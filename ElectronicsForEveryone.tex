@@ -1,0 +1,223 @@
+\documentclass{book}
+
+%% Math font options
+% \usepackage[math]{iwona}
+% \usepackage[math]{kurier}
+% \usepackage{cmbright}
+% \usepackage{lmodern}
+
+%% Font-y stuff
+\usepackage{dingbat}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsfonts}
+\usepackage{textcomp}
+\usepackage{newtxmath} % Better math lettering (v vs u)
+
+
+\usepackage{amsmath}
+
+\usepackage{needspace}
+%\usepackage{pgfplots}
+\usepackage{mdframed}
+\usepackage{placeins} % Give float barriers
+
+\usepackage{makeidx}
+
+
+% Booksize
+% \usepackage[top=1in,bottom=0.5in,left=0.5in,right=0.5in,paperwidth=8.5in,paperheight=11in]{geometry}
+\usepackage[top=1in,bottom=0.5in,left=0.5in,right=0.5in,paperwidth=7.5in,paperheight=9.25in]{geometry}
+
+% Better Hyphenation
+\usepackage[none]{hyphenat}
+\usepackage[english]{babel} % Prevents underscore from causing problems with tex4ht 
+% Graphics
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{maxiplot} % Maxima interface
+
+\makeatletter
+\@ifpackageloaded{tex4ht}{
+\newcommand{\forebook}[1]{#1}
+\newcommand{\forprintbook}[1]{}
+}{
+\newcommand{\forebook}[1]{}
+\newcommand{\forprintbook}[1]{#1}
+}
+\makeatother
+
+
+\setcounter{tocdepth}{1} % TOC to section level
+\setlength{\parindent}{0in} % No paragraph indents
+\setlength{\parskip}{10pt} % Between-paragraph skips
+
+
+\forprintbook{
+\def\bookpart#1{%
+  \par\newpage\cleardoublepage % Page break
+  \thispagestyle{empty}
+  \chaptermark{~}
+  \sectionmark{~}
+  \markboth{~}{~}
+  \vspace*{1in} % Vertical shift
+  \refstepcounter{part}% Next part
+  {\centering\textbf{\Huge Part \thepart}\par}% 
+  \addcontentsline{toc}{part}{{\thepart}~~~~~#1}
+  \vspace{1cm}% Vertical shift
+  {\centering \textbf{\Huge #1}\par}%
+  \vspace{2cm}% Vertical shift
+  % Some text
+}
+}
+
+\forebook{
+\def\bookpart#1{%
+%\section*{~}
+%\refstepcounter{part}% Next part
+%{\centering\textbf{\Huge Part \thepart}\par}% 
+% \part{#1}
+% \addcontentsline{toc}{part}{{\thepart}~~~~~#1}
+}
+}
+
+\forprintbook{
+\newenvironment{partintro}{\begin{mdframed}[backgroundcolor=gray!10,skipabove=\baselineskip,skipbelow=\baselineskip]%
+~\\ 
+}{%
+~\\
+\end{mdframed}
+}
+}
+
+\forebook{
+\newenvironment{partintro}{}{}
+}
+
+
+% \pgfplotsset{compat=1.10}
+
+\newcommand{\booktitle}[1]{\emph{#1}}
+
+\newcommand{\deriv}[1]{\mathrm{d}#1}
+\newcommand{\pd}[2]{\partial{#1}_{#2}}
+\newcommand{\myint}{\int\!}
+\renewcommand{\dh}{\deriv{h}}
+\newcommand{\dx}{\deriv{x}}
+\newcommand{\dy}{\deriv{y}}
+\newcommand{\ds}{\deriv{s}}
+\newcommand{\dr}{\deriv{r}}
+\newcommand{\dt}{\deriv{t}}
+\newcommand{\du}{\deriv{u}}
+\newcommand{\dv}{\deriv{v}}
+\newcommand{\dw}{\deriv{w}}
+\newcommand{\diff}{\mathrm{d}}
+\newcommand{\dz}{\deriv{z}}
+\newcommand{\dq}{\deriv{q}}
+\newcommand{\dydx}{\frac{\dy}{\dx}}
+\newcommand{\arccot}{\mathrm{arccot}}
+\newcommand{\arcsec}{\mathrm{arcsec}}
+\newcommand{\arccsc}{\mathrm{arccsc}}
+\newcommand{\glossterm}[1]{\textbf{#1}}
+\newcommand{\fixme}[1]{FIXME---\textbf{#1}}
+\newcommand{\degrees}{^{\circ}}
+
+
+\newcommand{\icode}[1]{\texttt{#1}}
+
+
+\newcommand\simplegraph[1]{
+	\begin{tikzpicture}
+		\begin{axis}[
+			xlabel=$x$,
+			ylabel=$y$,
+			axis equal image
+		]
+			\addplot+[mark=none,smooth]{#1};
+		\end{axis}
+	\end{tikzpicture}
+}
+
+\newcommand\mxpoutopt[1]{gnuplot_out_file,"./generated_plots\jobname#1.png"}
+\newcommand\maxgraphout[1]{\begin{center}\mxpIncludegraphics[scale=0.60]{generated_plots/\jobname#1.png}\end{center}}
+\newcommand\maxgraphscale[2]{\begin{center}\mxpIncludegraphics[scale=#2]{generated_plots/\jobname#1.png}\end{center}}
+\newcommand\maxdraw[3]{
+	\begin{maximacmd}
+		draw2d(terminal=eps_color, file_name="generated_plots/\jobname#1", xaxis=true, yaxis=true, yaxis_type=solid, xaxis_type=solid, #2);
+	\end{maximacmd}
+	\begin{center}
+		\mxpIncludegraphics[scale=#3]{generated_plots/\jobname#1.eps}
+	\end{center}
+}
+
+\newcommand\maxgraph[3]{
+	\begin{maximacmd}
+		plot2d(#2, #3, [gnuplot_preamble,"set zeroaxis;"], [gnuplot_term, png], [\mxpoutopt{#1}])$
+	\end{maximacmd}
+	\maxgraphout{#1}
+}
+
+\begin{maximacmd}
+load(draw);
+set_draw_defaults(grid=true, fill_color=grey, xaxis_type=solid, yaxis_type=solid, xlabel="x", ylabel="y");
+\end{maximacmd}
+% xaxis_color, xaxis_type (solid), xaxis_width, yaxis..., font, font_size, line_width
+
+\newcounter{examplecounter}
+\def\theexamplecounter{\thechapter.\arabic{examplecounter}}
+\newenvironment{exampleprob}{\begin{quote}%
+\refstepcounter{examplecounter}%
+\textbf{Example \theexamplecounter}%
+\quad
+}{%
+\end{quote}%
+}
+
+\newenvironment{sidebar}[1][]{%
+	\Needspace{10\baselineskip}
+	\begin{mdframed}[%
+		backgroundcolor=gray!10,
+		frametitle={--- \hskip 10pt #1},
+		frametitleaboveskip=0pt,
+		frametitlebelowskip=10pt,
+		innertopmargin=20pt,
+		innerbottommargin=10pt,
+		shadow=false,
+		shadowsize=2pt,
+		skipabove=\baselineskip,
+		skipbelow=\baselineskip,
+		linewidth=0.5pt,
+		frametitlerule=true,
+		frametitlebackgroundcolor=gray!30
+	]%
+}{%
+	\end{mdframed}
+}
+
+\newcommand\reviewsection{\newpage\section*{Review}}
+\newcommand\exercisesection{\newpage\section*{Exercises}}
+
+\raggedbottom
+
+\begin{document}
+
+\sloppy
+
+\frontmatter
+
+\title{Electronics for Everybody}
+\author{Jonathan Bartlett}
+
+\input{TitlePages}
+
+\tableofcontents
+
+\mainmatter
+
+\include{Introduction}
+\include{BeforeWeBegin}
+\include{WhatIsElectricity}
+\include{Glossary}
+
+\end{document}
+
