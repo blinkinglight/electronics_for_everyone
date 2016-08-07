@@ -1,0 +1,85 @@
+\chapter{Voltage and Resistance}
+
+In the previous chapter we learned about current, which is the rate of flow of charge.
+In this chapter we are going to learn about two other fundamental electrical quantities---\glossterm{voltage} and \glossterm{resistance}.
+These two quantities are the ones that are usually the most critical to building effective circuits.
+
+Current is important because limiting current allows us to preserve battery life and protect precision components.
+Voltage, however, is usually the quantity that has to be present to do any work within a circuit.
+
+\section{Picturing Voltage}
+
+What is voltage?
+Voltage is the amount of power each coulomb of electricity can deliver.
+If you have a one coulomb of electricity at 5 volts and I have one coulomb of electricity at 10 volts, that means that my coulomb can deliver twice as much power as yours.
+
+A good analogy to electronics is the flow of water.
+When comparing water to electricity, \emph{coulombs} are a similar unit to \emph{liters}---coulombs measure the amount of electrical charge present just like a liter is the amount of water stuff present.
+Both charge and water both flow.
+In water, we can measure the flow of a current of a stream in liters-per-second.
+Likewise, in electronics, we measure the flow of charge through a wire in coulombs-per-second, called amperes.
+
+Now, I want you to image the end of a hose containing water.
+Normally, the water just falls out of the hose, especially if the hose is just sitting on the ground.
+That hose just sitting on the ground is like a current with zero volts---each unit of water or charge is just not doing that much.
+
+Let's pretend we added a spray nozzle to the hose.
+What happens now?
+Water shoots out of the nozzle.
+We haven't added any more water---it is actually the same amount of current flowing.
+Instead, we increased the pressure on the water, which is just like increasing the voltage on an electric charge.
+By increasing the pressure, we changed the amount of work that each liter of water is available to perform.
+Likewise, when we increase voltage, we change the amount of work that each coulomb of electricity can do.
+
+One way we might measure the pressure of water coming out of a hose is to measure how far up it can shoot out of the hose.
+By doubling the pressure of the water, we can double how far out of the hose it can shoot.
+Similarly, with voltages, large enough voltages can actually jump air gaps across circuits.
+However, to do this, it takes a lot of voltage---about 30,000 volts per inch of gap.
+If you have been shocked by static electricity, though, this is what is happening!
+The power of the charge was extreme (thousands of volts), but the amount of charge in those shocks are so small that it doesn't harm you (about 0.00000001 coulombs).
+
+\section{Volts are Relative}
+
+While charge and current are fairly concrete ideas, voltage is a much more relative idea.
+You can actually never measure voltage absolutely.
+All voltage measurements are actually relative to other voltages.
+That is, I can't actually say that my electric charge has exactly 1, 2, 3, or whatever volts.
+Instead, what I have to do is say that one charge is however many volts more or less than another charge.
+So, let's take a 9-volt battery.
+What that means is not that the battery is 9 volts in any absolute sense, but rather that there is a 9-volt \emph{difference} between the charge at the positive terminal and the charge at the negative terminal.
+That is, the pressure with which charge is trying to move from the positive terminal to the negative terminal is 9 volts.
+
+\section{Relative Voltages and Ground Potential}
+
+When we get to actually measuring voltages on a circuit, we will only be measuring voltage \emph{differences} on the circuit.
+So, I can't just put a probe on one place on the circuit, I have to put my probe on two different places on the circuit and measure the voltage difference (also called the \glossterm{voltage drop}) between those two points.
+
+However, to simplify calculations and discussions, we usually choose some point on the circuit to represent ``zero volts.''
+This gives us a way to standardize voltage measurements on a circuit, since they are all given relative to the same point.
+In theory this could be any point on the circuit, but, usually, we choose the negative terminal on the battery to represent zero volts.
+
+This ``zero point'' goes by several names, the most popular of which is \glossterm{ground} (often abbreviated as \glossterm{GND}).
+It is called the ground because, historically, the physical ground has often been used as a reference voltage for circuits.
+Using the physical ground as the zero point allows you to also compare voltages between circuits with different power supplies.
+However, in our circuits, when we refer to the ground, we are referring to the negative terminal on the battery, which we are designating as zero volts.
+If we designate any other part of the circuit as a ground, we will let you know.  % FIXME - need to pull or clarify this depending on what is in the final version of the book
+
+Another, lesser-used term for this designated zero volt reference is the \glossterm{common} point.
+Many multimeters label one of their electrodes as \glossterm{COM}, for the common electrode.
+When analyzing a circuit's voltage, this electrode would be connected to whatever your zero-volt point is.
+
+This ``ground'' analogy also makes sense with our water hose analogy.
+Remember that a voltage is the potential for a charge to do work.
+What happens to water after it lands on the ground?
+By the time the water from my hose lands on the ground, it has lost all its energy.
+It is just sitting there.
+Sure, it may seep or flow around a bit, but nothing of consequence.
+All of its ability to do work---to move quickly or to knock something over---has been drained.
+It is just on the ground.
+Likewise, when our electric charge is all puttered out, we say that it has reached ``ground potential.''
+
+So, even though we could designate any point as being zero, we usually designate the negative terminal of the battery as the zero point, indicating that by the time electricity reaches that point, it has used up all of its potential energy---it now has zero volts.
+
+\section{Voltage and Resistance}
+
+
