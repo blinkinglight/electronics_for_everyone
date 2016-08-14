@@ -29,6 +29,7 @@ However, in electronics, we usually measure in milliamps (abbreviated as \si{\mi
 $$ 0.013 * 1000 = 13\,\si{\milli\ampere}$$
 
 So, our circuit will draw about 13 milliamps of current.
+This amount of current is the same amount running through all of the components in the series.
 
 \section{Parallel Circuits}
 
@@ -47,6 +48,8 @@ This makes determining the total amount of current more difficult, as we have to
 
 However, there are two additional laws we can use to help us out, known as \glossterm{Kirchoff's circuit laws}.
 The guy's name is hard to spell, but his rules are actually fairly easy to understand.
+
+\subsection{Kirchoff's Current Law}
 
 The first law is known as \glossterm{Kirchoff's current law}.
 Kirchoff's current law states that, at any junction, the total amount of current going \emph{into} a junction is exactly the same as the total amount of current going \emph{out} of a junction.
@@ -75,3 +78,122 @@ $$0.75\,\si{\ampere} + 0.34\,\si{\ampere} = 1.09\,\si{\ampere}$$
 
 Therefore, the total amount of current coming into the circuit is $1.09\,\si{\ampere}$.
 
+Now, lets say we had a junction of four wires.  
+In the first wire, we have $0.23\,\si{\ampere}$ of current coming in.
+On the second wire, we have $0.15\,\si{\ampere}$ of current going out.
+On the third wire, we have $0.20\,\si{ampere}$ of current going out.
+What must be happening on the fourth wire?
+Is current coming in or going out on that wire?
+
+To figure that out, we have to look at the totals so far.
+Coming in, we have the one wire at $0.23\,\si{\ampere}$.
+Going out, we have the two wires for a total of $0.15\,\si{\ampere} + 0.20\,\si{\ampere} = 0.35\,\si{\ampere}$.
+Since we only have $0.23\,\myamp$ coming in, but there is $0.35\,\myamp$ going out, that means that the fourth wire must be bringing current in.
+Therefore, the amount that this fourth wire must be bringing in is $0.35\,\myamp - 0.23\,\myamp = 0.12\,\myamp$.
+
+\subsection{Kirchoff's Voltage Law}
+
+Kirchoff's current law makes a lot of sense, because the amount of ``stuff'' coming in is the same as the amount of ``stuff'' going out.
+This is similar to our everyday experience.
+Kirchoff's voltage law, however, is a bit more tricky.
+\glossterm{Kirchoff's voltage law} states that, given any two points on a circuit at a particular time, that no matter what path is travelled to get between those two points, the difference in voltage between the two points (known as the \glossterm{voltage drop}) is the same \emph{no matter what pathway you take to get there}.
+
+Figures~\ref{figKirchoffVoltageLawExample0}~and~\ref{figKirchoffVoltageLawExampleComposite} illustrates this point.
+If we wanted to measure the voltage drop between the two points indicated (A and B), then that voltage drop, at least at a particular point in time, will be the same no matter what pathway electricity travels.
+The direct route between the two points has the same voltage drop as the more winding pathways, no matter what the values of the resistors are.
+
+\simplegraphicsfigure{A Circuit With Many Parallel Paths}{KirchoffVoltageLawExample0}{0.08}
+\simplegraphicsfigure{All Paths Between Two Points Have the Same Voltage Drop}{KirchoffVoltageLawExampleComposite}{0.05}
+
+So how does that square with Ohm's law?
+
+The way it works is that Ohm's law will cause all of the \emph{currents} through each part of the circuit to adjust in order to make sure that the \emph{voltage} stays the same.
+
+As you can see, the voltage drop between A and B \emph{must} be 9 volts because the battery is a 9-volt battery, and there are no components (only wires) between the battery terminals and A and B.
+Since batteries always have a constant voltage between their terminals, that means that A and B will have the same voltage---9 volts.
+
+Therefore, that means that the voltage drop across R1 is 9 volts, because it is one of the pathways between A and B, and all pathways get the same voltage.
+Let's put in some real values for these resistors and see if we can figure out how much voltage and current is happening in each part of the circuit.
+Let's set R1 = $1,000\,\si{\ohm}$, R2 = $500\,\si{\ohm}$, R3 = $300\,\si{\ohm}$, R4 = $400\,\si{\ohm}$, and R5 = $800\,\si{\ohm}$.
+Now, let's find out what our circuit looks like.
+
+As we have noted, \emph{every} path must have the same voltage drop---9 volts.
+So let's start with the easiest one, the current going across R1.
+Since we have a 9-volt drop and $1,000\,\si{\ohm}$, we can just use Ohm's law for current: 
+
+$$I = V / R = 9\,\si{\volt} / 1,000\,\si{\ohm} = 0.009\,\myamp$$
+
+So, we have $0.009\,\myamp$ running across R1.
+
+Now, what about R2?
+R2 is connected to point A simply by a wire.
+As we mentioned in Section~\ref{secWireRule}, wires can be considered to be zero-length.
+Therefore, R2 is just as much directly connected to point A as R1 is.
+Therefore, the voltage drop across R2 is also going to be 9-volts.
+Again, using Ohm's law, we can see that 
+
+$$I = V / R = 9\,\si{\volt} / 500\,\si{\ohm} = 0.018\,\myamp$$
+
+So, the current going across R2 is $0.018\,\myamp$.
+
+What about the current going across R3, R4, and R5?
+Well, if you notice, those resistors are all in series, so we can add them all up and just use the total resistance.
+
+So, the total resistance for this section of the circuit will be:
+
+$$R3 + R4 + R5 = 300\,\si{\ohm} + 400\,\si{\ohm} + 800\,\si{\ohm} = 1,500\,\si{\ohm}$$
+
+So, using Ohm's law, the current running through this part of the circuit will be:
+
+$$I = V / R = 9\,\si{\volt} / 1,500\,\si{\ohm} = 0.006\,\myamp$$
+
+Now, remember that the total current flowing into any junction has to be equal to the current flowing out of it.
+So, let's look at the junction between R2 and R3.  
+We calculated that the current flowing to R2 is $0.018\,\myamp$ and the current flowing to the series starting with R3 is $0.006\,\myamp$.
+Therefore, there has to be $0.018 + 0.006 = 0.024\,\myamp$ flowing into that junction.
+
+Now, how much current is flowing out of junction A?
+Well, earlier, we noted that the amount of current flowing across R1 was $0.009\,\myamp$, and we just calculated that there is $0.024\,\myamp$ flowing out of A into the junction between R2 and R3. 
+That means that there must be $0.033\,\myamp$ total flowing into junction A.
+
+While there were a lot of steps to determine this, each individual step was fairly straightforward.
+We simply combined Ohm's law, Kirchoff's voltage law, and Kirchoff's current law to figure out each step.
+
+Now, one important thing to notice is that there is \emph{less} current running through the pieces of the circuit with more resistance than there is with the pieces of the circuit with less resistance.
+This is a very important point and should not be overlooked, as it will come in handy in later chapters.
+
+This sort of calculation that we have done here gets trickier if there is a series resistance before or after the parallel resistance.
+Figure~\ref{figKirchoffVoltageLawSeriesAndParallel} gives an example of this.
+The setup is just like the previous circuit, except there is a single resistor (R6) in series with the battery \emph{before} the parallel branches.
+This will prevent our simple calculations from working because the current flowing in each of the branches of the circuit will all add together to tell us the amount of current flowing through R6.
+However, the voltage drop across R6 will depend on the current flowing through it.
+If this voltage changes, then it will change our starting voltage for our calculations to figure out the parallel branches.
+
+\simplegraphicsfigure{Kirchoff's Voltage Law with Series and Parallel Components}{KirchoffVoltageLawSeriesAndParallel}{0.08}
+
+Thus, we have ourselves in a loop---in order to find out the current flowing through the parallel branches, we have to know their starting voltage.
+In order to find out their starting voltage, we have to know how much the voltage dropped across R6.
+In order to know how much the voltage dropped across R6, we have to know how much current was flowing through it!
+
+This may seem like an impossible problem, but basic algebra allows us to work it out, though the details are kind of ugly.
+Additionally, a way of calculating this value even more simply has been discovered, and, for those mathematically inclined, you can read about it in Appendix~\ref{appendixElectronicsEquations}.
+However, a lot of the time, rather than using equations to get exact values, engineers use what they know about how the components work to get a general idea, and then they use their equipment to test actual voltages in the circuit to see if they were close or not.
+
+That is the general approach we will take in this book.
+
+% FIXME - put this somewhere after we talk about LEDs/diodes more in-depth.  A corollary to that law is that if the calculated voltage drop between two components down a particular pathway must be more than another voltage drop by a different pathway, the pathway with the larger voltage drop can be considered to be disconnected.
+
+\section{Joined and Unjoined Wires}
+
+In complicated circuits, sometimes we run out of room and must draw wires on top of each other even though the wires aren't connected.
+In this book, we try to make clear which wires are connected by placing a dot on the junction point.
+To show two wires that don't connect to each other, but which had to cross because the diagram was too complicated to prevent it, we will show one of the wires as being broken across the intersection point.
+Figure~\ref{figJoinedVsUnjoinedEdited} demonstrates the difference.
+The wires on the left are joined together as indicated by the dot.
+The wires on the right are not joined in any way, they just had to be drawn across each other because of space reasons in the diagram.
+
+\simplegraphicsfigure{Joined Wires (left) vs. Unjoined Wires (right)}{JoinedVsUnjoinedEdited}{0.08}
+
+\reviewsection
+
+\applysection
