@@ -1,0 +1,5 @@
+#!/bin/sh
+
+pdflatex ElectronicsForEveryone.tex
+pdflatex ElectronicsForEveryone.tex
+pdflatex ElectronicsForEveryone.tex
