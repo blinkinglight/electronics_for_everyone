@@ -6,3 +6,8 @@ This book is built in LaTeX.  It follows several conventions, so if you contribu
  * Then, I incorporate the image into the page, usually at scale=0.08.  When possible, I use the customer \simplegraphicsfigure macro, with parameters Title, Image (which should be the image name WITHOUT png), and Scale.  This produces a figure with an image, with the figure label figImageName, where ImageName is what you supplied.
  * Every chapter ends with a \reviewsection and \applysection
  * Every new term should be marked with \glossterm on its first usage, and the definition should be both in the main text and in the Glossary.  Note that these definitions should be similar enough to avoid confusion, but don't have to be identical.  
+ * Try to avoid using *here* figures.  Instead refer to the figure by number using Figure~\ref{figureLabel}.
+
+You can build it just by running the following command 2-3 times.
+
+    pdflatex ElectronicsForEveryone.tex

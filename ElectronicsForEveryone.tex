@@ -187,6 +187,12 @@ set_draw_defaults(grid=true, fill_color=grey, xaxis_type=solid, yaxis_type=solid
 \end{quote}%
 }
 
+\newenvironment{advsidebar}[1]{%
+	\begin{sidebar}[Advanced: #1]
+}{%
+	\end{sidebar}
+}
+
 \newenvironment{sidebar}[1][]{%
 	\Needspace{10\baselineskip}
 	\begin{mdframed}[%

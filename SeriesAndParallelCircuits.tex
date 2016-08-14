@@ -3,9 +3,75 @@
 In the Chapter~\ref{chapFirstCircuit} we looked at our very first circuit and how to draw it using a circuit diagram.
 In this chapter, we are going to look at different ways components can be hooked together and what they mean for your circuit.
 
-\section{A Series Circuit}
+\section{Series Circuits}
 
 The circuit built in Chapter~\ref{chapFirstCircuit} is considered a \glossterm{series circuit} because all of the components are connected end-to-end, one after another.
 In a series circuit, there is only one pathway for the current to flow, making analyzing the circuit fairly simple.
 
 It does not matter how \emph{many} components are connected together---as long as all of the components are connected one after another, the circuit is considered a series circuit.
+Figure~\ref{figSeriesComponents} shows a series circuit with several components included.
+
+\simplegraphicsfigure{A Series Circuit with Several Components}{SeriesComponents}{0.08}
+
+If all of the components are in a series, then even if there are multiple resistors scattered throughout the circuit, you can figure out the total resistance of the circuit just by adding together all of the resistances.
+In this example, if R1 is 100\si{\ohm}, R2 is 350\si{\ohm}, and R3 is 225\si{\ohm}, then the total series resistance of the circuit will be $100 + 350 + 225 = 675\,\si{\ohm}$.
+
+That means that the current is easy to figure out as well.
+If we ignore the LEDs (since we have not yet learned to calculate using them), then we can use the total series resistance to calculate current the same way we did with the single resistor.
+
+Since the voltage is 9 volts, then we can use Ohm's law to find out the current going through the system.
+
+$$I = V / R = 9 / 675 = 0.013\,\si{\ampere}$$
+
+Note that \si{\ampere} stands for ampere, and we will be using this in our calculations from here on out.
+However, in electronics, we usually measure in milliamps (abbreviated as \si{\milli\ampere}), so let us convert:
+
+$$ 0.013 * 1000 = 13\,\si{\milli\ampere}$$
+
+So, our circuit will draw about 13 milliamps of current.
+
+\section{Parallel Circuits}
+
+Circuits are wired into a \glossterm{parallel circuit} if one or more of their components are arranged into multiple branches.
+
+Figure~\ref{figSimpleParallel} shows a simple circuit with two resistors in parallel.
+In this figure, the circuit has \emph{two} branches.
+R1 is in the first branch, and R2 is in the second branch.
+The place where the branch occurs is called a \glossterm{junction}, and is usually marked with a dot to show that all the wires there are connected.
+
+\simplegraphicsfigure{Two Resistors Wired in Parallel}{SimpleParallel}{0.08}
+
+In a parallel circuit, electricity will flow through both branches simultaneously.
+Some of the current will go through R1 and some of it will go through R2.
+This makes determining the total amount of current more difficult, as we have to take into account more than one branch.
+
+However, there are two additional laws we can use to help us out, known as \glossterm{Kirchoff's circuit laws}.
+The guy's name is hard to spell, but his rules are actually fairly easy to understand.
+
+The first law is known as \glossterm{Kirchoff's current law}.
+Kirchoff's current law states that, at any junction, the total amount of current going \emph{into} a junction is exactly the same as the total amount of current going \emph{out} of a junction.
+This should make sense to us.
+Think about traffic at a four-way intersection.
+The same number of cars that enter that intersection must be the same number of cars that leave the intersection.
+We can't create cars out of thin air, therefore each car leaving must have come in.
+Cars don't magically disappear, therefore each car entering must leave at some point.
+Therefore, Kirchoff's circuit law says that if you add up all of the traffic going in it will equal the amount going out.
+
+\begin{advsidebar}{Another Way of Looking at It}
+Another way to say this is that the total amount of all of the currents at a junction is zero.
+That is, if we consider currents coming in to the junction to be positive and currents going out of the junction to be negative, then their total will be zero since the size of the currents coming in must equal the size of the currents going out.
+\end{advsidebar}
+
+So, let's look at a junction.
+Figure~\ref{figSimpleJunction1} shows a junction where one wire is bringing current in, and it branches with two wires bringing current out.  
+The first wire going out has $0.75\,\si{\ampere}$ of current, and the second wire going out has $0.34\,\si{\ampere}$ of current.
+How much current is going into the junction from the left?
+
+\simplegraphicsfigure{A Simple Junction}{SimpleJunction1}{0.08}
+
+Since the total coming in must equal the total coming out, then that means the total coming in must be 
+
+$$0.75\,\si{\ampere} + 0.34\,\si{\ampere} = 1.09\,\si{\ampere}$$
+
+Therefore, the total amount of current coming into the circuit is $1.09\,\si{\ampere}$.
+
