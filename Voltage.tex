@@ -80,6 +80,116 @@ Likewise, when our electric charge is all puttered out, we say that it has reach
 
 So, even though we could designate any point as being zero, we usually designate the negative terminal of the battery as the zero point, indicating that by the time electricity reaches that point, it has used up all of its potential energy---it now has zero volts.
 
-\section{Voltage and Resistance}
+\section{Resistance}
 
+Resistance is how much a circuit or device resists the flow of current.
+Resistance is measured in \glossterm{ohms}, and is usually represented by the symbol \si{\ohm}.
+Going back to our water hose analogy, \glossterm{resistance} is how small the hose is.
+Think about a 2-liter bottle of pop.
+The bottle has a wide base, but the opening is small.
+If I turn the bottle upside down, the small opening limits the amount of liquid that flows out at one time.
+That small opening is giving \emph{resistance} to the flow of liquid, making it flow more slowly.
+If you cut off the small opening, leaving a large opening, the liquid will come out much faster because there is less resistance.
 
+Ohm's law, which we will use throughout this book, tells us about the relationship between resistance, voltage, and current flow.
+The equation is very simple.
+It says:
+
+\begin{equation}
+\label{ohmequationv}
+V = I * R
+\end{equation}
+
+In this equation, V stands for voltage, I stands for current (in \emph{amperes}, not milliamperes), and R stands for resistance (in ohms).
+To understand what this equation means, let's think again about water hoses.
+The water the comes out of the fawcet of your house has essentially a constant current.
+Therefore, according to the equation, if we add resistance, it will increase our voltage.
+
+We know this to be true from experience. 
+If we have a hose and just point it forward, water usually comes out about a foot or two.
+Remember, voltage is how much push the water has, which determines how far the water will go when it leaves the hose.
+However, if my children are on the other side of the yard, and I want to hit them with a water spray, what do I do?
+I put my thumb over the opening.
+This increases the resistance, and, since the current is constant, the voltage (the distance the water will travel after it leaves the hose) will increase.
+
+However, in circuits, we usually don't have a constant current source.
+Instead, batteries provide a constant voltage source.
+A 9-volt battery will provide 9-volts in nearly every condition.
+Therefore, for electronics work, we usually rearrange the equation a little bit.  
+Using a little bit of algebra, we can solve our equation for either current or resistance, like this:
+
+\begin{equation}
+\label{ohmequationi}
+I = V / R
+\end{equation}
+
+\begin{equation}
+\label{ohmequationr}
+R = V / I
+\end{equation}
+
+Equation~\ref{ohmequationi} is the one that is usually most useful.
+To understand this equation, think back to the example of the bottle turned upside down.
+There, the liquid has a constant amount of push/voltage (from gravity), but we had different resistances.
+With the small opening, we had a large resistance, so the water came out slower.
+With the large opening, we had almost no resistance, so the water came out all at once.
+
+\begin{exampleprob}
+Let's put Ohm's law to use.
+If I have a 5-volt voltage source with 10 ohms of resistance, how much current will flow?
+Since we are solving for current, we should use equation~\ref{ohmequationi}.
+This says $I = V / R$.
+Therefore, plugging in our voltage and resistance, we have $I = 5 / 10$, which is $I = 0.5 \textrm{amperes}$ (remember, Ohm's law always uses amperes for current).
+Note that, in this book, we will never use fractions when we solve problems, we will only use decimals.
+\end{exampleprob}
+
+\begin{exampleprob}
+Now let's say that we have a 10 volt source, and we want to have 2 amps worth of current flowing.
+How much resistance do we need in order to make this happen?
+Since we are now solving for resistance, we will use equation~\ref{ohmequationr}, which says $R = V / I$.
+Plugging in our values, we see that $R = 10 / 2 = 5 \si{\ohm}$.
+Therefore, we would need $5 \si{\ohm}$ of resistance.
+\end{exampleprob}
+
+\begin{exampleprob}
+Now let's say that I have a 9-volt source and I want to limit my current to 10 \emph{milliamps}.  
+This uses the same equation, but the problem I have is that my units are in milliamps, but my equation uses amps.
+Therefore, before using the equation, I have to convert my current from milliamps to amps. 
+Remember, to convert milliamps to amps, we just divide by 1000.
+Therefore, we take 10 milliamps and divide by 1000, we get $0.010$ amps.
+Now we can use equation~\ref{ohmequationr} to find the resistance we need.
+$R = V / I = 9 / 0.010 = 900 \si{\ohm}$.
+Therefore, with 900 \si{\ohm} of resistance, we will limit our current to 10 milliamps.
+\end{exampleprob}
+
+\reviewsection
+
+In this chapter, we learned:
+
+\begin{enumerate}
+\item Voltage is the amount of power that each unit of electricity delivers.
+\item The volt is the electrical unit that we use to measure voltage.
+\item Voltage is always given relative to other voltages---it is not an absolute value.
+\item The ground of a circuit is a location on the circuit where we have chosen to use as a universal reference point---we define that point as having zero voltage for our circuit to make measuring other points on our circuit easier.
+\item In DC electronics, the chosen ground is usually the negative terminal of the battery.
+\item Other terms and abbreviations for the ground include common, GDN, and COM.
+\item Resistance is how much a circuit resists the flow of current and is measured in ohms (\si{\ohm}).
+\item Ohm's law tells us the relationship between voltage, current, and resistance: $V = I * R$.
+\item Using basic algebra, we can rearrange ohm's law in two other ways, depending on what we want to know.  It can be solved for current, $I = V /R$, or it can be solved for resistance, $R = V / I$.
+\end{enumerate}
+
+\applysection
+
+\begin{enumerate}
+\item If I have a 4-volt battery, how many volts are between the positive and negative terminals of this battery?
+\item If I choose the \emph{negative} terminal of this battery as my ground, how many volts are at the \emph{negative} terminal?
+\item If I choose the \emph{negative} terminal of this battery as my ground, how many volts are at the \emph{positive} terminal?
+\item If I choose the \emph{positive} terminal of this battery as my ground, how many volts are at the \emph{negative} terminal?
+\item Given a constant voltage, what effect does increasing the resistance have on current?
+\item Given a constant current, what effect does increasing the resistance have on voltage?
+\item If I have a 10-volt battery, how much resistance would I need to have a current flow of 10 amps?
+\item If I have a 3-volt battery, how much resistance would I need to have a current flow of 15 amps?
+\item Given 4 amps of current flow across 200 ohms of resistance, how much voltage is there in my circuit?
+\item If I am wanting to limit current flow to 2 amps, how much resistance would I need to add to a 40-volt source?
+\item If I am wanting to limit current flow to 2 milliamps, how much resistance would I need to add to a 9-volt source?
+\end{enumerate}

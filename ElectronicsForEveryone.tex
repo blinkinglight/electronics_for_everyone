@@ -7,6 +7,7 @@
 % \usepackage{lmodern}
 
 %% Font-y stuff
+\usepackage{siunitx}
 \usepackage{dingbat}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
@@ -23,6 +24,11 @@
 \usepackage{placeins} % Give float barriers
 
 \usepackage{makeidx}
+
+\usepackage{array} % custom column cells
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
+\setlength{\tabcolsep}{1em}
+\renewcommand{\arraystretch}{1.6}
 
 
 % Booksize
@@ -125,6 +131,14 @@
 
 \newcommand{\icode}[1]{\texttt{#1}}
 
+\newcommand\simplegraphicsfigure[3]{
+\begin{figure}
+\caption{#1}
+\label{fig#2}
+\centering
+\includegraphics[scale=#3]{#2.png}
+\end{figure}
+}
 
 \newcommand\simplegraph[1]{
 	\begin{tikzpicture}
@@ -223,10 +237,14 @@ set_draw_defaults(grid=true, fill_color=grey, xaxis_type=solid, yaxis_type=solid
 
 \include{WhatIsElectricity}
 \include{Voltage}
-\include{PuttingWiresTogether}
-\include{TheFourRules}
+\include{FirstCircuit}
+\include{SeriesAndParallelCircuits}
+
+\appendix
 
 \include{Glossary}
+\include{AppendixFindingValues}
+\include{AppendixSymbols}
 
 \end{document}
 
