@@ -1,5 +1,7 @@
 \chapter{Analyzing Series and Parallel Circuits}
 
+% FIXME - do I define "voltage drop" anywhere?
+
 In the Chapter~\ref{chapFirstCircuit} we looked at our very first circuit and how to draw it using a circuit diagram.
 In this chapter, we are going to look at different ways components can be hooked together and what they mean for your circuit.
 
@@ -288,7 +290,7 @@ However, we start with only resistors in order to make the problems simpler.
 
 % FIXME - put this somewhere after we talk about LEDs/diodes more in-depth.  A corollary to that law is that if the calculated voltage drop between two components down a particular pathway must be more than another voltage drop by a different pathway, the pathway with the larger voltage drop can be considered to be disconnected.
 
-\section{Joined and Unjoined Wires}
+\section{Wires in a Circuit}
 
 In complicated circuits, sometimes we run out of room and must draw wires on top of each other even though the wires aren't connected.
 In this book, we try to make clear which wires are connected by placing a dot on the junction point.
@@ -298,6 +300,19 @@ The wires on the left are joined together as indicated by the dot.
 The wires on the right are not joined in any way, they just had to be drawn across each other because of space reasons in the diagram.
 
 \simplegraphicsfigure{Joined Wires (left) vs. Unjoined Wires (right)}{JoinedVsUnjoinedEdited}{0.08}
+
+Also, the lengths of wires that we draw are irrelevant.  
+Usually, in simple circuits, we should consider that wires are all zero-length.
+If, after a resistor, the voltage in the circuit has dropped to $5\myvolt$, then we can consider that the \emph{whole wire} until the next circuit is at $5\myvolt$.  
+If a wire branches into multiple branches, even though each branch will have a different amount of \emph{current} running on the branch, each branch of the wire will all have the \emph{exact same voltage} until they reach another component.
+
+Therefore, in the circuit in Figure~\ref{figEquivalentPoints}, you can see several points labelled A, B, C, D, E, F, and G.
+In this circuit, A, B, and C all have equivalent voltages (though not equivalent currents) since there are only wires (and not components) between them.
+Likewise, D, E, F, and G all have equivalent voltages since there are only wires between them.  
+Also, since D, E, F, and G are all connected to the battery negative (i.e., ground) with no components between them, that means that they are all at zero volts.
+Likewise, since A, B, and C are all directly connected to the battery positive with no intervening components, they are all at 9 volts.
+
+\simplegraphicsfigure{Several Points on a Circuit}{EquivalentPoints}{0.08}
 
 \reviewsection
 
@@ -326,5 +341,7 @@ In this chapter, we learned:
 \item If I have three resistors in parallel---$25\myohm$, $40\myohm$, and $75\myohm$, what is the total resistance of this circuit?
 \item If I have four resistors in parallel---$1,000\myohm$, $800\myohm$, $2,000\myohm$, and $5,000\myohm$, what is the total resistance of this circuit?
 \item If I have three resistors in parallel---$100\myohm$, $5,000\myohm$, and $10,000\myohm$---what is the total resistance of this circuit?  Which of the resistors is the total resistance most similar to?
-\item Take a look at the following circuit diagram:
+\item Take a look at the following circuit diagram.  If the voltage drop between B and C is 2 volts, and the voltage drop between C and D is 3 volts, what is the voltage drop between A and E?  What is the voltage at E?  What is the voltage at A? \\ \includegraphics[scale=0.08]{VoltageDropProblem.png}
+\item Optional - what resistor values would you need to have the circuit above run with $2\myamp$ total current?
+\item The circuit below is a combination of series and parallel resistances.  Each resistor is labelled with its resistance value, given in ohms.  Find out how much current is flowing through each resistor, and how much each resistor drops the voltage.  \\ \includegraphics[scale=0.08]{ProblemCalculateCurrentAndVoltage}
 \end{enumerate}
