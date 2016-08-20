@@ -1,4 +1,4 @@
-\chapter{Series and Parallel Circuits}
+\chapter{Analyzing Series and Parallel Circuits}
 
 In the Chapter~\ref{chapFirstCircuit} we looked at our very first circuit and how to draw it using a circuit diagram.
 In this chapter, we are going to look at different ways components can be hooked together and what they mean for your circuit.
@@ -14,6 +14,8 @@ Figure~\ref{figSeriesComponents} shows a series circuit with several components 
 \simplegraphicsfigure{A Series Circuit with Several Components}{SeriesComponents}{0.08}
 
 If all of the components are in a series, then even if there are multiple resistors scattered throughout the circuit, you can figure out the total resistance of the circuit just by adding together all of the resistances.
+This is known as the \glossterm{equivalent resistance} of the series.
+
 In this example, if R1 is 100\si{\ohm}, R2 is 350\si{\ohm}, and R3 is 225\si{\ohm}, then the total series resistance of the circuit will be $100 + 350 + 225 = 675\,\si{\ohm}$.
 
 That means that the current is easy to figure out as well.
@@ -160,9 +162,12 @@ While there were a lot of steps to determine this, each individual step was fair
 We simply combined Ohm's law, Kirchoff's voltage law, and Kirchoff's current law to figure out each step.
 
 Now, one important thing to notice is that there is \emph{less} current running through the pieces of the circuit with more resistance than there is with the pieces of the circuit with less resistance.
+The electric current is more likely to go down the path of least resistance.
 This is a very important point and should not be overlooked, as it will come in handy in later chapters.
 
-This sort of calculation that we have done here gets trickier if there is a series resistance before or after the parallel resistance.
+\section{Equivalent Parallel Resistance}
+
+The sort of calculation that we have done in the previous section gets trickier if there is a series resistance before or after the parallel resistance.
 Figure~\ref{figKirchoffVoltageLawSeriesAndParallel} gives an example of this.
 The setup is just like the previous circuit, except there is a single resistor (R6) in series with the battery \emph{before} the parallel branches.
 This will prevent our simple calculations from working because the current flowing in each of the branches of the circuit will all add together to tell us the amount of current flowing through R6.
@@ -176,10 +181,110 @@ In order to find out their starting voltage, we have to know how much the voltag
 In order to know how much the voltage dropped across R6, we have to know how much current was flowing through it!
 
 This may seem like an impossible problem, but basic algebra allows us to work it out, though the details are kind of ugly.
-Additionally, a way of calculating this value even more simply has been discovered, and, for those mathematically inclined, you can read about it in Appendix~\ref{appendixElectronicsEquations}.
-However, a lot of the time, rather than using equations to get exact values, engineers use what they know about how the components work to get a general idea, and then they use their equipment to test actual voltages in the circuit to see if they were close or not.
+Instead, we have an equation which gives us \glossterm{equivalent resistance}.
+That is, we can take a series of parallel resistors, and we can calculate the total resistance of those resistors.
 
-That is the general approach we will take in this book.
+If you have resistors in parallel to each other (let's call them $R_1$, $R_2$, and $R_3$), and you want to know the resistance of their \emph{combined} action (which we will call this total $R_T$), then you would use the following equation:
+
+\begin{equation}
+\label{eqparallelresistancethree}
+R_T = \frac{1}{\frac{1}{R_1} + \frac{1}{R_2} + \frac{1}{R_3}}
+\end{equation}
+
+This equation works for any number of resistances that we have in parallel.
+We can just keep on adding them to the end of the list:
+
+\begin{equation}
+\label{eqparallelresistancen}
+R_T = \frac{1}{\frac{1}{R_1} + \frac{1}{R_2} + \ldots + \frac{1}{R_N}}
+\end{equation}
+
+So, let's look at our circuit, and see how we can find out the currents flowing through each resistor.
+For this example, we will again say that $R1 = 1,000\,\si{\ohm}$, $R2 = 500\,\si{\ohm}$, $R3 = 300\,\si{\ohm}$, $R4 = 400\,\si{\ohm}$, and $R5 = 800\,\si{\ohm}$.  Additionally, $R6 = 250\,\si{\ohm}$.
+
+In order to compute this, we first have to figure out \emph{what} is in series and what is in parallel.
+Notice the loop made by R3, R4, and R5.  
+Those are all connected end-to-end, so they are in series.
+Because they are in series, we can get their equivalent resistance just by adding them together---$300 + 400 + 800 = 1,500\,\si{\ohm}$.
+Therefore, we can actually \emph{replace} these resistors with a single, $1,500\,\si{\ohm}$ resistor.
+We will call this ``combined'' resistor R7.
+Now, if you look at the new picture, with R7 standing in for the loop, you will see that R1, R2, and R7 are in parallel with each other.
+
+Therefore, we can find out their combined resistance by using Equation~\ref{eqparallelresistancen}:
+
+\begin{align*}
+R_T &= \frac{1}{\frac{1}{R1} + \frac{1}{R2} + \frac{1}{R7}} \\
+R_T &= \frac{1}{\frac{1}{1,000} + \frac{1}{500} + \frac{1}{1,500}} \\
+R_T &= \frac{1}{0.001 + 0.002 + 0.00067} \\
+R_T &= \frac{1}{0.00367} \\
+R_T &= 272.5\,\si{\ohm}
+\end{align*}
+
+Therefore, the equivalent resistance of all of the parallel resistances is about $272.5\,\si{\ohm}$, which means that we can replace \emph{all} of these resistors (R1, R2, R3, R4, and R5) with a single resistor that is $272.5\,\si{\ohm}$.
+Also notice that this resistance is actually \emph{less} than each of the individual resistances.
+
+Now, to get the total resistance of the circuit, we notice that this parallel resistance ($272.5\,\si{\ohm}$) is in series with R6, which is $250\,\si{\ohm}$.  
+Since they are in series with each other, we can simply add them together.
+The total resistance of this circuit is $250 + 272.5 = 522.5\,\si{\ohm}$.
+We can now use Ohm's law to find the total amount of current running through this circuit:
+
+\begin{align*}
+I &= \frac{V}{R} \\
+I &= \frac{9}{522.5} \\
+I &= 0.0172\myamp
+\end{align*}
+
+Thus, the whole circuit has 0.0172 amperes of current running through it.
+Using this, we can now go back through and identify how much current and voltage is flowing through each individual piece.
+
+Because the entirety of the 0.0172 amperes is going through the first resistor, that means that the voltage drop of this resistor will be, using Ohm's law:
+
+\begin{align*}
+V &= I\cdot R \\
+V &= 0.0172 \cdot 250 \\
+V &= 4.3\,\si{\volt}
+\end{align*}
+
+That means that this resistor will chew up $4.3\,\si{\volt}$.  
+This leaves us with $9 - 4.3 = 4.7\,\si{\volt}$ left after the series resistor.
+
+We now know the starting and ending voltages of each branch of the parallel resistors---$4.7\,\si{\volt}$ at the beginning (what we just calculated the voltage to be after the series resistor), and $0\,\si{\volt}$ at the end (because it connects to the negative terminal of the battery, which we have designated as the zero volt reference).
+
+Therefore, we can use Ohm's law to find the amount of current flowing through each of them.
+For R1:
+
+\begin{align*}
+I &= \frac{V}{R} \\
+I &= \frac{4.7}{1,000} \\
+I &= 0.0047\,\si{\ampere}
+\end{align*}
+
+For R2:
+
+\begin{align*}
+I &= \frac{V}{R} \\
+I &= \frac{4.7}{500} \\
+I &= 0.0094\,\si{\ampere}
+\end{align*}
+
+And finally, for the series that is in a loop at the right (R3, R4, and R5):
+
+\begin{align*}
+I &= \frac{V}{R} \\
+I &= \frac{4.7}{1500} \\
+I &= 0.0031\,\si{\ampere}
+\end{align*}
+
+Since the loop is all in series, that means all of the resistors in that series will have $0.0031\,\si{\ampere}$ going through them.
+
+If we add all of these currents, we will see that $0.0031 + 0.0094 + 0.0047 = 0.0172\,\si{\ampere}$, which is the amount of current we originally figured out.
+
+What we have learned is that we can replace the entire circuit with a single value for its resistance to figure out how the circuit will behave as a whole.
+For a simple circuit like this, having all of these parallel branches doesn't do much, so it may seem pointless.
+However, in a real circuit, each of these branches may be, instead of a resistor, a component that has some amount of resistance.
+If you know the resistance, you can calculate how much current is flowing through it the same way.
+
+However, we start with only resistors in order to make the problems simpler.
 
 % FIXME - put this somewhere after we talk about LEDs/diodes more in-depth.  A corollary to that law is that if the calculated voltage drop between two components down a particular pathway must be more than another voltage drop by a different pathway, the pathway with the larger voltage drop can be considered to be disconnected.
 
@@ -196,4 +301,30 @@ The wires on the right are not joined in any way, they just had to be drawn acro
 
 \reviewsection
 
+In this chapter, we learned:
+\begin{enumerate}
+\item In a series circuit, electricity flows in a single line through all of the components.
+\item In a parallel circuit, electricity branches and flows in multiple branches.
+\item Most real circuits are combinations of series and parallel circuits.
+\item When you have resistors together in series, the total resistance of all of the resistors combined is simply the sum of their individual resistances.
+\item In a parallel circuit, Kirchoff's Current Law says that the total amount of current entering a branch/junction is the same as the total amount of current leaving the branch.
+\item In a parallel circuit, Kirchoff's Voltage Law says that, between any two points on a circuit at a given point in time, the voltage difference between those two points will be identical no matter what pathway the electricity follows to get there.
+\item When resistances are in parallel, the total resistance for the parallel circuit is given by the equation $R_T = \frac{1}{\frac{1}{R_1} + \frac{1}{R_2} + \ldots + \frac{1}{R_N}}$.
+\item By using these laws in combination, we can predict how current will flow in each part of our circuit.
+\end{enumerate}
+
 \applysection
+
+\begin{enumerate}
+\item There is a junction in a circuit that has one wire with current flowing in and two wires with current flowing out.  There is $1.25\myamp$ of current coming in, and the first wire going out has $0.15\myamp$ of current going out.  How much current is leaving through the second wire?
+\item There is a junction in a circuit that has two wires with current flowing in and two wires with current flowing out.  The first wire with current flowing in has $0.35\myamp$ of current, the first wire with current flowing out has $0.25\myamp$ of current, and the second wire with current flowing out has $0.42\myamp$ of current.  How much current is flowing in on the second incoming wire?
+\item At a junction of four wires, wire 1 has $0.1\myamp$ of current flowing in, wire 2 has $0.2\myamp$ of current flowing in, and wire 3 has $0.4\myamp$ of current flowing out.  Is the current in wire 4 going in or out?  How much current is flowing on it?
+\item If I have three $100\myohm$ resistors in series, what is the total resistance of the series?
+\item If I have a $10\myohm$ resistor, a $30\myohm$ resistor, and a $65\myohm$ resistor in series, what is the total resistance of the series?
+\item If I have a $5\myohm$ resistor and a $7\myohm$ resistor in series, what is the total resistance of the series?
+\item If I have two resistors in parallel, a $30\myohm$ resistor and a $40\myohm$ resistor, what is the total resistance of this circuit?
+\item If I have three resistors in parallel---$25\myohm$, $40\myohm$, and $75\myohm$, what is the total resistance of this circuit?
+\item If I have four resistors in parallel---$1,000\myohm$, $800\myohm$, $2,000\myohm$, and $5,000\myohm$, what is the total resistance of this circuit?
+\item If I have three resistors in parallel---$100\myohm$, $5,000\myohm$, and $10,000\myohm$---what is the total resistance of this circuit?  Which of the resistors is the total resistance most similar to?
+\item Take a look at the following circuit diagram:
+\end{enumerate}
