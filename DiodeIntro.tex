@@ -128,9 +128,11 @@ Therefore, we can calculate that the current going through the diode is $8.4 - 0
 
 Diodes don't make the math harder, but they do force you to think a little harder about how you apply the rules.
 
-Let's take a look at a slightly harder example, with Figure~\ref{figParallelMultipleDiodes}.
+Let's take a look at a slightly harder example, using Figure~\ref{figParallelMultipleDiodes}.
 In this circuit, we have two diodes in parallel with two resistors in parallel.
 This parallel circuit is in series with a resistor on the front and another diode at the end. 
+
+\simplegraphicsfigure{A Circuit with Multiple Diodes}{ParallelMultipleDiodes}{0.08}
 
 It is almost always easiest to analyze circuits starting with the diodes because their voltage drops are fixed.
 If we look at this circuit, the diode at the end gives the circuit a voltage drop of $0.6\myvolt$.
@@ -213,7 +215,7 @@ So keep that in mind---if you ever wind up with more forward voltage drop from a
 
 Therefore, we would analyze Figure~\ref{figNonconductingDiodes} as if it were just like Figure~\ref{figNonconductingDiodesNoDiodes}.
 
-\simplegraphicsfigure{A Circuit Equivalent to Figure~\ref{figNonconducting Diodes} Because of Nonconducting Diodes}{NonconductingDiodesNoDiodes}{0.08}
+\simplegraphicsfigure{A Circuit Equivalent to Figure~\ref{figNonconductingDiodes} Because of Nonconducting Diodes}{NonconductingDiodesNoDiodes}{0.08}
 
 \section{Usage of Diodes}
 
@@ -243,6 +245,8 @@ Therefore, if you need a fixed amount of voltage, you can use diodes to provide 
 
 Figure~\ref{figThreeVoltDiodeRegulator} shows a simple voltage regulator using diodes.
 Given a $5\myvolt$ battery (actually, a battery of any size significantly over $3\myvolt$ will work), this circuit will provide a regulated $3\myvolt$ of electricity to whatever is connected to it as a load (remember, a ``load'' resistor is just a stand-in for whatever we want to attach to this).
+
+\simplegraphicsfigure{A Simple $3\myvolt$ Voltage Regulator}{ThreeVoltDiodeRegulator}{0.08}
 
 Because the diodes provide a fixed voltage drop of $0.6\myvolt$ each, then that pathway has a total voltage drop for five diodes as $5 * 0.6 = 3.0\myvolt$.
 Kirchoff's Voltage Law says that between two points, \emph{every} pathway between them will have the same voltage drop.
@@ -388,4 +392,5 @@ In this chapter, we learned:
 \applysection
 
 \begin{enumerate}
+\item FIXME
 \end{enumerate}
