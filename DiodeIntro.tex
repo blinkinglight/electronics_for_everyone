@@ -1,0 +1,239 @@
+\chapter{Diodes and How to Use Them}
+
+This chapter introduces the \glossterm{diode}.  
+We have used light-emitting diodes (LEDs) in previous chapters, but have not really discussed their function except for emitting light.
+In this chapter, we are going to look at regular diodes, light-emitting diodes, and zener diodes, to get a feel for what these devices are and how they might be used in circuits for more than just light.
+
+% FIXME - schematic of a diode
+
+\section{Basic Diode Behavior}
+
+Unlike resistors, diodes have both a positive and negative side.
+For any component with both positive and negative legs, the positive leg of the component is termed the \glossterm{anode} and the negative leg is termed the \glossterm{cathode}.
+On LEDs, the anode is longer than the cathode.
+However, for other types of diodes, the cathode is marked with a line.
+You can remember this because in the schematic of a diode, the cathode has the blocking line.
+
+The diode performs two fundamental ``actions'' with electric current.  
+The first action of a diode is to drop voltage by an essentially fixed amount \emph{without} affecting or limiting current.
+This amount of voltage is called the \glossterm{forward voltage drop} and it is usually around $0.6\myvolt$ for more non-LED diodes. 
+Forward voltage is often abbreviated as $\myvolt_F$.
+For most LEDs, the forward voltage drop depends on the color of the LED, with a red LED dropping about $1.8\myvolt$ and a blue LED dropping about $3.3\myvolt$.
+The forward voltage drop can vary among the other colors as well.
+
+To remind you, when we say ``voltage drop,'' we are referrig to the difference in voltage between the positive and negative leg of the diode.
+Therefore, no matter what the voltage is coming into the diode, the voltage coming out of the diode will be that voltage minus the voltage drop.
+
+The second action of a diode is to limit the direction of current to a single direction.
+With some exception, the diode only allows current to flow one way in the circuit.
+The ``normal flow'' of a current through the diode is to flow from the anode to the cathode.
+Looking at the schematic symbol, current flows in the direction that the arrow is pointing, and current is blocked from flowing the other way (you can think of the line as a ``block'' preventing reverse flow).
+
+However, diodes are limited in the amount of reverse flow they can block.
+At a certain point, diodes reach their \glossterm{breakdown voltage}.
+The breakdown voltage is the voltage at which they will stop blocking voltage.
+In regular diodes, this is a failure mode and the precise value shouldn't be relied upon (we will see an exception to this with zener diodes). %% FIXME - refer to specific section on zener diodes
+Usually, though, this value is high enough not to worry about (i.e., around 100 volts).
+
+\section{Circuit Calculations with Diodes in Series}
+
+Now let's talk about how to properly calculate the behavior of circuits with diodes.
+Remember, the key to a diode is that if current is flowing through the diode, the voltage drop across the diode will be essentially constant.
+For a normal non-LED diode, this voltage drop is almost always $0.6\myvolt$.
+This is so common it is usually assumed, and never listed in the circuit itself.
+
+Therefore, take a look at the circuit in Figure~\ref{figDiodeWithResistor}.
+Since the voltage source is 9 volts, that means that the total voltage drop between the positive and negative is 9 volts.
+The diode will eat $0.6\myvolt$ of the voltage, but will not limit the current in any way.
+The resistor, then, since it is the only component left, will use up the rest of the voltage---$8.4\myvolt$.
+Therefore, we can calculate the current in the circuit using Ohm's law:
+
+$$I = V / R = 8.4 / 1000 = 0.0084\myamp = 8.4\mymamp$$
+
+\simplegraphicsfigure{A Diode and Single Resistor Circuit}{DiodeWithResistor}{0.08}
+
+Therefore, our circuit will use $8.4\mymamp$ of current.
+So, as you can see, when doing calculations, the diodes simply provide a drop in voltage, they do not limit current.
+
+This is true no matter how many diodes or resistors I have in my circuit.
+Figure~\ref{figMultipleDiodesResistors} shows a circuit like that.
+To figure out the behavior of this circuit, remember that \emph{every} diode has a $0.6\myvolt$ voltage drop.  Since the circuit has three diodes, that means that the diodes will drop a total of $0.6 * 3 = 1.8\myvolt$.
+
+Therefore, we will have $1.8\myvolt$ taken up by diodes, which drop voltage without limiting current.  
+Since we have a $9\myvolt$ source, there will be $9 - 1.8 = 7.2\myvolt$ that is not eaten by diodes.
+This voltage will go to our two resistors.  
+These resistors, even though they are separated by diodes, are essentially in series with each other.
+Therefore, we can treat them as a single resistor in series.
+So, the total resistance on the circuit will be $1k + 2k = 3k\myohm$.
+
+We can then find the total current running through the circuit using Ohm's Law:
+
+$$ I = V / R = 7.2\myvolt / 3,000\myohm = 0.0024\myamp = 2.4\mymamp$$
+
+\simplegraphicsfigure{A Circuit with Multiple Diodes and Resistors}{MultipleDiodesResistors}{1.5}
+
+However, it is possible to put too many diodes in your circuit.
+Since they each eat $0.6\myvolt$ in their forward voltage drop, that puts a limit on how many you can string together in series from a given battery.
+For a $9\myvolt$ battery, if I try to put 20 diodes together in series, I will have used \emph{more} than the total 9 volts that I have available.  
+Therefore, current will not flow.
+With 20 diodes, the voltage drop will be $20 * 0.6 = 12\myvolt$.  
+Since this is more voltage than the battery can put out, no current will flow.
+
+So, we have seen two conditions for which current will not flow through a diode---the first is that the diode will block current from flowing in the wrong direction, and the second is that the diode will not conduct if the voltage source cannot provide enough voltage to bridge the forward voltage drop of the diode.
+
+\section{Circuit Calculations with Diodes in Parallel}
+
+The real magic of diodes comes when using them in parallel circuits.
+Remember the rules that we learned in Chapter~\ref{chSeriesParallel}.
+Kirchoff's Voltage Law says that between any two points, the voltage drop between those two points will be the same \emph{no matter what path the current follows}.
+Therefore, since the voltage drop across a diode is \emph{fixed}, that means that we can guarantee a maximum voltage drop between two points on a circuit by putting diodes between them.
+
+\simplegraphicsfigure{A Single Diode in Parallel with a Resistor}{ParallelDiode}{0.08}
+
+Figure~\ref{figParallelDiode} shows what this looks like.  
+The voltage drop from one side of the diode to the other is $0.6\myvolt$.
+Period. End of story (actually, it could be less, which would keep the diode from conducting altogether, but we won't consider that at the moment).
+
+Kirchoff's Voltage Law tells us that \emph{no matter what path is travelled}, the voltage difference between those two points will be the same.
+Since the 2k resitor is attached to the same two points that the diodes are attached to, Kirchoff's Voltage Law tells us that the voltage across the resistor \emph{must} be the same as the voltage across the diode.
+Thus, the voltage across the resistor \emph{must} be $0.6\myvolt$.
+
+Using Ohm's law, we can deduce the amount of current flowing through that resistor:
+
+$$ I = V / R = 0.6 / 2,000 = 0.0003\myamp = 0.3\mymamp $$
+
+So how much current is flowing through the diode?
+To find this out, we need to use Kirchoff's Current Law.
+The amount entering the junction where the diode and the 2k resistor splits off is the same as the amount leaving it.
+We know that $0.3\mymamp$ leaves the junction to go to the resistor.
+Therefore, if we could figure out how much current was coming \emph{into} the junction we could figure out how much is going through the diode.
+
+To discover that value, we need to know how much current is going through the 1k resistor.
+To figure that out, we need to know the voltage drop across the resistor.
+However, we can figure this out easily.  
+Since the tail end of the diode is connected to ground (the negative terminal), that means that after the diode we are at $0\myvolt$.  
+Therefore, since the diode voltage drop is $0.6\myvolt$, then the voltage before the diode must be $0.6\myvolt$.
+That means that the rest of the voltage must have been consumed by the 1k resistor.
+
+Since the voltage source is $9\myvolt$, that means that the voltage for the entire circuit from positive to negative is $9\myvolt$, and therefore, the voltage drop across the resistor must have been $9 - 0.6 = 8.4\myvolt$.
+Using this value, we can determine the current going through the resistor using Ohm's Law.
+
+$$ I = V / R = 8.4 / 1,000 = 0.0084\myamp = 8.4\mymamp $$
+
+In this circuit, there is $8.4\mymamp$ going through the first resistor.
+That means that there is $8.4\mymamp$ coming into the junction.
+We know that $0.3\mymamp$ is going out of the junction through the 2k resistor.
+That means that the rest of the current is going through the diode.
+Therefore, we can calculate that the current going through the diode is $8.4 - 0.3 = 8.1\mymamp$.
+
+Diodes don't make the math harder, but they do force you to think a little harder about how you apply the rules.
+
+Let's take a look at a slightly harder example, with Figure~\ref{figParallelMultipleDiodes}.
+In this circuit, we have two diodes in parallel with two resistors in parallel.
+This parallel circuit is in series with a resistor on the front and another diode at the end. 
+
+It is almost always easiest to analyze circuits starting with the diodes because their voltage drops are fixed.
+If we look at this circuit, the diode at the end gives the circuit a voltage drop of $0.6\myvolt$.
+
+Now let's look at the parallel part of the circuit.
+Here, we have three pathways---one through two diodes, and two other pathways through resistors.
+However, one of the pathways contains all diodes.
+We know that diodes give a constant voltage drop, and we know that Kirchoff's Voltage Law says that all pathways between two points have the same voltage drop.
+Since we have two diodes, the voltage drop of this parallel pathway is $0.6 * 2 = 1.2\myvolt$.
+
+Now we have the parallel resistors to worry about.
+However, we can use the formula for parallel resistance (Equation~\ref{eqparallelresistancen}) to figure out the total resistance of the parallel resistors.
+
+$$ R_T = \frac{1}{\frac{1}{R1} + \frac{1}{R2}} = \frac{1}{\frac{1}{2,000} + \frac{1}{3,000}} \approx \frac{1}{0.0005 + 0.0003333} = \frac{1}{0.0008333} \approx 1200\myohm $$
+
+However, we technically don't even need that number, because, since we already know the voltage drop across each resistor (it \emph{must} be $1.2\myvolt$ because of Kirchoff's Voltage Law), we can just apply Ohm's Law to each resistor.
+
+Now, using Ohm's Law, we can calculate the current flowing through the resistors.
+So, for the 2k resistor, we have:
+
+$$ I = V / R = 1.2\myvolt / 2,000\myohm = 0.0006\myamp = 0.6\mymamp $$
+
+For the 3k resistor, we have:
+
+$$ I = V / R = 1.2\myvolt / 3,000\myohm = 0.0004\myamp = 0.4\mymamp $$
+
+The total current going into both resistors is simple the sum of each of the currents, $0.4 + 0.6 = 1.0\mymamp$.
+So there is $1\mymamp$ total flowing through the two resistors.
+To find out how much current is flowing through the diode, we will need to know how much current is coming into the circuit itself out of the first resistor.
+
+So how much current is flowing through the first resistor?
+Well, the voltage drops we have calculated so far include a $0.6\myvolt$ drop at the end and a $1.2\myvolt$ drop in the middle.
+That is a total of $1.2 + 0.6 = 1.8\myvolt$.
+Since the battery is $9\myvolt$, that means that there is $9 - 1.8 = 7.2\myvolt$ left to be consumed by the circuit.
+Therefore, that must be the voltage drop of the first resistor.
+Using Ohm's Law, we find that:
+
+$$ I = V / R = 7.2\myvolt / 1,000\myohm = 0.0072\myamp = 7.2\mymamp $$
+
+Therefore, we have $7.2\mymamp$ flowing through that first resistor.
+So, if we have $7.2\mymamp$ coming into the parallel circuit in the middle, and $1\mymamp$ flowing to the resistors, the amount of current flowing through the diodes down the middle is $7.2 - 1 = 6.2\mymamp$.
+The amount of current going through the final diode is the full $7.2\mymamp$ of current in the circuit.
+
+Again, there are a lot of steps, but none of the steps are individually very hard.
+You simply start with the easiest-to-find values (in this case, the voltage drops from the diodes), and work out from there.
+
+\section{Diode Short Circuits}
+
+Next, let's look at a very bad design with a diode.
+Let's say that someone wanted to use a diode to regulate the amount of voltage across a resistor to $0.6\myvolt$.
+Therefore, they built the circuit shown in Figure~\ref{figBadDiodeCircuit}.
+Can you figure out what the problem is here?
+
+\simplegraphicsfigure{A Bad Diode Circuit}{BadDiodeCircuit}{0.08}
+
+Well, the voltage drop across the diode will be $0.6\myvolt$.
+However, the battery operates at $9\myvolt$.  
+This means that there is $8.4\myvolt$ left in the circuit with \emph{zero} resistance.
+Using Ohm's Law, that gives us:
+
+$$ I = V / R = 8.4 / 0 = \infty $$
+
+Thus, having a diode going direct from the positive to the negative of your voltage source is essentially the same as a short circuit.  
+That is why the circuit is bad!
+To use a diode, there must \emph{always} be resistance somewhere in series with the diode whether the resistance comes before it or after it in order to dissipate the current from the excess voltage.
+
+\section{Non-Conducting Diodes}
+
+There is one case where diodes do not maintain a constant voltage drop, and that is where there is not enough voltage to go across them.
+Figure~\ref{figNonconductingDiodes} shows an example of this.
+
+\simplegraphicsfigure{Nonconducting Diodes}{NonconductingDiodes}{0.08}
+
+In this figure, the voltage drop across the center diode bridge is $0.6 + 0.6 + 0.6 + 0.6 = 2.4\myvolt$.
+However, the battery source is only $1\myvolt$.
+Since the voltage drop of the diodes is larger than the available voltage, this part of the circuit is basically turned off.
+In reality, there is a small but ignorable leakage current (about $0.00000022\mymamp$ in this case), but we can think of this circuit as effectively switched off.
+
+So keep that in mind---if you ever wind up with more forward voltage drop from a diode than you have available voltage, you may treat the diode as if it were an open (i.e., unconnected) circuit---as if it were not even there.
+
+Therefore, we would analyze Figure~\ref{figNonconductingDiodes} as if it were just like Figure~\ref{figNonconductingDiodesNoDiodes}.
+
+\simplegraphicsfigure{A Circuit Equivalent to Figure~\ref{figNonconducting Diodes} Because of Nonconducting Diodes}{NonconductingDiodesNoDiodes}{0.08}
+
+\section{Usage of Diodes}
+
+Diodes can be thought of as circuit traffic cops---they regulate the flow of electricity.
+They make sure that everything within a circuit is happening in a controlled manner.
+They regulate the circuit in two different ways---both by limiting the direction of current and, in parallel circuits, by establishing fixed voltages between two points.
+
+The simplest usage of a diode is to use it as a device that makes sure that your battery is in the right direction.
+If you have a device that will be damaged if someone puts the battery in backwards, a simple diode will make sure that the current can only flow in one direction.
+
+The circuit in Figure~\ref{figSimpleDiodeCircuit} shows what this looks like.
+Note that we have a resistor labelled ``load.''  
+Many times in circuits, a load resistor is shown to represent whatever else is happening in another part of a circuit.
+Thus, this circuit shows that the diode is protecting the rest of the circuit (whatever it is) from the user putting the battery in backwards.
+However, this has a cost---the diode will eat $0.6\myvolt$ in order to provide this protection.
+
+Another problem often solved by diodes is voltage regulation.
+Because diodes provide a fixed voltage drop between two points, you can use diodes to ensure a fixed voltage for devices that require it.
+
+For instance, when we looked at batteries in Chapter~\ref{chapConstructingTesting}, we noted that their voltage actually varied quite a bit.
+A $9\myvolt$ battery might give you anywhere from $7\myvolt$ to $9.7\myvolt$.
+
+\simplegraphicsfigure{A Simple Diode Protection Circuit}{SimpleDiodeCircuit}{0.08}

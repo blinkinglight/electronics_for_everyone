@@ -1,4 +1,5 @@
 \chapter{Constructing and Testing Circuits}
+\label{chapConstructingTesting}
 
 In the previous chapter, we learned the theory behind how to analyze circuits.
 In this chapter, we are going to put real circuits together and use simple equipment to analyze the same kinds of problems, and compare our calculated answers to the measurements we make on live circuits.
@@ -37,12 +38,16 @@ These are known as \glossterm{power rails} (some people call them \glossterm{pow
 
 Power rails are very similar to terminal strips, with a few exceptions.
 The main difference is that, in terminal strips, only the five connection points grouped together are connected.
-On power rails, all of the connection points all the way down the board are connected together, even when there are short gaps.
-The positive and negative are \emph{not} connected to each other (that would create a short circuit), and they are \emph{not} connected to the power rails on the other side of the board (unless you connect them manually).
+On power rails, many more of the connection points are connected together, even when there are short gaps.
+Some boards will split the power rails at the halfway point, but others go all the way down the board.  
+This is usually visually indicated by a break in the red and blue lines that indicate the power rails.
+
+Note that the positive and negative are \emph{not} connected to each other (that would create a short circuit), and they are \emph{not} connected to the power rails on the other side of the breadboard (unless you connect them manually).
+As we mentioned, on some breadboards, even a single side isn't connected all the way down, but may be broken into sections at the halfway point.
 
 In many projects, many components need direct access to the positive or negative power supply.
-Power rails make this easy by simply connecting these rails all the way down the board.
-If you plug your power source's positive and negative terminals into the positive and negative rails on the breadboard, then any time you need a connection to the positive or negative terminal, you can just bring a wire to the closest connection point on the power rail.
+Power rails make this easy by providing a connection point with positive and negative power a very short distance away from wherever you need it on the breadboard.
+If you plug your power source's positive and negative terminals into the positive and negative rails on the breadboard, then any time you need a connection to the positive or negative terminal, you can just bring a wire to the closest connection point on the appropriate power rail.
 
 \section{Putting a Circuit Onto a Breadboard}
 
@@ -269,9 +274,17 @@ The multimeter uses power to measure resistance, and if there is already power i
 
 We can use our multimeter with our breadboard, too.
 Let's say that we wanted to measure the voltage between the positive and negative rails of the breadboard.
-To do this, you would do the same procedure as you did with the battery, but, instead of connecting the leads of the multimeter directly to the battery terminals, you can shove the leads in the positive and negative rails of the breadboard.
 
-To try this out, configure your breadboard similar to Figure~\ref{figBreadboardBeginFour}.  
+There are two ways to do this.
+The first, if the size of your multimeter probes and the size of your breadboard connection points allow it, is to simply shove the leads of your multimeter into connection points on the positive and negative rails.
+Since these will be connected to the power by a wire, these will be at the same voltage levels as the battery itself.
+
+However, if your breadboard/multimeter combination does not support this, you can do the same thing by simply connecting two jumper wires into the positive and negative rails, and then testing the voltage on the other end of the wires.  
+
+Also, if you are testing components for voltage, you can also use your multimeter on the exposed legs of the component.
+This is often easier than either trying to push your leads into the breadboard or running extra wires to your multimeter.
+
+To try out using your multimeter with your breadboard, configure your breadboard similar to Figure~\ref{figBreadboardBeginFour}.  
 Use this layout, and \emph{not} one of the ones with fewer wires (you will see why in a minute).
 With the battery connected to the breadboard, set your multimeter to the highest voltage setting, and put the red lead in any empty hole in the positive rail.
 While that lead is there, put the black lead in any empty hole in the negative rail.
@@ -279,6 +292,7 @@ While that lead is there, put the black lead in any empty hole in the negative r
 This should give you the same reading that you received for the battery terminals.
 Remember that the power rails are connected all the way across---that is why putting your leads in any hole on the line works!
 If you work your way down the ranges on your multimeter, you should find that you get the same value that you did when you measured directly on the battery's leads.
+Again, if your leads do not fit inside the connection points, you can also use wires to connect out from your breadboard to your multimeter leads.
 
 You can now do the same to any component on your board.
 Let's find the voltage difference between one side of the resistor and the other.
@@ -300,9 +314,10 @@ To measure current, use the DC Amperage (sometimes called DC Current) settings o
 
 Measuring current is a little different than measuring voltage in a circuit.
 Instead of just placing your leads in the breadboard as it is, you are going to use your leads to \emph{replace a wire}.
-You will remove a wire, and then place your leads in the holes where the wire used to be.
-The circuit will then use your multimeter as that wire.
-The multimeter will then measure how much current was running through that wire, and report it to you on the screen.
+You will remove a wire, and then place your leads in the holes (connection points) where the wire used to be.
+Alternatively, if your multimeter does not fit into the connection points, you can again run two wires, one from each hole, from the breadboard to your multimeter leads.
+
+Using either of these approaches, the circuit will then use your multimeter as the wire that was removed, and the multimeter will then measure how much current is running through that wire, and report it to you on the screen.
 You will then need to use the same ranging technique as you used before with voltages and resistances to get an accurate report.
 
 Let's say that you wanted to measure the current going through the wire that connects the resistor to the LED.
@@ -324,7 +339,7 @@ In this chapter, we learned:
 \item Both wire and the legs of a component are attached to connection points on the breadboard.
 \item Connection points in the same terminal strip are connected by a wire behind the breadboard.
 \item To connect two components together, all you have to do is put their legs on the same terminal strip of the breadboard.
-\item The power rails on a breadboard extend all the way down the board.  Power rails are connected all the way down the board.
+\item The power rails on a breadboard extend either all the way down the board, or sometimes split at the halfway point.
 \item The bridge of a breadboard divides and separates different groups of terminal strips.  This allows a chip to be placed over the bridge, allowing each of its pins a separate terminal strip.
 \item The schematic drawing of a circuit can be assembled onto a breadboard, giving a definite implementation of the drawing.
 \item There are multiple different ways to place a given circuit drawing onto a breadboard.
@@ -335,7 +350,7 @@ In this chapter, we learned:
 \item Always be sure your multimeter is set to the right setting \emph{before} measuring.
 \item Always turn your circuit off before measuring resistance.
 \item Your circuit must be on to measure voltage or current.
-\item Voltage is measured by connecting your multimeter to empty connection points in the terminal strips that you want to measure.
+\item Voltage is measured by connecting your multimeter to empty connection points in the terminal strips that you want to measure.  This can be done either by putting your multimeter leads directly into the relevant connection points or by running wires from those connection points to your multimeter leads.
 \item Current is measured by using your multimeter to replace a wire that you want to measure current running through.
 \item Many circuit values vary much more than what you might think, so it is good to design circuits in a way that will handle these variances.
 \end{enumerate}
