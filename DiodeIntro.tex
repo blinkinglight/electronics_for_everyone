@@ -2,7 +2,7 @@
 
 This chapter introduces the \glossterm{diode}.  
 We have used light-emitting diodes (LEDs) in previous chapters, but have not really discussed their function except for emitting light.
-In this chapter, we are going to look at regular diodes, light-emitting diodes, and zener diodes, to get a feel for what these devices are and how they might be used in circuits for more than just light.
+In this chapter, we are going to look at regular diodes, light-emitting diodes, and Zener diodes, to get a feel for what these devices are and how they might be used in circuits for more than just light.
 
 % FIXME - schematic of a diode
 
@@ -32,7 +32,7 @@ Looking at the schematic symbol, current flows in the direction that the arrow i
 However, diodes are limited in the amount of reverse flow they can block.
 At a certain point, diodes reach their \glossterm{breakdown voltage}.
 The breakdown voltage is the voltage at which they will stop blocking voltage.
-In regular diodes, this is a failure mode and the precise value shouldn't be relied upon (we will see an exception to this with zener diodes). %% FIXME - refer to specific section on zener diodes
+In regular diodes, this is a failure mode and the precise value shouldn't be relied upon (we will see an exception to this with Zener diodes). %% FIXME - refer to specific section on Zener diodes
 Usually, though, this value is high enough not to worry about (i.e., around 100 volts).
 
 \section{Circuit Calculations with Diodes in Series}
@@ -224,6 +224,8 @@ They regulate the circuit in two different ways---both by limiting the direction
 The simplest usage of a diode is to use it as a device that makes sure that your battery is in the right direction.
 If you have a device that will be damaged if someone puts the battery in backwards, a simple diode will make sure that the current can only flow in one direction.
 
+\simplegraphicsfigure{A Simple Diode Protection Circuit}{SimpleDiodeCircuit}{0.08}
+
 The circuit in Figure~\ref{figSimpleDiodeCircuit} shows what this looks like.
 Note that we have a resistor labelled ``load.''  
 Many times in circuits, a load resistor is shown to represent whatever else is happening in another part of a circuit.
@@ -235,5 +237,155 @@ Because diodes provide a fixed voltage drop between two points, you can use diod
 
 For instance, when we looked at batteries in Chapter~\ref{chapConstructingTesting}, we noted that their voltage actually varied quite a bit.
 A $9\myvolt$ battery might give you anywhere from $7\myvolt$ to $9.7\myvolt$.
+This is true of any battery, not just the $9\myvolt$ variety.
 
-\simplegraphicsfigure{A Simple Diode Protection Circuit}{SimpleDiodeCircuit}{0.08}
+Therefore, if you need a fixed amount of voltage, you can use diodes to provide that at the cost of some extra current.
+
+Figure~\ref{figThreeVoltDiodeRegulator} shows a simple voltage regulator using diodes.
+Given a $5\myvolt$ battery (actually, a battery of any size significantly over $3\myvolt$ will work), this circuit will provide a regulated $3\myvolt$ of electricity to whatever is connected to it as a load (remember, a ``load'' resistor is just a stand-in for whatever we want to attach to this).
+
+Because the diodes provide a fixed voltage drop of $0.6\myvolt$ each, then that pathway has a total voltage drop for five diodes as $5 * 0.6 = 3.0\myvolt$.
+Kirchoff's Voltage Law says that between two points, \emph{every} pathway between them will have the same voltage drop.
+This means that the load, since it is connected to those two points, will have the same voltage drop, thus regulating the amount of voltage used by the load.
+
+But what about that first resistor at the beginning of the circuit?
+Remember, if we provide a pathway through diodes only, we create a short circuit in the system.
+There has to be some element (usually a resistor) that eats up whatever voltage is left over.
+Therefore, putting a small resistor before our diode pathway will give the circuit a place to use the excess voltage, and limit the amount of current that flows.
+
+The size of the resistor will depend on how much current the load requires and how much current you are willing to waste.
+A small resistor wastes more current, but allows for a higher maximum current used by the load.
+A larger resistor wastes less current, but if the load needs a lot of current, it could interfere with the voltage regulation.
+
+To see how this could happen, let's say that our load is equivalent to $1,000\myohm$.
+This means that the amount of current that the load will draw can be calculated using Ohm's Law:
+
+$$ I = V / R = 3\myvolt / 1,000\myohm = 0.003\myamp = 3\mymamp $$
+
+So the load will use up $3\mymamp$ of current.
+That means that, however much current goes through our first resistor, however much that is over $3\mymamp$ will be drained off through the diodes.
+So, let's calculate what that looks like on a tiny, $20\myohm$ resistor.
+The voltage will be $5 - 3 = 2\myvolt$.
+
+$$ I = V / R = 2\myvolt / 20\myohm = 0.1\myamp = 100\mymamp $$
+
+So, if we just used a $20\myohm$ resistor, that means that even though the load only used $3\mymamp$, the whole circuit will be using $100\mymamp$ to operate!
+Therefore, we need a bigger resistor to limit the amount of current we use.
+Let's try a $500\myohm$ resistor:
+
+$$ I = V / R = 2\myvolt / 500\myohm = 0.004\myamp = 4\mymamp $$
+
+This is much better---we are only using $4\mymamp$ in this circuit, so we are only wasting $1\mymamp$.
+There has to be \emph{some} amount of waste to do the voltage regulation.
+
+Let's say that, after a while, our battery sags down to only providing $4\myvolt$ of power.
+What happens now?
+Well, using the $500\myohm$ initial resistor, that means that there is only $1\myvolt$ extra to drain off, so the current will be:
+
+$$ I = V / R = 1\myvolt / 500\myohm = 0.002\myamp = 2\mymamp $$
+
+Here, the current is only $2\mymamp$, but we need $3\mymamp$ to power the circuit!
+Thus, if we use a $500\myohm$ resistor, we can't handle our power supply dropping down to $4\myvolt$.
+
+What about using the $20\myohm$ resistor?
+In this case, Ohm's Law would give us:
+
+$$ I = V / R = 1\myvolt / 20\myohm = 0.05\myamp = 50\mymamp $$
+
+So, here, the $20\myohm$ resistor will still provide plenty of excess current to allow our regulator to keep working.
+However, it is still eating up an extraordinary amount of current compared to our load.
+
+So how do you choose the right resistor?
+The way to work situations like this is to think about what are the maximum cases you are designing for, and then calculate appropriately.
+So, if I want this circuit to work when the battery sags down to $4\myvolt$, I need to decide how much excess current I'm willing to have at that level.
+Let's say I decide that I always want at least half a milliamp to run through the diode (somewhat of an arbitrary number, but if the diode has no power, it is not providing any regulation---this is a low number that is still ``noticeable'' on the circuit).
+That means that, since my load will be using $3\mymamp$, the total amount of current running through the initial resistor will be $3.5\mymamp$, or $0.0035\myamp$.
+Therefore, I calculate what the resistor will need to be a $4\myvolt$ using Ohm's Law:
+
+$$ R = V / I = 1\myvolt / 0.0035\myamp \approx 286\myohm $$
+
+Therefore, for this situation, the initial resistor should be $286\myohm$.
+Now, let's figure out how much current this wastes when the battery is at full charge---$5\myvolt$ (which means that there will be a $2\myvolt$ drop across this resistor).
+
+$$ I = V / R = 2\myvolt / 286\myohm \approx 0.007\myamp = 7\mymamp $$
+
+So, at full charge, there is $7\mymamp$ going through this resistor, which means we will waste $4\mymamp$.  
+Whether or not that is acceptable to your circuit depends on what you are going to do with it!
+
+Note that there are better means of regulating battery voltage for a whole circuit than using diodes.
+However, many times you need a regulated voltage somewhere \emph{within} a more complex circuit.
+Diodes are great for that, and the same calculations apply.
+
+One final note---as mentioned earlier, although we think of diodes as providing a fixed voltage, they actually do vary a little bit with the amount of current flowing through them.
+In any circuit, you should allow for $\pm 10\%$ variance in the voltage drop of a diode.
+
+\section{Other Types of Diode Protection}
+
+Diodes can provide other types of protection for circuits as well.
+As single-direction control valves, they can be used to prevent a variety of over-voltage conditions.
+Often times they are wired in such a way that they will not normally conduct, but will conduct under certain conditions to redirect extra voltage in a safe manner.
+
+Figure~\ref{figFlybackDiode} shows an example circuit.
+In this circuit, a DC motor is connected to a switch.
+Notice the diode that is wired backwards.
+Normally, this diode does absolutely nothing because the current is flowing in the other direction, so it just goes through the motor.
+DC motors, however, tend to generate very large voltages for a short time when switched off.
+Therefore, when this motor is switched off the motor can produce a very large voltage---up to $50\myvolt$ in this circuit!
+
+\simplegraphicsfigure{A Diode Protection Circuit}{FlybackDiode}{0.08}
+
+To protect the rest of the circuit from this sudden influx of voltage, the diode provides an alternative path back through the motor.
+Thus, when the voltage starts to build up after the switch closes, the diode provides a safe pathway back through motor for it to flow, allowing the voltage buildup to slowly dissipate through the motor, rather than overloading a circuit expecting $5\myvolt$ with $50\myvolt$.
+
+Often times when looking at circuit diagrams you may find diodes in funny places, and oriented in funny ways.
+These are oftentimes providing some sort of protection to the circuit from potential failure conditions or exceptional circumstances.
+Many microchips, for instance, use diodes to shunt off excess voltage from static electricity shocks.
+
+\section{Zener Diodes}
+
+One problem with using diodes for voltage regulation is that their forward voltage drop is pretty small, so you have to have quite a few of them to regulate larger voltages.
+Zener diodes can help out in these situations.
+Figure~\ref{figZenerDiodeSymbol} shows the symbol for a Zener diode.
+
+\simplegraphicsfigure{The Zener Diode Schematic Symbol}{ZenerDiodeSymbol}{0.08}
+
+Remember that most diodes have a breakdown voltage if you try to pass voltage the wrong way.
+However, in most diodes, this is a failure mode---doing this can, at best, be unpredictable, and, at worst, damage your diode.
+A Zener diode, however, is built so that it has a very predictable operation at its breakdown voltage.
+In fact, at its breakdown voltage, it acts like a normal diode with a larger voltage drop.
+
+However, since you are using the breakdown voltage rather than the forward voltage, Zener diodes are wired into your circuit \emph{backwards}.
+Figure~\ref{figZenerAndRegular} shows what this looks like.
+In this figure, on the left you have the same $3\myvolt$ regulated circuit as above.
+On the right, you have an equivalent circuit regulated by a Zener diode instead.
+Since we are using the Zener diode's breakdown voltage rather than its forward voltage, it has to be wired backwards for it to work.
+
+\simplegraphicsfigure{A Circuit Regulated by Regular Diodes and a Zener Diode}{ZenerAndRegular}{0.08}
+
+\reviewsection
+
+In this chapter, we learned:
+
+\begin{enumerate}
+\item Diodes only allow current to flow in one direction.
+\item Diodes have a fixed forward voltage drop across the diode---$0.6\myvolt$ for normal diodes, and a range of about $1.8--3.3\myvolt$ for LEDs.
+\item Different color LEDs have different voltage drops.
+\item Diodes also have a breakdown voltage---the amount of voltage for which, if applied in the reverse direction, the diode will no longer block current.
+\item When analyzing circuits with diodes, it is often easier to analyze the diodes first, since the voltage drop is fixed.  
+\item Because of Kirchoff's Voltage Law, anything wired in parallel with diodes will have the same voltage drop as the diodes.
+\item If the forward voltage drop on a diode is greater than the available voltage in the circuit, the diode will not conduct and it can be treated as an open circuit.
+\item If diode(s) are connected to the positive and negative terminals of a voltage source (such as a battery) with no resistance in series, this will create a short circuit, causing extremely large amounts of current to flow through the diode.
+\item Diodes are often used to regulate the amount of voltage between two points on a circuit.
+\item Diodes are often used as control valves to regulate the direction of current flow on a circuit.
+\item Diodes can be used as voltage regulators to provide a predictable amount of voltage to a circuit with changing battery conditions.
+\item The series resistor used with voltage-regulating diodes determines both how much current is wasted and how much current the load can draw---lower-value resistors waste more current but allow the load to draw more current, and higher-value resistors waste less current but don't allow as much potential current to your load.
+\item When designing circuits, it is often useful to account for the most extreme variations possible.  This will allow your circuit to be more flexible.
+\item Diodes can also provide protection to circuits against strange failure conditions, such as voltage spikes and static electricity.  Diodes in strange places in circuit diagrams are often there to protect the circuit against certain types of failures or events.
+\item Zener diodes are built so that they have very reliable operation on their breakdown voltage.  
+\item Wiring a Zener diode backwards gives you the equivalent of several forward diodes in series, and can be used for simple voltage regulation.
+\end{enumerate}
+
+\applysection
+
+\begin{enumerate}
+\end{enumerate}
