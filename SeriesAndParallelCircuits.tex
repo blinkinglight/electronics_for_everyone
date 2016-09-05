@@ -3,6 +3,8 @@
 
 % FIXME - do I define "voltage drop" anywhere?
 
+% FIXME - be sure I define subcircuit somewhere in this chapter
+
 In the Chapter~\ref{chapFirstCircuit} we looked at our very first circuit and how to draw it using a circuit diagram.
 In this chapter, we are going to look at different ways components can be hooked together and what they mean for your circuit.
 
@@ -317,6 +319,37 @@ Likewise, since A, B, and C are all directly connected to the battery positive w
 
 \section{Wiring Parallel Circuits Onto a Breadboard}
 
+One other issue we need to look at is how to wire parallel circuits onto the breadboard.
+It is actually very simple to do.
+In this section, we are going to put the circuit in Figure~\ref{figParallelForBreadboard} onto a breadboard.
+
+\simplegraphicsfigure{A Circuit with Series and Parallel Components}{ParallelForBreadboard}{0.08}
+
+Notice that, in this circuit, there is a series resistor at the beginning, and then two parallel circuits that branch off from it.
+It doesn't matter much what the value of the resistors are, but we will put them at $200\myohm$ if you need a specific value (anything between $200$ and $1,000\myohm$ should work fine).
+
+To get the circuit onto the breadboard, remember that anything that is connected in the same terminal strip on a breadboard is connected together.
+This means that, when we have a parallel subcircuit, we connect all of the branches of the subcircuit into the same terminal strip.
+Figure~\ref{figParallelUsingBreadboard} shows what this looks like.
+
+\simplegraphicsfigure{A Circuit with Series and Parallel Components on the breadboard}{ParallelUsingBreadboard}{1}
+
+Let's follow the path of electricity through the breadboard.
+First, the current flows from the positive terminal to the positive rail on the breadboard.
+A wire then pulls the positive $+9\myvolt$ power onto the board.
+This wire is connected to a resistor by putting one leg of the resistor in the same terminal strip as the wire.
+On the other leg of the resistor there are \emph{two} wires that are in the same terminal strip.
+Each of these go to a different part of the circuit.
+We have one LED with a resistor on the top, and one LED with a resistor on the bottom.
+These are just normally connected components.
+
+However, after the resistor, the two subcircuits come back together to a terminal strip on the right.
+Then, a wire on the same terminal strip takes that back to the negative rail on the breadboard (which connects to the negative terminal on the battery).
+
+Note that, in this case, I could have just connected the two subcircuits directly back to the negative, but I thought having them come together on a terminal strip would illustrate more clearly the general method of bringing circuits back together.
+
+Take a moment to look at both the schematic drawing and the breadboard picture, and be sure that you can trace the flow of the schematic on the actual breadboard.
+
 \reviewsection
 
 In this chapter, we learned:
@@ -329,6 +362,8 @@ In this chapter, we learned:
 \item In a parallel circuit, Kirchoff's Voltage Law says that, between any two points on a circuit at a given point in time, the voltage difference between those two points will be identical no matter what pathway the electricity follows to get there.
 \item When resistances are in parallel, the total resistance for the parallel circuit is given by the equation $R_T = \frac{1}{\frac{1}{R_1} + \frac{1}{R_2} + \ldots + \frac{1}{R_N}}$.
 \item By using these laws in combination, we can predict how current will flow in each part of our circuit.
+\item Series circuits are placed onto a breadboard by putting the connected legs of two connected components onto the same terminal strip.
+\item Parallel circuits are placed onto a breadboard by connecting each subcircuit branch to the same terminal strip.
 \end{enumerate}
 
 \applysection
@@ -347,4 +382,5 @@ In this chapter, we learned:
 \item Take a look at the following circuit diagram.  If the voltage drop between B and C is 2 volts, and the voltage drop between C and D is 3 volts, what is the voltage drop between A and E?  What is the voltage at E?  What is the voltage at A? \\ \includegraphics[scale=0.08]{VoltageDropProblem.png}
 \item Optional - what resistor values would you need to have the circuit above run with $2\myamp$ total current?
 \item The circuit below is a combination of series and parallel resistances.  Each resistor is labelled with its resistance value, given in ohms.  Find out how much current is flowing through each resistor, and how much each resistor drops the voltage.  \\ \includegraphics[scale=0.08]{ProblemCalculateCurrentAndVoltage.png}
+\item Build the circuit in Figure~\ref{figParallelUsingBreadboard} on your own breadboard.  Measure the voltage drops across every component, and measure the amount of current flowing into the first series resistor.
 \end{enumerate}
