@@ -366,6 +366,13 @@ Since we are using the Zener diode's breakdown voltage rather than its forward v
 
 \simplegraphicsfigure{A Circuit Regulated by Regular Diodes and a Zener Diode}{ZenerAndRegular}{0.08}
 
+Not only that, the breakdown voltage drop for a Zener diode is much more constant over a larger range of current than the forward voltage drop of most regular diodes.
+Because of this, Zener diodes are used much more often for voltage regulation than series of regular diodes.
+
+Zener diodes come in a variety of breakdown voltages.  
+In any exercise in this book which involves drawing a circuit with a Zener diode, you may presume that the Zener diode with the voltage drop you are looking for exists.
+When drawing a circuit, be sure to label the Zener diode with the breakdown voltage you are needing.
+
 \reviewsection
 
 In this chapter, we learned:
@@ -387,10 +394,20 @@ In this chapter, we learned:
 \item Diodes can also provide protection to circuits against strange failure conditions, such as voltage spikes and static electricity.  Diodes in strange places in circuit diagrams are often there to protect the circuit against certain types of failures or events.
 \item Zener diodes are built so that they have very reliable operation on their breakdown voltage.  
 \item Wiring a Zener diode backwards gives you the equivalent of several forward diodes in series, and can be used for simple voltage regulation.
+\item The breakdown voltage of a Zener diode is much more constant than the forward voltage of a regular diode, and therefore works even better for voltage regulation.
+\item Zener diodes come in a wide variety of breakdown voltages and are usually labelled on the circuit with the necessary breakdown voltage.
 \end{enumerate}
 
 \applysection
 
 \begin{enumerate}
-\item FIXME
+\item If you have a $9\myvolt$ voltage source, a blue LED, and a $500\myohm$ resistor all in series, how much current is running through the LED?
+\item If you have a $3\myvolt$ voltage source and a red LED, what size resistor do you need to put in series with the LED to have it use $3\mymamp$ of current?
+\item If you have a $10\myvolt$ voltage source, a blue LED, a red LED, and a $200\myohm$ resistor all in series, how much current is running through the LEDs?
+\item If I have a $12\myvolt$ voltage source, a blue LED, and a red LED, and the LEDs have a maximum current of $30\mymamp$ before it breaks and a minimum current of $1\mymamp$ before it turns on, what range of resistors can I put in series with the LEDs to get them to light up without breaking?
+\item In the circuit below, calculate the how much current flowing through each component and each component's voltage drop if R1 is $500\myohm$. \\ \includegraphics[scale=0.08]{DiodeApplyEx1.png}
+\item Let's say instead of a standard diode, the diode is a blue LED.  Recalculate the current going through each component and the voltage drops for each component.
+\item In the circuit below, calculate how much current is flowing through each component and each component's voltage drop if R1 is $300\myohm$, R2 is $400\myohm$, and R3 is $500\myohm$.  \\ \includegraphics[scale=0.08]{DiodeApplyEx2.png}
+\item Draw a circuit that provides a 6-volt regulated power supply to circuit load from a 9-volt battery using regular diodes.  Choose a resistor that works efficiently for a circuit load of $500\myohm$ and operates with a battery voltage from $7\myvolt$ to $9.6\myvolt$.  What is the current at the lowest and highest ranges of the battery?  How much is used by the circuit load and how much is wasted through the diodes in each configuration?
+\item Draw an equivalent circuit to the previous question using a Zener diode instead of normal diodes.
 \end{enumerate}
