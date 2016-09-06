@@ -1,0 +1,148 @@
+\chapter{Basic Resistor Circuit Patterns}
+
+When most people look at a schematic drawing, all they see is a sea of interconnected components with no rhyme or reason combining them.
+However, most circuits are actually a collection of \glossterm{circuit patterns}.
+A circuit pattern is a common way of arranging components to accomplish an electronic task.
+Experienced circuit designers can look at a circuit and see the patterns that are being used.
+Instead of a mass of unrelated components, a circuit designer will look at a schematic and perceive a few basic patterns being implemented in a coherent way.
+
+In this chapter, we are going to learn three basic resistor patterns, and learn to work with switches as well.
+
+\section{Switches and Buttons}
+
+Switches and buttons are very simple devices, but nonetheless we probably need to take a moment to explain them.
+A switch works by connecting or disconnecting a circuit.
+A switch in the ``off'' position basically disconnects the wires so that the circuit can't complete.
+A switch in the ``on'' position connects the wires.
+
+There are different types of switches depending on their operation.
+The ones we are concerned with are called ``single pole single throw'' (SPST) switches, which means that they control only one circuit (single pole), and the only thing they do is turn it on or off (single throw).
+
+\simplegraphicsfigure{Schematic Symbols for an SPST Switch (left) and an APST button (right)}{SwitchSchematicSymbols}{0.08}
+
+Figure~\ref{figSwitchSchematicSymbols} show what the schematic symbols for an SPST switch and an SPST momentary switch (i.e., a button) look like.
+As the drawing indicates, when the switch is open, the circuit disconnects.
+When the switch closes, it connects the circuit.
+While the switch holds its position stable (someone has to manually switch it back and forth), the button only connects the circuit \emph{while it is being pushed}.  
+While the button is being pushed, the circuit is connect, but as soon as someone stops pushing the button, the circuit opens back up.
+
+\simplegraphicsfigure{A Simple Switch Circuit}{SimpleSwitchCircuit}{0.08}
+
+Figure~\ref{figSimpleSwitchCircuit} shows what a simple circuit with a switch looks like.
+It is just like a normal LED circuit, but with a switch controlling whether or not electricity can flow.
+Note that the switch is just as effective on the other side of the circuit.
+If the switch was the last part of the circuit, it would be equally as effective.  
+Remember, in order for current to flow, there must be a full circuit from positive back to negative.
+
+\section{Current-Limiting Resistor Pattern}
+
+The first resistor pattern we are going to learn is one that we already know---the current-limiting resistor pattern.
+The idea behind this pattern is that a resistor is added to limit the amount of current that can flow through a device.
+The size of the resistor needed depends on the size of the voltage source, the action of the device itself, and the maximum amount of current to allow.
+Then, the resistor size needed can be calculated using Ohm's Law.
+
+Many resistors are added to circuits to limit current flow.
+At the beginning, we used resistors to make sure we didn't destroy our LEDs.
+In Chapter~\ref{chapDiodes}, we used a resistor to limit the amount of current flowing through our voltage regulation circuit.
+
+In many different circuits, we will need resistors to limit current for two different reasons---to avoid breaking equipment and to save battery life.
+Oftentimes, we are actually choosing resistor values to accomplish both of these tasks.
+
+If an LED breaks with $20\mymamp$, then we need a resistor big enough to keep the current that low.
+However, if the LED light is sufficiently visible with $1\mymamp$, then, to save battery life, we might want a bigger resistor.
+Battery capacity is often measured in milliamp-hours (mAh), with a typical $9\myvolt$ battery holding 400mAh.  
+So, with such a battery, an LED circuit at $10\mymamp$ will drain the battery in 40 hours ($400\textrm{mAh} / 10\mymamp = 40\textrm{h}$), but the same LED circuit with a bigger resistor, limiting the current to $1\mymamp$ will take a full 400 hours ($400\textrm{mAh} / 1\mymamp = 400\textrm{h}$) to drain the same battery!
+That will save you a lot of money in the long run.
+
+\section{Voltage Divider Pattern}
+
+\simplegraphicsfigure{A Simple Voltage Divider Circuit}{SimpleVoltageDivider}{0.08}
+
+A \glossterm{voltage divider} occurs anytime there are two resistors together with a subcircuit coming out from in-between them.
+A simple schematic of a voltage divider is shown in Figure~\ref{figSimpleVoltageDivider}.
+Notice that there are two resistors between the voltage source and the ground (a 1k on top and a 2k on bottom) and a subcircuit (indicated by the load resistance) branching off from between them.
+Under certain circumstances (which will be covered in a moment), we can basically ignore the parallel resistance of the subcircuit, and just look at the voltages at each point in the main voltage divider circuit.
+
+We can see that the voltage at the top of the voltage divider is $9\myvolt$ (because it connects to the positive terminal) and at the bottom of the voltage divider it is $0\myvolt$ (because it connects to the negative terminal).  
+Therefore, the total voltage drop across both resistors must be $9\myvolt$.
+Since the resistors are in series (remember, we are ignoring the load for now), we can find the total resistance in the circuit by just adding their resistances.
+So, $1,000\myohm + 2,000\myohm = 3,000\myohm$.
+Since the current in a series is the same for the whole series, we can now use Ohm's Law to calculate the current flow:
+
+$$ I = V / R = \frac{9\myvolt}{3,000\myohm} = 0.003\myamp = 3\mymamp $$
+
+So, there is $0.003\myamp$ ($3\mymamp$) in this circuit.
+That means that \emph{each} resistor in the series will have this amount of current flowing through them.
+Therefore, we can calculate the voltage drop across each resistor.
+Let's look at the 1k resistor:
+
+$$ V = I * R = 0.003\myamp * 1,000\myohm = 3\myvolt $$
+
+So, the voltage drop across the first resistor is $3\myvolt$.
+That means that, since the battery started at $9\myvolt$, at the end of the resistor the voltage compared to ground is $6\myvolt$.
+We can calculate the voltage drop across the second resistor either by Ohm's Law again or just by noting the fact that since the other end of the resistor is connected to ground, the voltage \emph{must} go from $6\myvolt$ to $0\myvolt$.
+
+\simplegraphicsfigure{Voltage Divider with Voltages Labelled}{SimpleVoltageDividerLabelled}{0.08}
+
+Figure~\ref{figSimpleVoltageDividerLabelled} shows the voltages at each point.
+As you can see, the wire from the middle of the voltage divider has a new voltage that can be used by the load.
+This is what voltage dividers are normally for---they provide a simple way of providing a scaled-down voltage to a different part of the circuit.
+
+But how do we choose the values of the resistors?
+
+One thing to note is that the second resistor consumed exactly twice as much voltage as the first resistor.
+Additionally, the second resistor was exactly twice as large as the first resistor.
+Thus, as a general principle, the relative sizes of the resistors will determine the relative amounts of voltage they eat up.
+So, if we needed a $4.5\myvolt$ output, that is half of our input voltage.
+Therefore, we would need both resistors to be the same.
+
+Note that the specific values don't matter yet---it is the \emph{ratio} we are concerned about.
+To get $4.5\myvolt$, we can use two $1\mykohm$ resistors, two $200\myohm$ resistors, or two $100\mykohm$ resistors.
+As long as the values are the same, we will divide the voltage in half.
+
+If we wanted an $8\myvolt$ output, we would do a similar calculation.  
+Since we start at $9\myvolt$, we need to use up $\frac{1}{9}$ of the voltage in the first resistor, and $\frac{8}{9}$ of the voltage in the second resistor.
+Therefore, our resistors need to be in similar ratio.
+We could use an $100\myohm$ resistor for the first resistor, and a $200\myohm$ resistor for the second resistor.
+
+So how do you determine exactly what value to use?
+Here is where we start thinking about the load again.
+While we have been treating the voltage divider as a series circuit, in truth we have one resistor in series, and then a parallel circuit with the other voltage divider resistor in parallel with the load.
+Our simplified model (where we ignore the parallel resistance) will work, \emph{as long as the load resistance does not impact the total parallel resistance by a significant amount}.
+Therefore, let's look at how the load resistance affects the parallel resistance.
+
+So, using Equation~\ref{eqparallelresistancen} we can write a formula for the total resistance of these two, with $R_2$ being our second voltage divider resistor and $R_L$ being our load resistance:
+
+$$ R_T = \frac{1}{\frac{1}{R_2} + \frac{1}{R_L}} $$
+
+Now, let's look back at the circuit in Figure~\ref{figSimpleVoltageDividerLabelled}.
+Let's say that the resistance of the load ($R_L$) is $400\myohm$, which is much less than the resistance of the voltage divider resistor ($R_2$).
+So what is the total resistance?
+
+$$ R_T = \frac{1}{\frac{1}{R_2} + \frac{1}{R_L}} = \frac{1}{\frac{1}{2,000} + \frac{1}{400}} = \frac{1}{0.0005 + 0.0025} = \frac{1}{0.003} \approx 333\myohm $$
+
+This is way off of our simplified model which ignored the load resistance, which gave $2,000\myohm$.
+Now, let's increase the load resistance so that it is equal to the load resistance ($2,000\myohm$) and recalculate:
+
+$$ R_T = \frac{1}{\frac{1}{R_2} + \frac{1}{R_L}} = \frac{1}{\frac{1}{2,000} + \frac{1}{2,000}} = \frac{1}{0.0005 + 0.0005} = \frac{1}{0.001} \approx 1,000\myohm $$
+
+This is still significantly off, but it is much closer.
+So, now, let's look at what happens if the load resistance is double of $R_2$, or $4,000\myohm$:
+
+$$ R_T = \frac{1}{\frac{1}{R_2} + \frac{1}{R_L}} = \frac{1}{\frac{1}{2,000} + \frac{1}{4,000}} = \frac{1}{0.0005 + 0.00025} = \frac{1}{0.00075} \approx 1,333\myohm $$
+
+Here, we are getting much closer to our original value.  Now, let's say that the load is ten times the resistance of our $R_2$ resistor, or $20,000\myohm$.  That give us this:
+
+$$ R_T = \frac{1}{\frac{1}{R_2} + \frac{1}{R_L}} = \frac{1}{\frac{1}{2,000} + \frac{1}{20,000}} = \frac{1}{0.0005 + 0.00005} = \frac{1}{0.00055} \approx 1,818\myohm $$
+
+This is very close to the resistance of $R_2$ by itself.
+So, what we can say is that our voltage divider circuit can ignore the resistance of the load \emph{if the resistance of the load is significantly more than the resistance of the voltage divider resistor}.
+A way of writing this down is that $R_L >> R_2$.
+
+So, for low-resistance loads, a voltage divider does not work well, because it puts too little resistance between the voltage source and ground.
+However, in Chapter~\ref{chapIC} we will see that many circuit have loads of approximately infinite resistance, so voltage dividers work well.
+
+In general terms, a voltage divider with smaller resistors is ``stiffer'' because it varies less in response to variations in a load, but it also eats up more current.
+A voltage divider with larger resistors doesn't work with low-resistance loads, but it also uses up much less current.
+
+\section{The Pull-Up Resistor}
