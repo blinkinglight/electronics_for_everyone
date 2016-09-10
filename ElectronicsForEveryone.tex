@@ -109,6 +109,7 @@
 \newcommand{\myvolt}{\,\si{\volt}}
 \newcommand{\myohm}{\,\si{\ohm}}
 \newcommand{\mykohm}{\,\si{\kilo\ohm}}
+\newcommand{\myMohm}{\,\si{\mega\ohm}}
 
 \newcommand{\deriv}[1]{\mathrm{d}#1}
 \newcommand{\pd}[2]{\partial{#1}_{#2}}
@@ -246,6 +247,10 @@ set_draw_defaults(grid=true, fill_color=grey, xaxis_type=solid, yaxis_type=solid
 
 \part{Basic Concepts}
 
+% FIXME - some things we need to be sure we describe:
+%          1) That current only flows in one direction in a given wire
+%          2) that current generally follows the path of least resistance
+%          2a) in the diode chapter, if it has a choice between direct-to-ground and diode-to-ground, it will choose direct and not go through the diode, because it is the easier path
 % FIXME - somewhere toward the beginning we need anode, cathode, leads, legs, packaging, and parts of a component, with a resistor and diode examples.
 % FIXME - also need to talk about k/m/u/M/n/p prefixes early on
 

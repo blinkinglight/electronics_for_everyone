@@ -1,4 +1,4 @@
-\chapter{Integrated Circuits}
+\chapter{Integrated Circuits and Resistive Sensors}
 \label{chapIC}
 
 So far, the components we have studied are simple, basic components---batteries, resistors, diodes, etc.
@@ -109,9 +109,137 @@ They will often tell you:
 For all of these reasons, Appendix~\ref{appSimplifiedDatasheets} contains simplified datasheets for a number of common devices that are easier to read than the standard ones. 
 
 For the LM393, the important points are:
+
 \begin{enumerate}
 \item The input voltage on $V_{CC}$ can be anywhere between $2\myvolt$ and $36\myvolt$.
+\item When sensing voltage, the LM393 doesn't really draw any (or at least much) current, so there are no parallel resistances we need to worry about.
 \item The output is high when \icode{IN+} is greater than \icode{IN-}, and low (i.e., ground) when \icode{IN+} is less than \icode{IN-}, with an error range of about 2 millivolts.
 \item When the output is low, the output pin will conduct current into itself (since it is at ground, positive charge will naturally flow into it), but if sink more than $6\mymamp$ into it, you will destroy it.
 \item When the output is high, the device will not conduct any current.
+\end{enumerate}
+
+That isn't to say that the datasheets aren't important, but for a beginner the datasheets usually aren't what you need to get started.
+
+\section{A Simple Circuit with the LM393}
+
+In this section, I am going to show a simple circuit using the LM393 chip.
+In doing so, we are going to be using several of the resistor circuit patterns that we learned in Chapter~\ref{chapBasicResistorCircuit}.
+
+\simplegraphicsfigure{A Simple Comparator Circuit}{SimpleComparatorCircuit}{0.08}
+
+The circuit we are discussing is shown in Figure~\ref{figSimpleComparatorCircuit}.
+Can you identify the resistor circuit patterns?  
+Take a minute and see if you can find some.
+Note that the wire coming out of \icode{1IN-} crosses two wires that it is \emph{not} joined with.
+
+The first thing to notice is that we have \emph{two} voltage dividers.
+The first voltage divider is between R1 and R2.
+Since R1 and R2 are the same resistance and are connected to both $9\myvolt$ and $0\myvolt$, that means that they divide the voltage in half, giving a $4.5\myvolt$ output.
+The second voltage divider is between R3 and R4.
+Since R3 is half of the resistance of R4, that means that it only uses up half as much voltage as R4.  
+Thus, since R3 eats up $3\myvolt$ and R4 eats up $6\myvolt$, the wire coming out from the middle is at $6\myvolt$.
+
+Then, to the right of the circuit, you can see that we have a current-limiting resistor in front of the LED.
+That is not its only function, though.
+It also functions, as we will see shortly, as a pull-up resistor.
+
+So what is the big triangle?
+Comparators (and several other circuits commonly placed on ICs) are represented as triangles in the schematic (we could have also placed the chip itself there).
+Each of the connections are labelled the same as they are labelled in the pinout diagram in Figure~\ref{figlm393Pinout} so they would be easy to locate.
+
+The way that the circuit works is very simple.
+The voltage coming in to \icode{1IN+} is $6\myvolt$ and the voltage coming in to \icode{1IN-} is $4.5\myvolt$.
+Since \icode{1IN+} is greater than \icode{1IN-} then that will turn \icode{1OUT} to high (positive voltage).
+However, remember that we said that \icode{1OUT} \emph{does not conduct} when it is high.
+It acts like an open switch.
+Therefore, R5 acts like a pull-up resistor and supplies the positive voltage for us to our LED to turn it on.
+
+Now let's say that the input voltages were reversed.
+What would happen?
+If \icode{1IN-} is greater than \icode{1IN+}, then \icode{1OUT} will go low (zero volts) and also conduct.
+It will act like a closed switch going to ground.
+
+Therefore, current will go the easy route - it will go through \icode{1OUT} (directly to ground) instead of through the LED ($1.8\myvolt$ or more).
+This works just like the switch in the circuit in Section~\ref{secPullUpResistor}.
+When \icode{1OUT} is low, it acts like a closed switch to ground.
+When \icode{1OUT} is high, it acts like an open switch (and is whatever positive voltage you supply yourself).
+
+The resistor R5 does several jobs.
+The first job is to act as a pull-up resistor. 
+Remember that a pull-up resistor prevents the load to ground from going too high when the switch is closed.
+Without the pull-up resistor, when the switch is closed (\icode{1OUT} goes low), we would have a short-circuit from the voltage source to ground.
+This would not only waste a large amount of electricity, it would break the LM393, because it can only sink a maximum of $6\mymamp$ of current.
+Having a $3\mykohm$ resistor, we limit the current for the closed switch to $I = V / R = 9 / 3,000 = 0.003A = 3\mymamp $.
+
+When the switch is open, the current flows through the resistor to the LED, and then the resistor acts as a current-limiting resistor for the LED.
+The amount of current to the LED will be calculated as $I = V / R = (9 - 1.8) / 3,000 = 7.2 / 3,000 = 0.0024\myamp = 2.4\mymamp$.
+
+\section{Resistive Sensors and Voltages}
+
+One of the more practical uses of the voltage comparator circuit is to measure the values of sensors which act as variable resistors.
+Many different materials in the world act as resistors.
+What's really interesting is that many of these materials \emph{change their resistance} depending on external factors.
+Some of them change their resistance based on temperature, pressure, light, humidity, and any number of other environmental factors.
+
+Now, changing resistance doesn't tell us much by itself.
+If we put a resistor between a voltage source and ground, it will always eat up that voltage source.
+However, if you use it in concert with a fixed resistor to make a voltage divider, you can then get the output voltage to vary based on the changes in resistance.
+
+\simplegraphicsfigure{A Simple Resistor Sensor Circuit}{SimpleResistiveSensorCircuit}{0.08}
+
+Figure~\ref{figSimpleResistiveSensorCircuit} illustrates this principle.
+It is a simple voltage divider, where the top resistor is actually a photoresistor (a resistor that varies based on light) and the bottom resistor has a fixed resistance.
+Thus, as the light varies, the top resistance will vary.
+This will change the ratio between the top and bottom resistor, which will affect the output voltage.
+
+To use this circuit, you will need to know the resistances of your photoresistor on the different conditions you are interested in.
+I usually use the GL5528, which ranges from $10\mykohm$ in bright light to $1\myMohm$ in complete darkness.
+However, depending on your specific photoresistor as well as the light conditions that you think of as ``light'' and ``dark,'' the resistance values that are relevant for light and dark will be different for you.
+So, whatever photoresistor you use, it is worthwhile to measure the resistance using your multimeter in the different conditions you think of as light and dark.
+
+\section{Sensing and Reacting to Darkness}
+
+So far in the book, we have focused entirely on example circuits that didn't really do anything.
+They lit up, they had voltage and current, but there wasn't much interesting that they were doing.
+However, now, we finally have enough knowledge to start building circuits that \emph{do} something.
+
+We have:
+\begin{enumerate}
+\item A way to generate a fixed voltage (using a voltage divider)
+\item A way to generate resistances from real-world events (photoresistors and other resistance sensors)
+\item A way to convert changes in resistances to changes in voltage (using a voltage divider with one fixed resistor)
+\item A way to compare our varying voltage to our fixed voltage (using the LM393 comparator)
+\item A way to utilize the output signal from the LM393 to do work (using the pull-up resistor and the LED)
+\end{enumerate}
+
+There are a lot of pieces to put together this simple circuit, which is why it has taken so long to do anything worthwhile. 
+However, if you have followed along carefully, now that you are here you should be able to see how all of this fits together.
+
+What we will do is to take the circuit given in Figure~\ref{figSimpleComparatorCircuit} and modify R4 to be our photoresistor and R3 to be a fixed resistor.
+In my own testing, I discovered that the light/dark switchover point for my photoresistor was about $15\mykohm$.
+Therefore, I am going to use a $15\mykohm$ resistor as the fixed resistor for R3.
+Yours may need to vary based on your experimentation with your photoresistor.
+
+When the light is on, my photoresistor will have a lower resistance than $15\mykohm$, which will make the fixed resistor R3 use up more of the voltage.  
+Thus, the voltage at the divider will be less than $4.5\myvolt$, which will turn \icode{1OUT} to low (which closes the switch and makes a path to ground on the output before it gets to the LED, which turns the LED off).
+
+In low-light conditions, the resistance will jump way up above the resistance of the fixed resistor.
+If the upper, fixed resistor has less resistance than the bottom resistor, then the voltage at the divider will be larger than $4.5\myvolt$, activating the comparator and turning \icode{1OUT} to high (i.e., opening the switch and allowing power to flow through the LED).
+
+The final circuit is given in Figure~\ref{figDarknessSensorCircuit}.
+
+\simplegraphicsfigure{The Darkness Sensor}{DarknessSensorCircuit}{0.08}
+
+\reviewsection
+
+In this chapter, we learned:
+
+\begin{enumerate}
+\item
+\end{enumerate}
+
+\applysection{
+
+\begin{enumerate}
+\item
 \end{enumerate}
