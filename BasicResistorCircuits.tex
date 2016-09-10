@@ -148,3 +148,53 @@ A voltage divider with larger resistors doesn't work with low-resistance loads, 
 
 \section{The Pull-Up Resistor}
 \label{secPullUpResistor}
+
+The pull-up resistor is a strange circuit, but we will find very good applications for it once we start dealing with ICs in Chapter~\ref{chapIC}.
+It is probably easiest to describe by simply showing you a circuit and then describing how it works.
+
+\simplegraphicsfigure{Basic Pull-Up Resistor}{PullUpResistorBasic}{0.08}
+
+Figure~\ref{figPullUpResistorBasic} shows the circuit diagram for a basic pull-up resistor circuit.
+Normally, we think of lighting up an LED by pushing the button.
+However, in this case, pushing the button causes the current to bypass the LED.
+
+If you look at the path from where the circuit branches, when the button is not pressed, the current can only go one way---through the LED.
+However, when the button is pressed, the electricity has two options---either through the LED or directly to ground through the button.
+The electricity would always rather go directly to ground rather than through an intermediary, so \emph{all} of the current goes through the closed button, and none of it goes through the LED.
+
+Since the branch point is directly connected to ground when the button is pushed, that means that the voltage \emph{at the branch point} is also zero.
+Kirchoff's Voltage Law says that no matter what path is taken, the voltage drop will always be the same.
+However, an LED induces a voltage drop, but the voltages on both sides of the LED are zero.
+Therefore, electricity cannot flow through the LED.
+
+So what is the function of the resistor?
+The resistor connects the switch and the LED to the positive voltage source, and provides a limitation on the current that runs through it.
+The resistor must be \emph{before} the branch point for it to work.
+
+Think about what happens without the resistor, or if the resistor is after the branch point.
+The electricity will have a path directly from the positive voltage source to ground with no resistance---in other words, a short circuit.
+This will draw an enormous amount of electricity.
+Figure~\ref{figPullUpResistorBad} shows what this would look like.
+Notice that when the button is pushed, you can trace a path from the positive voltage source to ground with no intervening resistance.
+
+\simplegraphicsfigure{Incorrect Way to Wire the Circuit}{PullUpResistorBad}{0.08}
+
+The resistor is called a pull-up resistor because it is connected to the positive voltage source, and is used to ``pull up'' the voltage on the circuit to a positive value when the switch is open.
+In Chapter~FIXME we will look at resistors that are connected to ground, called pull-down resistors.
+
+In short, a pull-up resistor is usually used to supply positive voltage to a circuit which might be turned off by redirecting the voltage to ground.
+The resistor provides both the electrical connection to the positive source and a limit to the amount of current that will flow if the wire is then routed to ground (usually through some kind of switching mechanism).
+
+\reviewsection
+
+In this chapter, we learned:
+
+\begin{enumerate}
+\item
+\end{enumerate}
+
+\applysection
+
+\begin{enumerate}
+\item
+\end{enumerate}

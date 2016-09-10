@@ -83,21 +83,23 @@ Don't worry if this is a little confusing, we will discuss it more in-depth late
 
 \section{The Importance and Problems of Datasheets}
 
+Every IC (and, usually, any other part as well) has a datasheet supplied by the manufacturer which tells you important details about how you should use their chip in your circuit.
 Reading datasheets is one of the worst parts of electronics, in my opinion. 
 For me, datasheets rarely have the information I am actually looking for in a way that is easy to find.
-In fact, most them assume that you already know how to use the device, and the datasheets are just there to supply additional details about the limitations of the device.
+
+In fact, most datasheets assume that you already know how to use the device, and the datasheets are just there to supply additional details about the limitations of the device.
 For instance, looking through the LM393 datasheet from Texas Instruments, the actual operation of the device isn't even listed until page 11, and there it is buried within a sub-subsection, almost as a side-note.
 
 These datasheets are written by people who have spent a lot of time being electrical engineers, and they are written for people who have spent a lot of time being electrical engineers, so when mere mortals read the datasheets, the important pieces are often shrouded in unintelligible gibberish.
 For instance, the fact that the ``high'' output state of the device doesn't conduct isn't mentioned explicitly anywhere at all in the datasheet.  
 Instead, it is implied by the configuration.
 
-The reason for this is that, although these chips were built for the purpose of being a voltage comparator, they are often used just as pieces of circuits.
-Thus, the datasheets oftentimes spend more time just showing and describing the layout of the circuit on the chip, and then you are left to interpret what that means for your circuit.
+The reason for this is that the datasheets are usually read by professionals familiar with the type of device, and just need to know the electrical details so they don't accidentally bend the device beyond the breaking point.
+Thus, the datasheets oftentimes spend more time just showing and describing the layout of the circuit on the chip and graphs of different chip properties, and then you are left to interpret what that means for your circuit.
 For advanced circuit designers, this is great.
-For newer people, this is less than useless.
+For students and hobbyists, however, this is oftentimes more frustrating than helpful.
 
-However, datasheets do often provide some basic details that are helpful.
+However, datasheets do often provide a few basic details that are helpful to everyone.
 They will often tell you:
 \begin{itemize}
 \item What each pin does
@@ -227,19 +229,63 @@ In low-light conditions, the resistance will jump way up above the resistance of
 If the upper, fixed resistor has less resistance than the bottom resistor, then the voltage at the divider will be larger than $4.5\myvolt$, activating the comparator and turning \icode{1OUT} to high (i.e., opening the switch and allowing power to flow through the LED).
 
 The final circuit is given in Figure~\ref{figDarknessSensorCircuit}.
+You can see a way to lay it out on the breadboard in Figure~\ref{figDarknessSensorBreadboard}.
 
-\simplegraphicsfigure{The Darkness Sensor}{DarknessSensorCircuit}{0.08}
+\simplegraphicsfigure{Darkness Sensor Schematic}{DarknessSensorCircuit}{0.08}
+
+\simplegraphicsfigure{Darkness Sensor Breadboard Layout}{DarknessSensorBreadboard}{1}
+
+\section{Sources and Sinks}
+
+Two terms that often come up when dealing with circuits are the concepts of a current \glossterm{source} and a current \glossterm{sink}.
+A source is a component whose pins might provide current to other parts of the circuit.
+A sink is a component whose pins might pull current from other parts of the circuit.
+
+For the LM393, its input pins neither source nor sink current (at least not any significant amount).
+The input pins more-or-less just sense the voltage without pulling any measurable current.
+Therefore, they are neither sources nor sinks of current.
+Technically, they probably sink a few nanoamps (billionths of an amp), but not nearly enough to affect our circuit analysis.
+
+The output pin, even though it is called an \emph{output}, doesn't source any current.  
+Instead, it acts either as a sink (when low) or as a disconnected circuit (when high).
+This is known as an \glossterm{open collector} output.
+
+Anytime an IC sources or sinks current, be sure to read the datasheets on the maximum amount of current it can source or sink.
+These are usually quantities that \emph{you} have to limit---they are merely telling you at what point their circuit will physically break.
+Therefore, you must use resistors to limit the currents to make sure that they are within limits.
+
+However, be aware that many (but certainly not all) ICs do not source current, using open collectors for their output operations.
+This has the disadvantage that you have to supply your own voltage and pull-up resistor to the output pin, but it also has the advantage that the output is set to \emph{whatever voltage level you choose}.
+In other words, you don't need to pick a new comparator IC to get a different output voltage.
 
 \reviewsection
 
 In this chapter, we learned:
 
 \begin{enumerate}
-\item
+\item Integrated Circuits (called ICs or chips) are miniaturized circuits packaged up into an a single chip that can be added to other circuits.
+\item ICs can have a few or several billion components on them, depending on the function.
+\item ICs have different types of packages, including through-hole (optimized for breadboards) and surface mount (optimized for soldering and machine placement).
+\item Dual In-line Packages (DIP) are the most common through-hole packaging type used for students, hobbyists, and prototype-builders.
+\item DIP chips should be placed in the breadboard saddling the bridge, so that each IC pin is attached to its own terminal strip.
+\item On most chips, pin 1 is located immediately counterclockwise of the notch in the chip, and remaining pins are numbered counterclockwise.
+\item Most ICs are active devices, meaning that they have a direct connection to a power supply in addition to their input and output pins.a
+\item An ICs Datasheet is a document that tells about the electrical characteristics of an IC.  However, most of them are difficult to read and assume you are already familiar with the part.  However, they are very useful for getting a pinout for the chip as well as telling the maximum ratings for voltages and currents.
+\item The LM393 is a dual voltage comparator IC---it compares two voltages and alters its output based on which is larger.
+\item The LM393's inputs do not consume any significant current on them when sensing the input voltages.
+\item The LM393's outputs are open collectors---which means that they act as a switch to ground.  When the output is ``low'' the pin acts as a closed switch to ground.  When the output is ``high'' the pin acts as a disconnected circuit.
+\item Because the LM393 acts as a disconnected circuit when high, a pull-up resistor circuit is required to get an output voltage.
+\item Many sensors are based on the fact that the resistance of many materials will change with environmental factors.  Therefore, the sensor acts as a variable resistor, with the resistance telling you about the environment.
+\item A resistive sensor can be used with a fixed resistor to make a variable voltage divider, essentially converting the resistance to a voltage.
+\item By putting the resistive voltage divider in comparison with a fixed reference, we can use the LM393 comparator to trigger an output when the sensor crosses some threshold of resistance.
 \end{enumerate}
 
-\applysection{
+\applysection
 
 \begin{enumerate}
-\item
+\item  Calculate the amount of current flowing through each element of the circuit in Figure~\ref{figSimpleComparatorCircuit}.  You can presume that the LM393 uses about $1\mymamp$ for its own operation, and that the LED is a red, $1.8\myvolt$ LED.  What is the total amount of current used by the circuit?
+\item Take the circuit in Figure~\ref{figSimpleComparatorCircuit} and swap which voltage divider is attached to \icode{1IN+} and \icode{1IN-}.  Now calculate the total amount of current used by this circuit.
+\item The Spectra Flex Sensor is a resistive sensor that changes its resistance when bent.  When it is straight, it has a resistance of $10\mykohm$.  When it is bent, it has resistances of $60\mykohm$ and above.  Draw a circuit that turns on an LED when the resistor is bent.  You may invent your own symbol for the flex sensor.
+\item Build the circuit in Figures~\ref{figDarknessSensorCircuit} and~\ref{figDarknessSensorBreadboard}. 
+\item If you wanted to wait until the room was even darker before the LED went on, how would you change the circuit?
 \end{enumerate}
