@@ -1,2 +1,117 @@
 \chapter{Integrated Circuits}
 \label{chapIC}
+
+So far, the components we have studied are simple, basic components---batteries, resistors, diodes, etc.
+In this chapter, we are going to start to look at \glossterm{integrated circuits}, also called \glossterm{chips}, \glossterm{microchips}, or \glossterm{IC}s.
+An IC is a miniaturized circuit placed on silicon.
+It is a whole collection of parts geared around a specific function.
+These functions may be small, such as comparing voltages or amplifying voltages, or they may be complex, such as processing video or even complete computers.
+A single chip may hold just a few components, or it may hold billions.
+
+Miniaturized circuits have several advantages---they are cheaper to produce in mass, they use less power, and they take up less space in your overall circuit---all because they have a reduced area and use fewer materials.
+These miniaturized circuits are what allowed for the computer revolution over the last century.
+
+\section{The Parts of an Integrated Circuit}
+
+Integrated circuits, as we have noted, are basically miniaturized circuits placed on a siliconplate, called the die.
+This die is where all of the action of the integrated circuit takes place.
+
+The die is then placed into a \glossterm{package}, which then provides connection points for circuit designers to interface with the IC.
+These connection points are often called \glossterm{pins} or \glossterm{pads}.
+Each pin on an IC is numbered, starting with pin 1 (we will show you how to find pin 1 shortly).
+Knowing which pin is which is important, because most of pins on a chip each have their own purposes, so if you attach a wire to the wrong pin your circuit won't work, or you will destroy the chip.
+Most packages are marked with the chip's manufacturer and part number.
+
+There are many different types of packaging available, but there are two general types that are often encountered:
+
+\begin{description}
+\item[Through-Hole] In this packaging type, the connection points are long pins which can be used on a breadboard.  This type of packaging is easiest for amateur usage.
+\item[Surface Mount]  In this packaging type, the connection points are small pads which are meant to be soldered to a circuit board.  This packages are much smaller (and therefore less expensive), and can be more easily managed by automated systems.  These are also referred to as SMD (surface mount devices) or SMT (surface mount technology).
+\end{description}
+
+\simplegraphicsfigure{Comparison of the Same IC in SMD (left) and DIP (right) Packages}{DIPAndSMD}{0.125}
+
+Since we are only using breadboards in this book and not doing any soldering, we will only concern ourselves with through-hole packaging.
+However, through-hole packaging itself comes in a variety of styles.
+The main one we will concern ourselves with is called a \glossterm{dual in-line package}, or \glossterm{DIP}.  
+
+\simplegraphicsfigure{Pin 1 is Immediately Counterclockwise of the Notch}{FindPin1}{0.125}
+
+An Integrated Circuit in a DIP package has two rows of pins coming out of the package.
+Most chips mark either the top of the chip with a notch or indentation (where pin 1 is immediately counterclockwise of the notch), or mark pin 1 with an indentation, or both. 
+See Figure~\ref{figFindPin1} to see how to use the notch to find pin 1.
+The rest of the pins are numbered counterclockwise around the chip.
+
+\simplegraphicsfigure{A DIP IC Inserted Into a Breadboard}{ChipInBreadboard}{0.125}
+
+The beauty of a DIP packaged IC is that it fits perfectly onto most breadboards.
+Figure~\ref{figChipInBreadboard} shows how you can place your IC across the breadboard's bridge and each pin on the chip will have its own terminal strip to connect to.
+
+Be careful, though, when inserting ICs into breadboards.
+The pins on an IC are often slightly wider than the breadboard.
+If you just jam the IC into the breadboard, you will likely accidentally crush one or more of the pins that aren't exactly aligned on the hole.
+Instead, compare the width of the pins to the width it has to fit in on your breadboard.
+If it doesn't match up, \emph{very gently} bend the pins with your fingers or with pliers to get them to match up.
+
+Usually, the ICs that I purchase are just a little wide, and I will squeeze the pins on each side slightly between my thumb and finger until they move close enough together.
+However, you adjust the pins, make sure they line up before pushing them into their connection points on the breadboard.
+Also, with larger ICs, you may need to adjust the IC back and forth as you gently insert it into place on the breadboard.
+
+\section{The LM393 Voltage Comparator}
+
+There are thousands and thousands of available chips which do a dizzying array of functions.
+In this chapter, we are going to focus on a very simple chip---the LM393 Voltage Comparator.
+This chip does one simple task.
+The LM393 compares two input voltages, and then outputs either a high-voltage signal or a low-voltage signal depending on which input voltage is greater.
+The LM393 is actually a \emph{dual} voltage comparator, which means that it will do two separate comparisons on the same chip.
+Like most chips, the LM393 is an \emph{active} device, which means that it additionally requires a voltage source and a ground connection to provide power to the device.
+
+\simplegraphicsfigure{The Pin Configuration of an LM393}{lm393Pinout}{0.25}
+
+Figure~\ref{figlm393Pinout} shows the pin configuration (also called the \glossterm{pinout}) of the LM393.
+The first thing to note on any pinout is where the voltage and ground connections are.
+In this case, the voltage is marked as $V_{CC}$ and the ground is marked as $GND$.
+Down the left side of the chip are the inputs and output for the first voltage comparator, and the inputs and output for the second voltage comparator is on the right.
+
+So, the \icode{1IN+} pin (pin 3) and the \icode{1IN-} pins are where the two voltages are being fed that are being compared by the first comparator.
+The \icode{1OUT} is the pin which will contain the output.
+If the voltage at \icode{1IN+} is less than the voltage on \icode{1IN-}, the output pin will be at a low (i.e., zero/ground) voltage.
+If the voltage at \icode{1IN+} is greater than the voltage on \icode{1IN-}, the output pin \emph{will not conduct at all}, but this will be considered a ``high'' (positive-voltage) state.
+This sounds counterintuitive, but, as we will see, this lets us set our own output voltage to whatever we want without causing too much complexity.
+This configuration where high-voltage outputs don't conduct is called an \glossterm{open collector} configuration.
+Don't worry if this is a little confusing, we will discuss it more in-depth later in the chapter.
+
+\section{The Importance and Problems of Datasheets}
+
+Reading datasheets is one of the worst parts of electronics, in my opinion. 
+For me, datasheets rarely have the information I am actually looking for in a way that is easy to find.
+In fact, most them assume that you already know how to use the device, and the datasheets are just there to supply additional details about the limitations of the device.
+For instance, looking through the LM393 datasheet from Texas Instruments, the actual operation of the device isn't even listed until page 11, and there it is buried within a sub-subsection, almost as a side-note.
+
+These datasheets are written by people who have spent a lot of time being electrical engineers, and they are written for people who have spent a lot of time being electrical engineers, so when mere mortals read the datasheets, the important pieces are often shrouded in unintelligible gibberish.
+For instance, the fact that the ``high'' output state of the device doesn't conduct isn't mentioned explicitly anywhere at all in the datasheet.  
+Instead, it is implied by the configuration.
+
+The reason for this is that, although these chips were built for the purpose of being a voltage comparator, they are often used just as pieces of circuits.
+Thus, the datasheets oftentimes spend more time just showing and describing the layout of the circuit on the chip, and then you are left to interpret what that means for your circuit.
+For advanced circuit designers, this is great.
+For newer people, this is less than useless.
+
+However, datasheets do often provide some basic details that are helpful.
+They will often tell you:
+\begin{itemize}
+\item What each pin does
+\item What the power requirements are
+\item What the outer limits of the chip's operation are
+\item An example circuit that you can build with the device
+\end{itemize}
+
+For all of these reasons, Appendix~\ref{appSimplifiedDatasheets} contains simplified datasheets for a number of common devices that are easier to read than the standard ones. 
+
+For the LM393, the important points are:
+\begin{enumerate}
+\item The input voltage on $V_{CC}$ can be anywhere between $2\myvolt$ and $36\myvolt$.
+\item The output is high when \icode{IN+} is greater than \icode{IN-}, and low (i.e., ground) when \icode{IN+} is less than \icode{IN-}, with an error range of about 2 millivolts.
+\item When the output is low, the output pin will conduct current into itself (since it is at ground, positive charge will naturally flow into it), but if sink more than $6\mymamp$ into it, you will destroy it.
+\item When the output is high, the device will not conduct any current.
+\end{enumerate}
