@@ -10,6 +10,7 @@ Instead of a mass of unrelated components, a circuit designer will look at a sch
 In this chapter, we are going to learn three basic resistor patterns, and learn to work with switches as well.
 
 \section{Switches and Buttons}
+% FIXME - should I move this to another chapter that needs content?
 
 Switches and buttons are very simple devices, but nonetheless we probably need to take a moment to explain them.
 A switch works by connecting or disconnecting a circuit.
@@ -60,6 +61,7 @@ That will save you a lot of money in the long run.
 \simplegraphicsfigure{A Simple Voltage Divider Circuit}{SimpleVoltageDivider}{0.08}
 
 A \glossterm{voltage divider} occurs anytime there are two resistors together with a subcircuit coming out from in-between them.
+They usually are connected to a fixed positive voltage on one side of the first resistor, and the ground on the other side of the second resistor, but this isn't strictly necessary.
 A simple schematic of a voltage divider is shown in Figure~\ref{figSimpleVoltageDivider}.
 Notice that there are two resistors between the voltage source and the ground (a 1k on top and a 2k on bottom) and a subcircuit (indicated by the load resistance) branching off from between them.
 Under certain circumstances (which will be covered in a moment), we can basically ignore the parallel resistance of the subcircuit, and just look at the voltages at each point in the main voltage divider circuit.
@@ -97,7 +99,14 @@ Thus, as a general principle, the relative sizes of the resistors will determine
 So, if we needed a $4.5\myvolt$ output, that is half of our input voltage.
 Therefore, we would need both resistors to be the same.
 
-Note that the specific values don't matter yet---it is the \emph{ratio} we are concerned about.
+A more explicit way of stating this is with an equation.
+Given a starting voltage $V_{IN}$ connected to the first resistor, $R_1$, and the second resistor ($R_2$) connected to ground, the output voltage ($V_{OUT}$) coming out between the resistors will be given by the equation:
+
+\begin{equation}
+V_{OUT} = V_{IN} * \frac{R_2}{R_1 + R_2}
+\end{equation}
+
+Note that the specific values don't matter yet---it is the \emph{ratio} we are concerned about so far.
 To get $4.5\myvolt$, we can use two $1\mykohm$ resistors, two $200\myohm$ resistors, or two $100\mykohm$ resistors.
 As long as the values are the same, we will divide the voltage in half.
 
@@ -139,6 +148,7 @@ $$ R_T = \frac{1}{\frac{1}{R_2} + \frac{1}{R_L}} = \frac{1}{\frac{1}{2,000} + \f
 This is very close to the resistance of $R_2$ by itself.
 So, what we can say is that our voltage divider circuit can ignore the resistance of the load \emph{if the resistance of the load is significantly more than the resistance of the voltage divider resistor}.
 A way of writing this down is that $R_L >> R_2$.
+What ``significantly'' means depends on how sensitive your circuit it to voltage changes, but, generally, I would say that $R_L$ should be at least ten times $R_2$.
 
 So, for low-resistance loads, a voltage divider does not work well, because it puts too little resistance between the voltage source and ground.
 However, in Chapter~\ref{chapIC} we will see that many circuit have loads of approximately infinite resistance, so voltage dividers work well.
@@ -190,11 +200,25 @@ The resistor provides both the electrical connection to the positive source and 
 In this chapter, we learned:
 
 \begin{enumerate}
-\item
+\item Most circuits are a combination of common, well-understood circuit patterns.
+\item The more experienced you are with circuits, the easier it is to see these circuit patterns when you look at a schematic drawing.
+\item A current-limiting resistor is a resistor that is used to limit the maximum current flow within a circuit, either to protect other components or to limit overall electricity usage.
+\item A voltage divider is a pair of two resistors connected in series with one another (usually connected to a positive voltage on one side and the ground on the other), but with another wire coming out in-between them to provide voltage to another circuit (called the \emph{load}).
+\item In a voltage divider, it is assumed that the resistance of the load is significantly more than the resistance of the second half of the voltage divider because then the load can be basically ignored for calculating voltage drops.
+\item For a voltage divider, the ratio of the voltages consumed by each resistor is the same as the ratio of their resistances.  The output voltage coming out between them is the same as the voltage used by the second resistor.
+\item Another way of stating the output voltage is $V_{OUT} = V_{IN} * \frac{R_2}{R_1 + R_2}$, where $R_1$ is the resistor connected to the positive voltage and $R_2$ is the resistor connected to ground.
+\item Voltage dividers with smaller resistances are ``stiffer''---they are impacted less by the resistance of the load.  Voltage dividers with larger resistances waste much less current.
+\item A pull-up resistor circuit is a circuit in which a positive voltage which may be switched to ground at some point is provided through a resistor.
+\item The pull-up resistor both (a) connects the circuit to the positive voltage to supply a positive current when the circuit is not switched to ground and (b) limits the current going to ground (i.e., prevents a short circuit) when the load is switched to ground.
+\item It is called a pull-up resistor because it pulls the voltage up when the circuit is not switched to ground.
 \end{enumerate}
 
 \applysection
 
 \begin{enumerate}
-\item
+\item Given a $15\myvol$ voltage supply, what size of a resistor would be needed to make sure that a circuit never went over $18\mymamp$.
+\item Given a $9\myvolt$ battery source, design a voltage divider that will output $7\myvolt$ to a load that has a resistance of $10\mykohm$.
+\item Given a $3\myvolt$ battery source, design a voltage divider that will output $1.5\myvolt$ to a load that has a resistnace of $1\mykohm$.
+\item In Figure~\ref{figPullUpResistorBasic}, how much current is going through the circuit when the switch is open?  How much when it is closed?
+\item How would you modify the circuit in Figure~\ref{figPullUpResistorBasic} to keep the maximum current in the circuit under $2\mymamp$?
 \end{enumerate}
