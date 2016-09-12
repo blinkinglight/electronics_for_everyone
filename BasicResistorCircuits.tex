@@ -10,7 +10,6 @@ Instead of a mass of unrelated components, a circuit designer will look at a sch
 In this chapter, we are going to learn three basic resistor patterns, and learn to work with switches as well.
 
 \section{Switches and Buttons}
-% FIXME - should I move this to another chapter that needs content?
 
 Switches and buttons are very simple devices, but nonetheless we probably need to take a moment to explain them.
 A switch works by connecting or disconnecting a circuit.
@@ -35,6 +34,16 @@ It is just like a normal LED circuit, but with a switch controlling whether or n
 Note that the switch is just as effective on the other side of the circuit.
 If the switch was the last part of the circuit, it would be equally as effective.  
 Remember, in order for current to flow, there must be a full circuit from positive back to negative.
+
+\simplegraphicsfigure{A Circuit with Multiple Switches}{MultipleSwitches}{0.08}
+
+Switches can also be used to turn on or off individual parts of a circuit---basically reconfiguring the circuit while it is running.
+In the circuit given in Figure~\ref{figMultipleSwitches}, a master switch (S1) turns the whole circuit on or off, and two individual switches (S2 and S3) turn parallel branches of the circuit on and off.
+
+To analyze a circuit with switches, you need to analyze the way the circuit behaves with each configuration of switches.  
+In this case, obviously when S1 is open, no current at all flows.
+However, this circuit will use different amounts of current when S1 is closed, S2 is closed, and both S1 and S2 are both closed.
+Therefore, to truly know the behavior of the circuit, you need to calculate the current usage in each of these situations.
 
 \section{Current-Limiting Resistor Pattern}
 
@@ -200,6 +209,7 @@ The resistor provides both the electrical connection to the positive source and 
 In this chapter, we learned:
 
 \begin{enumerate}
+\item Buttons and switches allow circuits to be altered while they are running by connecting circuits (allowing pathways for electricity) and disconnecting circuits (blocking pathways for electricity).
 \item Most circuits are a combination of common, well-understood circuit patterns.
 \item The more experienced you are with circuits, the easier it is to see these circuit patterns when you look at a schematic drawing.
 \item A current-limiting resistor is a resistor that is used to limit the maximum current flow within a circuit, either to protect other components or to limit overall electricity usage.
@@ -216,9 +226,12 @@ In this chapter, we learned:
 \applysection
 
 \begin{enumerate}
+\item In Figure~\ref{figMultipleSwitches}, calculate the amount of current used by the whole circuit for each configuration of the switches S2 and S3 when S1 is closed.
+\item Build the circuit given in Figure~\ref{figMultipleSwitches} (you may swap out resistors with different but similar values---anything from $300\myohm$ to about $5\mykohm$ should work).
 \item Given a $15\myvol$ voltage supply, what size of a resistor would be needed to make sure that a circuit never went over $18\mymamp$.
 \item Given a $9\myvolt$ battery source, design a voltage divider that will output $7\myvolt$ to a load that has a resistance of $10\mykohm$.
 \item Given a $3\myvolt$ battery source, design a voltage divider that will output $1.5\myvolt$ to a load that has a resistnace of $1\mykohm$.
 \item In Figure~\ref{figPullUpResistorBasic}, how much current is going through the circuit when the switch is open?  How much when it is closed?
-\item How would you modify the circuit in Figure~\ref{figPullUpResistorBasic} to keep the maximum current in the circuit under $2\mymamp$?
+\item How would you modify the circuit in Figure~\ref{figPullUpResistorBasic} to keep the maximum current in the circuit under $2\mymamp$?  Draw the full circuit out yourself.
+\item Build the circuit you designed in the previous question.  If you do not have the right resistor values, use the closest ones you have.
 \end{enumerate}
