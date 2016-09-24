@@ -1,4 +1,4 @@
-\chapter{More Integrated Circuits}
+\chapter{Using Logic ICs}
 \label{chapLogicICs}
 
 In Chapter~\ref{chapIC}, we worked with our first Integrated Circuit, the LM393 Voltage Comparator.  
@@ -103,21 +103,27 @@ A better option would be to build the Zener diode voltage regulator that was sho
 
 Another option is to use a voltage regulator IC.
 The LM7805 is a simple voltage regulator circuit you can use to convert a $9\myvolt$ voltage source (or higher--up to $24\myvolt$) into a $5\myvolt$ voltage source with minimal current loss.
-It is itself an IC, though with a different kind of packaging than we've seen, known as a TO-220 package.
+It is itself an IC, though with a different kind of packaging than we've seen, known as a \glossterm{TO-220 package}.
 You can see what this looks like in Figure~\ref{figTO220Pkg}.
 On these packages, if you are reading the writing on the package, pin 1 (input voltage) is on the left, pin 2 (ground) is in the middle, and pin 3 (output voltage) is on the right.
 Figure~\ref{figVoltageRegulatorLogicGate} shows what this looks like in a circuit diagram.
 
 \simplegraphicsfigure{Logic Gate Circuit with a Voltage Regulator}{VoltageRegulatorLogicGate}{0.08}
 
-To wire the LM7805 into your breadboard, you can plug the regulator into your breadboard so that the ground (pin 2) and output pin (pin 3) connect to the ground and positive power rails on your breadboard.
-Then, plug in the input voltage pin (pin 1) to the nearest terminal strip.
-Now, you can connect your $9\myvolt$ battery's positive wire to the input voltage terminal strip, and connect the negative (ground) to the ground of the breadboard power rail.
-Figure~\ref{figLM7805Breadboard} shows what this looks like.
-
 \simplegraphicsfigure{Simple Way to Attach the LM7805 to Your Breadboard}{LM7805Breadboard}{1}
 
-Another option is to use an add-on unit for your breadboard.
+Figure~\ref{figLM7805Breadboard} shows how to attach the LM7805 regulator to your breadboard.
+First, plug the regulator into your breadboard so that each pin is on its own terminal strip.
+Next, plug the positive wire from the battery into the terminal strip with the voltage regulator's pin 1 and the negative wire from the battery to the negative/ground power rail on the breadboard.
+Then, connect the voltage regulator's pin 2 (ground) to the negative/ground power rail. 
+Finally, connect the voltage regulator's pin 3 (output voltage) to the positive power rail.
+You now have a $5\myvolt$ supply!
+
+Note that some LM7805s have pins that are too big for breadboards.
+That's unfortunate, but they are pretty rare.  
+As long as you buy from companies that target hobbyists, you are likely to get a component that will work well with breadboards.
+
+Another option for $5\myvolt$ power is to use an add-on unit for your breadboard.
 There are many full-featured power units available for use in standard breadboards (unfortunately, there is no standard name or part number for these units, so we will just call them \emph{breadboard power units}).
 This type of unit plugs into the power rails of your breadboard, and can output either $5\myvolt$ (the logic voltage we are using here) or $3.3\myvolt$ (another popular logic voltage).
 The breadboard power unit can take voltage from a variety of sources, including batteries (with a compatible plug), a wall outlet (with an appropriate adapter), or even with USB power (either from your computer or a wall charger).
@@ -132,10 +138,74 @@ For the rest of the book, if the schematic requests a voltage other than $9\myvo
 \section{Pull-Down Resistors}
 \label{secPullDownResistors}
 
+In Figure~\ref{figANDGateExample}, we looked at the circuit diagram for a simple AND gate.  
+We noted that each button had a resistor connecting it to ground, but we did not mention why.
+In digital logic circuits, buttons and single-pole switches, when they are open, essentially disconnect the circuit.
+Because the inputs are high-impedance inputs (i.e., they use very little current), simply disconnecting the input circuits is not always enough to turn them off!
+Think of it this way---when you connect the circuit by pushing the button, the whole wire becomes positive.
+When you let go of the button, the state of the wire has not changed.
+Eventually the positive charge will drain out through the gate, but, since the input uses so little current, it will take a while for that to happen.
+Therefore, we have to provide another path for the electricity to go when the button is not pressed.
+Note that some logic chips actually supply pull-up resistors internally which make the inputs always positive when disconnected.  
+In those cases, the pull-down resistor does essentially the same job, but is even more necessary than before.
+
+These resistors are called pull-down resistors because, when the button circuit is not connected, they pull the voltage level down to zero through the resistor.
+The resistor is very important because, when the button is connected, it limits the amount of current that leaks out across the resistor.
+
+In short, without a path to ground, when you let go of the button, the input could remain high.
+However, without the resistor, pushing the button would cause a short-circuit.
+Therefore, a pull-down resistor allows voltage to drain off quickly when the button is not pressed, but also prevents disasters and wasted current when the button is pressed.
+
+The value of a pull-down resistor is usually somewhere between $1\mykohm$ and $10\mykohm$.  
+Beyond $10\mykohm$ the actual function of pulling the voltage down to zero can be slowed down.  
+Additionally, even above $4\mykohm$ it is possible to interfere with the actual logic operation of the chip.
+Having a resistor below $1\mykohm$, however, means that you are just wasting current.
+
+So, for any button-type input to a digital logic circuit (where the circuit is \emph{phyiscally disconnected} when the input is off), a pull-down resistor is needed to make sure that the input \emph{actually} goes low when the circuit disconnects.
+
 \section{Combining Logic Circuits}
 
-However, logic gates usually do not draw any significant current on their inputs (this is called having ``high-impedance'' inputs). 
-Therefore, if you want to combine logic circuits, you can directly wire the outputs of one logic gate to the input of the next, and it will work great.
-The next output gate has a large enough resistance on its inputs to keep the outputs of the previous gate from putting out too much current.
+Logic chips that operate at the same voltage are very easy to combine together.
+Let's say that you had three buttons that you wanted to monitor, and you wanted the light to come on if someone pushed either buttons 1 \emph{and} 2 together \emph{or} button 3 (or all of them).
+To do that, you would need an AND gate and an OR gate.
+Buttons 1 and 2 would be wired with the AND gate, and button 3 would be combined with the output of the AND gate through an OR gate.
 
+\simplegraphicsfigure{Multiple Logic Gates Combined in a Circuit}{MultipleGates}{0.08}
+
+Figure~\ref{figMultipleGates} shows what this looks like.
+Since there are so many voltage/ground connections, the figure does not have an explicit battery drawn, instead it simply shows $+5\myvolt$ wherever it should connect to the voltage source, and a ground symbol wherever it should connect to the battery negative.
+As you can see here, there are two logic ICs---the 7408 having the AND gate and the 7432 having the OR gate.
+The output of the first AND gate is wired into one of the inputs of the OR gate.
+
+This works because, unlike the LM393 (discussed in Chapter~\ref{chapIC}), these logic gates actually supply output voltage and current as well.  
+Because the inputs to the logic gates are high-impedance (they use up very little current), there is no need for a current-limiting resistor when combining gates in this way.
+
+Now, it is fine to draw logic circuits the way we have in Figure~\ref{figMultipleGates}.
+However, as the logic becomes more complex, actually drawing all of the connections to voltage and ground become tiring, and trying to get all of the wires to the right spot on the chip can get messy as well.
+Because of this, engineers have devised a simpler way of describing logic gates and logic circuits.
+
+\simplegraphicsfigure{Logic Gates Represented as Shapes Instead of IC Pins}{MultipleGatesShapes}{0.08}
+
+Instead of representing the entire chip on a schematic, engineers will represent only the logic gates themselves.
+Additionally, since the power goes to the whole chip (and not the individual gates), in such a drawing the power connections for the gates are not shown.
+The standard that was developed represents each type of gate with a shape.
+Figure~\ref{figMultipleGatesShapes} shows what this circuit drawing looks like if it is drawn using shaped gates instead of IC pins.
+The actual physical circuit is the same, this is only to simplify the schematics to make them easier to understand and follow.
+
+\simplegraphicsfigure{Common Gates Used in Schematic Drawings}{CommonGates}{0.08}
+
+Figure~\ref{figCommonGates} shows what these gate drawings look like.
+The AND gate has a flat back panel and a simple, rounded front.
+The OR gate looks a bit like a space shuttle, with both the back and the front angled.
+The NOT gate is a triangle with a circle at the tip.
+This circle can also be added to other gates to show that the gate is the opposite one.
+For instance, a NAND gate is drawn by first drawing an AND gate, and then adding a circle to the front, indicating that the gate behaves like an AND gate with a NOT gate in front of it.
+Similarly, the NOR gate is an OR gate with a circle in front of it.
+The XOR gate is similar to the OR gate, but with an extra line going across its inputs.
+
+\section{Logic Families and Understanding Chip Names}
+
+
+\section{Logic Symbols}
+\section{Logic Chips with Open Collector Outputs}
 
