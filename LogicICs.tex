@@ -1,2 +1,141 @@
-\chapter{Logic Integrated Circuits}
+\chapter{More Integrated Circuits}
 \label{chapLogicICs}
+
+In Chapter~\ref{chapIC}, we worked with our first Integrated Circuit, the LM393 Voltage Comparator.  
+In this chapter, we are going to look at other ICs and talk more about how they are named and used in electronics.
+
+\section{Logic ICs}
+
+One of the easiest class of ICs to use are the \emph{logic} ICs.  
+A logic IC is a chip that implements a basic function of \glossterm{digital logic}.
+In digital logic, electric voltages are given meanings of either ``true'' or ``false,'' usually with ``false'' being a voltage near zero, and ``true'' being a voltage between 3--5 volts.
+Then, the digital logic ICs implement logic functions that combine different signals (usually designated as A and B) and give an output signal (usually designated as Y).
+For instance, the \glossterm{AND} function will output a ``true'' value if both of its inputs are true.  
+In other words, if A \emph{and} B are true, Y is true.
+As another example, the \glossterm{OR} function will output a ``true'' value if either of its inputs are true.
+In other words, if A \emph{or} B are true, Y is true.
+Figure~\ref{figTruthTable} shows the most common types of logic operations and how they work.
+
+\begin{figure}
+\caption{Common Logic Operations}
+\centering
+\label{figTruthTable}
+\begin{tabular}{l | l | l| | l}
+\textbf{Operation} & \textbf{A} & \textbf{B} & \textbf{Y} (output) \\
+AND & false & false & false \\
+AND & false & true & false \\
+AND & true & false & false \\
+AND & true & true & true \\
+OR & false & false & false \\
+OR & false & true & true \\
+OR & true & false & true \\
+OR & true & true & true \\
+XOR & false & false & false \\
+XOR & false & true & true \\
+XOR & true & false & true \\
+XOR & true & true & false \\
+NOR & false & false & true \\
+NOR & false & true & false \\
+NOR & true & false & false \\
+NOR & true & true & false \\
+NAND & false & false & true \\
+NAND & false & true & true \\
+NAND & true & false & true \\
+NAND & true & true & false \\
+NOT & false & N/A & true \\
+NOT & true & N/A & false \\
+\end{tabular}
+\end{figure}
+
+As we have seen, AND yields a true result when both A and B are true and OR yields a true result when either A or B are true.
+So what are the others?
+\glossterm{XOR} is \emph{exclusive OR}, which means that it is just like OR, but is also false when both inputs are true.
+\glossterm{NOR} is \emph{not OR}, which means that it is the exact opposite of OR.
+Likewise, \glossterm{NAND} is \emph{not AND}, which means that it is the exact opposite of AND.
+Finally, \glossterm{NOT} only has one input, and simply reverses its value.
+
+Each digital logic function, when implemented in electronics is called a \glossterm{gate}.
+The nice thing about building circuits with logic gates is that, rather than using math, you can build circuits based on ordinary language.
+If you were to say, ``I want my circuit to output a signal if both button 1 \emph{and} button 2 are pressed,'' then it is obvious that you would use an AND gate to accomplish this.
+
+\simplegraphicsfigure{The Pinout of a 7408 Chip}{Chip7408Pinout}{0.16}
+
+Most logic gates are implemented in chips that contain four implementations of the same gate.
+For instance, the 7408 chip is a quad NAND gate chip.
+The pinout for this chip is shown in Figure~\ref{figChip7408Pinout}
+Note that it has a voltage pin (pin 14) as well as a ground pin (pin 7).
+Each logic gate is numbered 1--4 and the inputs are labelled A and B with the output of Y.
+
+To use the chip, you pick which one of the four gates you are going to use.
+If we want to use Gate~1, then we put our inputs on 1A and 1B and then our output signal goes to 1Y.
+Note that, unlike the IC from the last chapter, this logic gate has a powered output---it actually supplies voltage and current to drive an output signal.
+There are logic chips that have open collector outputs, but they are more rare because they are harder to use.
+Usually, with logic gates, the logic gates are wired to expect relatively fixed, predefined voltages, and output the same.
+However, ICs are limited in how much current they can put out before they fry (usually somewhere in the range of $8--20\mymamp$).
+Because of this, if you use a logic gate to directly power a device (such as an LED), you probably will need a current limiting resistor to keep the output current down.
+
+\simplegraphicsfigure{Example Circuit Using an AND Gate}{ANDGateExample}{0.08}
+
+Lets say that we want to build a circuit which will turn on an LED if \emph{both} of two buttons are pushed at the same time.
+Figure~\ref{figANDGateExample} shows a circuit to accomplish this.
+It has two buttons, one wired to 1A (pin 1) and one wired to 1B (pin 2).
+The output 1Y (pin 3) then goes to an LED with a current limiting resistor.
+You may wonder what the resistors attached to the buttons are doing.
+Those will be explained in Section~\ref{secPullDownResistors}.
+
+Note that the circuit shows a $5\myvolt$ source.
+This is because, like many digital logic circuits, the 7408 expects that its voltage source will be $5\myvolt$ and its inputs will be about the same.
+
+\section{Getting a $5\myvolt$ Source}
+
+So far in this book, however, we have mostly dealt with $9\myvolt$ batteries.
+However, digital logic circuits usually operate at lower voltages ($5\myvolt$ in this case).
+
+Therefore, to actually built the circuit, you need to find a way to convert the $9\myvolt$ source into a $5\myvolt$ source.
+There are several options for doing this, all depending on your requirements and/or the supplies you have available to you.
+
+One option is to build a simple $5\myvolt$ power supply.
+In Chapter~\ref{chapBasicResistorCircuits} we showed how to build a voltage divider to step down the voltage from a higher voltage source to a lower one.
+Although not ideal, this could work fine for simple test circuits.
+A better option would be to build the Zener diode voltage regulator that was shown in Chapter~\ref{chapDiodes} if you have a $5\myvolt$ Zener diode handy.
+
+\simplegraphicsfigure{A 7805 Voltage Regulator in a To-220 Package}{TO220Pkg}{0.08}
+
+Another option is to use a voltage regulator IC.
+The LM7805 is a simple voltage regulator circuit you can use to convert a $9\myvolt$ voltage source (or higher--up to $24\myvolt$) into a $5\myvolt$ voltage source with minimal current loss.
+It is itself an IC, though with a different kind of packaging than we've seen, known as a TO-220 package.
+You can see what this looks like in Figure~\ref{figTO220Pkg}.
+On these packages, if you are reading the writing on the package, pin 1 (input voltage) is on the left, pin 2 (ground) is in the middle, and pin 3 (output voltage) is on the right.
+Figure~\ref{figVoltageRegulatorLogicGate} shows what this looks like in a circuit diagram.
+
+\simplegraphicsfigure{Logic Gate Circuit with a Voltage Regulator}{VoltageRegulatorLogicGate}{0.08}
+
+To wire the LM7805 into your breadboard, you can plug the regulator into your breadboard so that the ground (pin 2) and output pin (pin 3) connect to the ground and positive power rails on your breadboard.
+Then, plug in the input voltage pin (pin 1) to the nearest terminal strip.
+Now, you can connect your $9\myvolt$ battery's positive wire to the input voltage terminal strip, and connect the negative (ground) to the ground of the breadboard power rail.
+Figure~\ref{figLM7805Breadboard} shows what this looks like.
+
+\simplegraphicsfigure{Simple Way to Attach the LM7805 to Your Breadboard}{LM7805Breadboard}{1}
+
+Another option is to use an add-on unit for your breadboard.
+There are many full-featured power units available for use in standard breadboards (unfortunately, there is no standard name or part number for these units, so we will just call them \emph{breadboard power units}).
+This type of unit plugs into the power rails of your breadboard, and can output either $5\myvolt$ (the logic voltage we are using here) or $3.3\myvolt$ (another popular logic voltage).
+The breadboard power unit can take voltage from a variety of sources, including batteries (with a compatible plug), a wall outlet (with an appropriate adapter), or even with USB power (either from your computer or a wall charger).
+To use the breadboard power unit, be sure the jumpers are set to the correct output voltage, and be sure to plug it in to your breadboard in the correct direction.  
+There is also an on/off switch provided in most such units so that you don't have to wire one yourself.
+The breadboard power unit has positive/negative markings, so be sure they line up with the positive/negative markings on your breadboard.
+
+\fixme{Show a photo of the power unit}
+
+For the rest of the book, if the schematic requests a voltage other than $9\myvolt$, feel free to use any of these methods to supply the proper power to your projects.
+
+\section{Pull-Down Resistors}
+\label{secPullDownResistors}
+
+\section{Combining Logic Circuits}
+
+However, logic gates usually do not draw any significant current on their inputs (this is called having ``high-impedance'' inputs). 
+Therefore, if you want to combine logic circuits, you can directly wire the outputs of one logic gate to the input of the next, and it will work great.
+The next output gate has a large enough resistance on its inputs to keep the outputs of the previous gate from putting out too much current.
+
+
