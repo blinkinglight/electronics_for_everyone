@@ -81,6 +81,14 @@ This sounds counterintuitive, but, as we will see, this lets us set our own outp
 This configuration where high-voltage outputs don't conduct is called an \glossterm{open collector} configuration.
 Don't worry if this is a little confusing, we will discuss it more in-depth later in the chapter.
 
+\begin{sidebar}[Voltage Sources on Integrated Circuits]
+Note that the voltage pins on integrated circuits can be marked in a number of different ways.
+The positive voltage source is often labelled as $V_CC$, $V_DD$, or $V_+$.
+The ground connect is often labelled as GND, $V_EE$, $V_SS$, or $V_-$.
+There are additional ways that these are labelled as well.
+Finding the positive and ground connections for an IC should always be the first thing you do with them.
+\end{sidebar}
+
 \section{The Importance and Problems of Datasheets}
 
 Every IC (and, usually, any other part as well) has a datasheet supplied by the manufacturer which tells you important details about how you should use their chip in your circuit.

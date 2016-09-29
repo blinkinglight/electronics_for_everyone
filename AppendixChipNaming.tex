@@ -1,0 +1,86 @@
+\chapter{Integrated Circuit Naming Conventions}
+\label{appICNaming}
+
+% Source information
+% 4000 vs 74xx - http://www.elecdude.com/2014/07/differences-in-cmos-4000-series-74ls-74hc-74hct.html
+% microwatts
+% Simple logic gates - http://www.eng.utah.edu/~cs6710/handouts/AppendixB/appendixB.doc2.html
+% http://www.avrfreaks.net/forum/does-hct-vs-hc-still-matter-5v
+% http://www.righto.com/2014/09/reverse-engineering-counterfeit-7805.html
+% Simple digital computer - http://www.simpledigitalcomputer.com/
+% Open collector info - http://denethor.wlu.ca/pc200/lectures/lgcocbeam.pdf
+% Logic Level - https://en.wikipedia.org/wiki/Logic_level / http://www.allaboutcircuits.com/textbook/digital/chpt-3/logic-signal-voltage-levels/
+% TTL - https://en.wikipedia.org/wiki/Transistor%E2%80%93transistor_logic
+% TTL/CMOS comparison - http://design-technology-in-stem.x10.mx/07%20Digital%20Electronics/02%20TTL%20and%20CMOS%20ICs/digital%20IC%20introduction/digtal%20IC's%20background%20introduction.html
+% TTL/CMOS level shifting - http://www.instructables.com/id/Level-Shifting-Between-TTL-and-CMOS/?ALLSTEPS
+% 7400 series history - https://en.wikipedia.org/wiki/7400_series
+% 7400 series partlist -  https://en.wikipedia.org/wiki/List_of_7400_series_integrated_circuits
+% 4000 series history - https://en.wikipedia.org/wiki/4000_series
+% 4000 series partlist - https://en.wikipedia.org/wiki/List_of_4000_series_integrated_circuits
+% Manufacturer prefixes - http://www.interfacebus.com/logic_prefix.html / https://en.wikibooks.org/wiki/Practical_Electronics/Manufacturers_Prefix / http://www.logwell.com/tech/components/ic_id.html / https://dmohankumar.wordpress.com/2012/04/24/know-the-meaning-of-transistor-and-ic-codes/
+% General logic numbering - http://www.radio-electronics.com/info/data/semicond/logic-ic-families-technologies/ic-numbering.php 
+% 74 families - http://www.chip1stop.com/web/AUS/en/tutorialContents.do?page=051 / http://www.chip1stop.com/web/AUS/en/tutorialContents.do?page=050
+% Suffix table - http://www.chip1stop.com/web/AUS/en/tutorialContents.do?page=052
+% CMOS/TTL discussion - https://www.physicsforums.com/threads/high-low-impedances-by-ttl-logic.57886/
+% CMOS/TTL long - http://www.lns.cornell.edu/~ib38/teaching/p360/lectures/wk09/l26/EE2301Exp3F10.pdf
+% Making chip numbers more visible - http://electronics.stackexchange.com/questions/5186/how-to-read-the-text-printed-on-top-of-every-ic
+% General identification guide - http://how-to.wikia.com/wiki/How_to_identify_computer_chips_or_integrated_circuits_on_circuit_boards
+%
+% Note that on ebay it is best just to look at the part and make sure the picture is DIP!
+% 
+
+The naming conventions for ICs can be bewildering at first.
+In truth, there is no official standard for chip names, but there are some conventions that are often followed.
+When a chip is invented, the company that invented it assigns it a part number.
+However, the courts have ruled that part numbers cannot be copyrighted.
+Therefore, if another manufacturer makes a similar or identical chip with the same pinout, they will often use the same part number.
+
+\section{Logic Chip Basic Conventions}
+
+Logic chips are often broken up into two families based on the voltage levels that they expect and produce.
+\glossterm{TTL} (which stands for transistor-to-transistor logic) and an old standard for logic chips which usually operate at $5\myvolt$.
+TTL chips consider a signal to be ``false'' when it is below $0.8\myvolt$ and ``true'' when it is above $2.2\myvolt$, and can break if they receive voltages significantly higher than $5\myvolt$.
+Between $0.8\myvolt$ and $2.2\myvolt$ is a region where the resulting value is unpredictable.
+TTL originally referred to \emph{how} the logic chips were constructed, but now it usually refers to the expected input/output levels of the chip.
+
+\glossterm{CMOS} is a newer technology, and with it came a newer standard for how logic levels are interpreted.  
+CMOS chips support a much wider supply voltage range than TTL, but their logic levels are a little different.
+For CMOS, false is from $0\myvolt$ to one-third of the supply voltage (whatever it is---CMOS can usually operate from $3\myvolt$ to $15\myvolt$), and true is from two-thirds of the supply voltage to the full supply voltage.
+
+Chips are often made in a series---a whole set of chips which all perform complementary functions.
+The most common series of logic chips is the 7400 series originally designed by Texas Instruments.
+The 7400 series started as a set of TTL chips.
+Some common chips in this series is the 7400 itself (a quad NAND gate), the 7408 (a quad AND gate), and the 7432 (a quad NOR gate).
+
+Chips names will often have a prefix that relates to either their manufacturer or the company that originally designed them.
+As some examples, National Semiconductor chips are usually prefixed with LM, Texas Instruments chips have a whole slew of prefixes, including SN and TI, Motorola chips usually have an MC prefix, and Signetics usually has an NE prefix.
+There are many others, but this is just to give you an example.
+The 7400 series usually has part numbers starting with SN74 because TI built them.
+So, a SN7408 is an AND gate based on designs by TI.
+
+Now, the series is 7400.  
+The last two digits refers to the function and pinout of the chips.
+That is, in the 7400 series, ``08'' will refer to quad AND gates which all have the same pin configuration.
+However, sometimes they will insert letters in-between ``74'' and ``08.''
+This usually refers to some modification to the electrical characteristics of the chip.
+For instance, a low-power version of the 7400 series have a ``74LS'' prefix.
+So, the ``SN74LS08'' chip is a version of the 7408 (i.e., has the same pinout and function) that was originally designed by TI (the SN prefix) but is built for lower power consumption (LS).
+
+Then, part numbers often have suffixes as well.
+Suffixes often refer to some external characteristic of the chip.
+For instance, in Chapter~\ref{chapIC}, we mentioned different chip packages, such as DIP and SMD.
+These different packages will have different suffixes.
+For the 7400 series, the DIP package is usually suffixed with ``P,'' so an SN74LS08P is the DIP version of the SN74LS08, and the NS74LS08NSR is an SMD version.
+You may also have suffixes which are based on temperature, hardiness, and even occasionally electrical output characteristics.
+
+Sometimes, if a different manufacturer builds the same chip, they may change the manufacturer code and use different suffixes.  
+For instance, Texas Instruments sells a SN74HC08P, which is a DIP 7408 which uses CMOS levels up to $6\myvolt$ (that's what the HC is for).
+Essentially the same chip is available from Fairchild, which calls it the MM74HC08N.
+The MM prefix is one that Fairchild uses, it is the same 74HC08 chip, and, for Fairchild, they use an ``N'' suffix to designate a DIP chip.
+
+As I mentioned, these are only conventions, not standards, so they don't always apply.
+However, they can be helpful, so that you know that if someone specifies a 7432 chip, and you see part numbers that say SN74LS32P, you might be able to determine that this at least has some relationship to the chip you are looking for.
+
+% FIXME - table of common chip prefixes by family
+%       - table of device numbers by family
+%

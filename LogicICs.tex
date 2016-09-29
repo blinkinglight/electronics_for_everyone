@@ -1,6 +1,8 @@
 \chapter{Using Logic ICs}
 \label{chapLogicICs}
 
+% FIXME - rewrite for CMOS
+
 In Chapter~\ref{chapIC}, we worked with our first Integrated Circuit, the LM393 Voltage Comparator.  
 In this chapter, we are going to look at other ICs and talk more about how they are named and used in electronics.
 
@@ -9,7 +11,9 @@ In this chapter, we are going to look at other ICs and talk more about how they 
 One of the easiest class of ICs to use are the \emph{logic} ICs.  
 A logic IC is a chip that implements a basic function of \glossterm{digital logic}.
 In digital logic, electric voltages are given meanings of either ``true'' or ``false,'' usually with ``false'' being a voltage near zero, and ``true'' being a voltage between 3--5 volts.
-Then, the digital logic ICs implement logic functions that combine different signals (usually designated as A and B) and give an output signal (usually designated as Y).
+These values are also referred to a 1 (for true) and 0 (for false), or HIGH (for true) and LOW (for false).
+Then, the digital logic ICs implement logic functions that combine different signals (usually designated as A and B) and give an output signal (usually designated as Y or Q).
+
 For instance, the \glossterm{AND} function will output a ``true'' value if both of its inputs are true.  
 In other words, if A \emph{and} B are true, Y is true.
 As another example, the \glossterm{OR} function will output a ``true'' value if either of its inputs are true.
@@ -22,26 +26,32 @@ Figure~\ref{figTruthTable} shows the most common types of logic operations and h
 \label{figTruthTable}
 \begin{tabular}{l | l | l| | l}
 \textbf{Operation} & \textbf{A} & \textbf{B} & \textbf{Y} (output) \\
+\hline
 AND & false & false & false \\
 AND & false & true & false \\
 AND & true & false & false \\
 AND & true & true & true \\
+\hline
 OR & false & false & false \\
 OR & false & true & true \\
 OR & true & false & true \\
 OR & true & true & true \\
+\hline
 XOR & false & false & false \\
 XOR & false & true & true \\
 XOR & true & false & true \\
 XOR & true & true & false \\
+\hline
 NOR & false & false & true \\
 NOR & false & true & false \\
 NOR & true & false & false \\
 NOR & true & true & false \\
+\hline
 NAND & false & false & true \\
 NAND & false & true & true \\
 NAND & true & false & true \\
 NAND & true & true & false \\
+\hline
 NOT & false & N/A & true \\
 NOT & true & N/A & false \\
 \end{tabular}
@@ -63,7 +73,7 @@ If you were to say, ``I want my circuit to output a signal if both button 1 \emp
 Most logic gates are implemented in chips that contain four implementations of the same gate.
 For instance, the 7408 chip is a quad NAND gate chip.
 The pinout for this chip is shown in Figure~\ref{figChip7408Pinout}
-Note that it has a voltage pin (pin 14) as well as a ground pin (pin 7).
+Note that it has a supply voltage pin (pin 14) as well as a ground pin (pin 7).
 Each logic gate is numbered 1--4 and the inputs are labelled A and B with the output of Y.
 
 To use the chip, you pick which one of the four gates you are going to use.
@@ -149,8 +159,10 @@ Therefore, we have to provide another path for the electricity to go when the bu
 Note that some logic chips actually supply pull-up resistors internally which make the inputs always positive when disconnected.  
 In those cases, the pull-down resistor does essentially the same job, but is even more necessary than before.
 
-These resistors are called pull-down resistors because, when the button circuit is not connected, they pull the voltage level down to zero through the resistor.
-The resistor is very important because, when the button is connected, it limits the amount of current that leaks out across the resistor.
+These resistors are called pull-down resistors because, when the button circuit is not connected, they pull the voltage level down close to zero through the resistor.
+The resistor is very important because, when the button is connected, it keeps the voltage high and limits the amount of current that leaks out across the resistor.
+If you directly connected the button to ground without the resistor, then pushing the button would not raise the voltage because it is still directly connected to ground, and would therefore remain at zero volts.  
+Having the resistor there makes sure that the voltage on the inputs remains high while the button is pressed, and bleeds off when the button is released.
 
 In short, without a path to ground, when you let go of the button, the input could remain high.
 However, without the resistor, pushing the button would cause a short-circuit.
@@ -203,9 +215,58 @@ For instance, a NAND gate is drawn by first drawing an AND gate, and then adding
 Similarly, the NOR gate is an OR gate with a circle in front of it.
 The XOR gate is similar to the OR gate, but with an extra line going across its inputs.
 
-\section{Logic Families and Understanding Chip Names}
+As an interesting side-note, every logic function can actually be built from NAND gates, though you have to wire them up in strange ways.
+You can actually build a computer entirely from NAND gates if you wanted to.
+It is not incredibly important, but Figure~\ref{figNANDLogic} shows how to build each type of logic gate from NAND gates.
+As an activity, go through the truth tables in Figure~\ref{figTruthTable} and see if you can follow how each set of values becomes the result.
 
+\simplegraphicsfigure{How Each Gate Can Be Built from NAND Gates}{NANDLogic}{0.08}
 
-\section{Logic Symbols}
-\section{Logic Chips with Open Collector Outputs}
+\section{Understanding Chip Names}
 
+One of the biggest problems in learning to build electronic devices is the bewildering array of chips, each with some weird name.
+``Oh, for that you want an NE555P,'' or, ``You could use a SN74HC00P or a CD4011BE for that task.''
+What language are such people speaking?
+
+There is a huge selection of chips available, and learning their names is a daunting task.
+Appendix~\ref{appICNaming} attempts to offer some method to the madness, but, at the end of the day, chip names are like people's names---you get to know them by using them.
+
+However, once you make it through this book, you should have a solid enough background to search for the chips you need, have some understanding of the part names, and be able to find the chips you need for your projects.
+If you buy the chips from a seller geared towards amateurs and hobbyists, they will likely also include tutorials and additional information available in an easier-to-understand format than just datasheets.
+
+\reviewsection
+
+In this chapter, we learned:
+
+\begin{enumerate}
+\item A logic IC implements basic digital logic functions such as AND, OR, NOT, etc.
+\item These logic functions refer to essentially the same ideas that they mean in ordinary language, and exactly what they mean in formal logic.
+\item Logic ICs use different voltage levels for true and false---usually with true being near the supply voltage and false being near zero voltage.
+\item The inputs of a logic function are usually designated as A and B, and the output is usually designated as Y or Q.
+\item A single digital logic function is called a gate.  Most logic ICs have more than one gate on a single chip.
+\item Logic ICs require a supply voltage and a ground connection to power the logic.
+\item Most logic ICs provide powered logic outputs, so that a ``true'' value supplies both voltage and a small amount of current on its output.  However, a current-limiting resistor is usually required.
+\item If an input to a logic IC may be disconnected for its ``false'' state (as is common with button inputs), then it needs a pull-down resistor to connect it to ground when the button is not being pushed.
+\item Logic ICs can usually be combined by wiring the output of one to the input of another to create more complex logical conditions.
+\item Logic gates are often drawn in schematics using basic shapes to indicate their operation, rather than as connections to chips.  In these cases, the power connections are not shown by schematics.
+\item Every logic gate can actually be built from NAND gates wired together.
+\item IC names are very confusing and take time and experience to get to know them well.
+\item Many ICs require specific voltage levels to operate, often at $5\myvolt$ or $3.3\myvolt$.
+\item Many solutions are available for generating specific voltages, including voltage dividers, zener diodes, voltage regulators, and add-on breadboard power units.
+\item The LM7805 is a very common $5\myvolt$ voltage regulator.
+\end{enumerate}
+
+\applysection
+
+\begin{enumerate}
+\item Draw the circuit in Figure~\ref{figANDGateExample} yourself.  Identify the function of each resistor.
+\item Build the circuit in Figure~\ref{figANDGateExample} (don't forget that the power source should be $5\myvolt$).
+\item If you assume that no current flows through the inputs of the AND gate, and that the output functions as a $5\myvolt$ power source how much current flows through each resistor when all of the buttons are pressed?  What, then, is the total current used by the circuit if you ignore the logic gate?
+\item Measure the actual current that flows through each resistor.  If you are having trouble pushing the buttons while you measure the current, just replace the buttons with wires for this test.
+\item Measure the current that it used by the AND gate itself.  You can do this by measuring the supply current of the AND gate.  Measure it both when its output is true and false.
+\item Draw a schematic of a circuit that has two buttons (B1 and B2) which light up an LED if either button is pressed.
+\item Draw a schematic of a circuit that has two buttons (B1 and B2) which light up an LED if neither button is pressed.
+\item Draw a schematic of a circuit that has four buttons (B1--B4) which light up an LED if either B1 and B2 are pressed or if B3 and B4 are pressed.
+\item Look at the construction of the different gates from NAND gates in Figure~\ref{figNANDLogic}.  Copy down the OR gate four times, and trace how the output is generated for each possible set of inputs (true/true, true/false, false/true, false/false).  Show the inputs and outputs on each NAND gate.  Compare the outputs to the truth table for the OR function in Figure~\ref{figTruthTable}.
+\item Take the circuit in Figure~\ref{figANDGateExample} and draw a schematic to use pull-up resistors on the inputs rather than pull-down resistors.  How will this change the behavior of the circuit?
+\end{enumerate}
