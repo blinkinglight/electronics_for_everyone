@@ -1,6 +1,8 @@
 \chapter{Basic Resistor Circuit Patterns}
 \label{chapBasicResistorCircuits}
 
+%% FIXME - need to go over the 10x more, as well as the << and >>, and include such in the review
+
 When most people look at a schematic drawing, all they see is a sea of interconnected components with no rhyme or reason combining them.
 However, most circuits are actually a collection of \glossterm{circuit patterns}.
 A circuit pattern is a common way of arranging components to accomplish an electronic task.
@@ -122,7 +124,7 @@ As long as the values are the same, we will divide the voltage in half.
 If we wanted an $8\myvolt$ output, we would do a similar calculation.  
 Since we start at $9\myvolt$, we need to use up $\frac{1}{9}$ of the voltage in the first resistor, and $\frac{8}{9}$ of the voltage in the second resistor.
 Therefore, our resistors need to be in similar ratio.
-We could use an $100\myohm$ resistor for the first resistor, and a $200\myohm$ resistor for the second resistor.
+We could use an $100\myohm$ resistor for the first resistor, and a $800\myohm$ resistor for the second resistor.
 
 So how do you determine exactly what value to use?
 Here is where we start thinking about the load again.
@@ -156,7 +158,7 @@ $$ R_T = \frac{1}{\frac{1}{R_2} + \frac{1}{R_L}} = \frac{1}{\frac{1}{2,000} + \f
 
 This is very close to the resistance of $R_2$ by itself.
 So, what we can say is that our voltage divider circuit can ignore the resistance of the load \emph{if the resistance of the load is significantly more than the resistance of the voltage divider resistor}.
-A way of writing this down is that $R_L >> R_2$.
+A way of writing this down is that $R_L \gg R_2$.
 What ``significantly'' means depends on how sensitive your circuit it to voltage changes, but, generally, I would say that $R_L$ should be at least ten times $R_2$.
 
 So, for low-resistance loads, a voltage divider does not work well, because it puts too little resistance between the voltage source and ground.
@@ -226,7 +228,7 @@ In this chapter, we learned:
 \applysection
 
 \begin{enumerate}
-\item In Figure~\ref{figMultipleSwitches}, calculate the amount of current used by the whole circuit for each configuration of the switches S2 and S3 when S1 is closed.
+\item In Figure~\ref{figMultipleSwitches}, calculate the amount of current used by the whole circuit for each configuration of the switches S2 and S3 when S1 is closed.  You can assume that the LEDs are red LEDs.
 \item Build the circuit given in Figure~\ref{figMultipleSwitches} (you may swap out resistors with different but similar values---anything from $300\myohm$ to about $5\mykohm$ should work).
 \item Given a $15\myvolt$ voltage supply, what size of a resistor would be needed to make sure that a circuit never went over $18\mymamp$.
 \item Given a $9\myvolt$ battery source, design a voltage divider that will output $7\myvolt$ to a load that has a resistance of $10\mykohm$.
