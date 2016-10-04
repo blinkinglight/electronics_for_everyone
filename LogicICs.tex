@@ -1,8 +1,6 @@
 \chapter{Using Logic ICs}
 \label{chapLogicICs}
 
-% FIXME - rewrite for CMOS
-
 In Chapter~\ref{chapIC}, we worked with our first Integrated Circuit, the LM393 Voltage Comparator.  
 In this chapter, we are going to look at other ICs and talk more about how they are named and used in electronics.
 
@@ -10,11 +8,11 @@ In this chapter, we are going to look at other ICs and talk more about how they 
 
 One of the easiest class of ICs to use are the \emph{logic} ICs.  
 A logic IC is a chip that implements a basic function of \glossterm{digital logic}.
-In digital logic, electric voltages are given meanings of either ``true'' or ``false,'' usually with ``false'' being a voltage near zero, and ``true'' being a voltage between 3--5 volts.
+In digital logic, electric voltages are given meanings of either ``true'' or ``false,'' usually with ``false'' being a voltage near zero, and ``true'' being a positive voltage (often between 3--5 volts).
 These values are also referred to a 1 (for true) and 0 (for false), or HIGH (for true) and LOW (for false).
 Then, the digital logic ICs implement logic functions that combine different signals (usually designated as A and B) and give an output signal (usually designated as Y or Q).
 
-For instance, the \glossterm{AND} function will output a ``true'' value if both of its inputs are true.  
+For instance, the \glossterm{AND} function will output a ``true'' (positive voltage) value if both of its inputs are true, and will output a ``false'' (near-zero voltage) value otherwise.  
 In other words, if A \emph{and} B are true, Y is true.
 As another example, the \glossterm{OR} function will output a ``true'' value if either of its inputs are true.
 In other words, if A \emph{or} B are true, Y is true.
@@ -68,33 +66,37 @@ Each digital logic function, when implemented in electronics is called a \glosst
 The nice thing about building circuits with logic gates is that, rather than using math, you can build circuits based on ordinary language.
 If you were to say, ``I want my circuit to output a signal if both button 1 \emph{and} button 2 are pressed,'' then it is obvious that you would use an AND gate to accomplish this.
 
-\simplegraphicsfigure{The Pinout of a 7408 Chip}{Chip7408Pinout}{0.16}
+\simplegraphicsfigure{The Pinout of a CD4081 Chip}{CD4081Pinout}{0.16}
 
-Most logic gates are implemented in chips that contain four implementations of the same gate.
-For instance, the 7408 chip is a quad NAND gate chip.
-The pinout for this chip is shown in Figure~\ref{figChip7408Pinout}
-Note that it has a supply voltage pin (pin 14) as well as a ground pin (pin 7).
+Most logic gates are implemented in chips that contain multiple (often four) implementations of the same gate.
+For instance, the CD4081 chip is a quad NAND gate chip.
+The pinout for this chip is shown in Figure~\ref{figCD4081Pinout}
+Note that it has a supply voltage pin (pin 14) as well as a ground pin (pin 7) to supply power to all the gates on the chip.
 Each logic gate is numbered 1--4 and the inputs are labelled A and B with the output of Y.
 
-To use the chip, you pick which one of the four gates you are going to use.
+To use the chip, you pick which one of the four gates you are going to use (it doesn't really matter which).
 If we want to use Gate~1, then we put our inputs on 1A and 1B and then our output signal goes to 1Y.
-Note that, unlike the IC from the last chapter, this logic gate has a powered output---it actually supplies voltage and current to drive an output signal.
-There are logic chips that have open collector outputs, but they are more rare because they are harder to use.
-Usually, with logic gates, the logic gates are wired to expect relatively fixed, predefined voltages, and output the same.
-However, ICs are limited in how much current they can put out before they fry (usually somewhere in the range of $8--20\mymamp$).
+Note that, unlike the IC from the last chapter, this logic gate has a powered output---it actually supplies voltage and current to drive a (small) output signal.
+
+Logic gates are wired to expect relatively fixed, predefined voltages on their inputs, and output the same voltage levels.
+For some logic chips, the input voltage is expected to be around $5\myvolt$, while as for others it is based on the supply voltage.
+However, nearly all ICs are limited in how much current they can put out before they fry.  
+This is usually somewhere in the range of $8--20\mymamp$.
 Because of this, if you use a logic gate to directly power a device (such as an LED), you probably will need a current limiting resistor to keep the output current down.
 
-\simplegraphicsfigure{Example Circuit Using an AND Gate}{ANDGateExample}{0.08}
+There are logic chips that have open collector outputs (like the LM393 from Chapter~\ref{chapIC}), but they are more rare because they are harder to use.
+
+\simplegraphicsfigure{Example Circuit Using an AND Gate}{LogicGateExample}{0.08}
 
 Lets say that we want to build a circuit which will turn on an LED if \emph{both} of two buttons are pushed at the same time.
-Figure~\ref{figANDGateExample} shows a circuit to accomplish this.
+Figure~\ref{figLogicGateExample} shows a circuit to accomplish this.
 It has two buttons, one wired to 1A (pin 1) and one wired to 1B (pin 2).
 The output 1Y (pin 3) then goes to an LED with a current limiting resistor.
 You may wonder what the resistors attached to the buttons are doing.
 Those will be explained in Section~\ref{secPullDownResistors}.
 
 Note that the circuit shows a $5\myvolt$ source.
-This is because, like many digital logic circuits, the 7408 expects that its voltage source will be $5\myvolt$ and its inputs will be about the same.
+This is because, like many digital logic circuits, the CD4081 expects that its voltage source will be $5\myvolt$ and its inputs will be about the same.
 
 \section{Getting a $5\myvolt$ Source}
 
@@ -148,7 +150,7 @@ For the rest of the book, if the schematic requests a voltage other than $9\myvo
 \section{Pull-Down Resistors}
 \label{secPullDownResistors}
 
-In Figure~\ref{figANDGateExample}, we looked at the circuit diagram for a simple AND gate.  
+In Figure~\ref{figLogicGateExample}, we looked at the circuit diagram for a simple AND gate.  
 We noted that each button had a resistor connecting it to ground, but we did not mention why.
 In digital logic circuits, buttons and single-pole switches, when they are open, essentially disconnect the circuit.
 Because the inputs are high-impedance inputs (i.e., they use very little current), simply disconnecting the input circuits is not always enough to turn them off!
@@ -186,7 +188,7 @@ Buttons 1 and 2 would be wired with the AND gate, and button 3 would be combined
 
 Figure~\ref{figMultipleGates} shows what this looks like.
 Since there are so many voltage/ground connections, the figure does not have an explicit battery drawn, instead it simply shows $+5\myvolt$ wherever it should connect to the voltage source, and a ground symbol wherever it should connect to the battery negative.
-As you can see here, there are two logic ICs---the 7408 having the AND gate and the 7432 having the OR gate.
+As you can see here, there are two logic ICs---the CD4081 having the AND gate and the CD4071 having the OR gate.
 The output of the first AND gate is wired into one of the inputs of the OR gate.
 
 This works because, unlike the LM393 (discussed in Chapter~\ref{chapIC}), these logic gates actually supply output voltage and current as well.  
@@ -242,6 +244,7 @@ In this chapter, we learned:
 \item A logic IC implements basic digital logic functions such as AND, OR, NOT, etc.
 \item These logic functions refer to essentially the same ideas that they mean in ordinary language, and exactly what they mean in formal logic.
 \item Logic ICs use different voltage levels for true and false---usually with true being near the supply voltage and false being near zero voltage.
+\item True is sometimes referred to as HIGH or 1.  False is sometimes referred to as LOW or 0.
 \item The inputs of a logic function are usually designated as A and B, and the output is usually designated as Y or Q.
 \item A single digital logic function is called a gate.  Most logic ICs have more than one gate on a single chip.
 \item Logic ICs require a supply voltage and a ground connection to power the logic.
@@ -259,8 +262,8 @@ In this chapter, we learned:
 \applysection
 
 \begin{enumerate}
-\item Draw the circuit in Figure~\ref{figANDGateExample} yourself.  Identify the function of each resistor.
-\item Build the circuit in Figure~\ref{figANDGateExample} (don't forget that the power source should be $5\myvolt$).
+\item Draw the circuit in Figure~\ref{figLogicGateExample} yourself.  Identify the function of each resistor.
+\item Build the circuit in Figure~\ref{figLogicGateExample} (don't forget that the power source should be $5\myvolt$).
 \item If you assume that no current flows through the inputs of the AND gate, and that the output functions as a $5\myvolt$ power source how much current flows through each resistor when all of the buttons are pressed?  What, then, is the total current used by the circuit if you ignore the logic gate?
 \item Measure the actual current that flows through each resistor.  If you are having trouble pushing the buttons while you measure the current, just replace the buttons with wires for this test.
 \item Measure the current that it used by the AND gate itself.  You can do this by measuring the supply current of the AND gate.  Measure it both when its output is true and false.
@@ -268,5 +271,5 @@ In this chapter, we learned:
 \item Draw a schematic of a circuit that has two buttons (B1 and B2) which light up an LED if neither button is pressed.
 \item Draw a schematic of a circuit that has four buttons (B1--B4) which light up an LED if either B1 and B2 are pressed or if B3 and B4 are pressed.
 \item Look at the construction of the different gates from NAND gates in Figure~\ref{figNANDLogic}.  Copy down the OR gate four times, and trace how the output is generated for each possible set of inputs (true/true, true/false, false/true, false/false).  Show the inputs and outputs on each NAND gate.  Compare the outputs to the truth table for the OR function in Figure~\ref{figTruthTable}.
-\item Take the circuit in Figure~\ref{figANDGateExample} and draw a schematic to use pull-up resistors on the inputs rather than pull-down resistors.  How will this change the behavior of the circuit?
+\item Take the circuit in Figure~\ref{figLogicGateExample} and draw a schematic to use pull-up resistors on the inputs rather than pull-down resistors.  How will this change the behavior of the circuit?
 \end{enumerate}
