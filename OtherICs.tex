@@ -1,15 +1,82 @@
 \chapter{Common Integrated Circuits}
 
-The purpose of this chapter is to introduce you to a few Integrated Circuits that are commonly used, that illustrate a principle of circuit design, and that you have enough knowledge to use well.
-In this chapter, we will cover:
-\begin{enumerate}
-\item FIXME - some sort of flip-flop or latch
-\item FIXME - some kind of counter
-\item FIXME - nand gate
-\item FIXME - A/D with 7seg driver?
-\item FIXME - shift register?
-\item FIXME - schmitt trigger?
-\item FIXME - level shifter?
-\end{enumerate}
+In Chapter~\ref{chapLogicICs} we studied basic logic circuits.
+This chapter will introduce you to a few more complexi integrated circuits that are generally useful in a variety of applications.
+Even more types of ICs can be found in Appendix~\ref{SimplifiedDatasheets}.
 
-More types of ICs can be found in Appendix~\ref{SimplifiedDatasheets}.
+\section{Holding a State}
+
+Up until now, all of our circuits have fluctuated with their inputs. 
+That is, the output is always determined by the \emph{present} state of the inputs.
+But what happens if we want a circuit to \emph{remember} that something happened?
+For that, we will need a way to set a state in the circuit and then hold it.
+That is, we need something that we can tell it to remember a true/false value until we tell it not to.
+
+Holding on to past states is called \glossterm{memory}.
+In your computer you have huge memory chips that have billions of switches that can hold a state.
+For our purposes, we will content ourselves to using chips that only hold a few states.
+
+The simplest kind of memory in electronics is known as a \glossterm{latch}.
+Latches hold a single \glossterm{bit} of memory.
+A bit is simply a single true/false signal (i.e., positive voltage/zero voltage).
+Latches allow you to store a true/false value and continue to retrieve it as often as you want until you choose to reset the value.
+There are many different latches that are based on how they are set (and how complicated the circuitry is to implement them).
+
+The easiest type of latch to learn about and use is the \glossterm{SR Latch}.
+The SR Latch holds a value that it continually outputs on its $Q$ pin.
+Additionally, some latches have an additional output which outputs the opposite of the $Q$ pin, known as $\bar{Q}$.
+The SR Latch has two inputs---set ($S$) and reset ($R$).  
+When the set ($S$) input alone is true, $Q$ gets set to true.
+When the reset ($R$) input alone is true, then $Q$ gets reset back to false.
+If both $S$ and $R$ are false, then, the latch continues to hold its previous state.
+This allows for both very easily setting a state, as well as a very easy implementation.
+
+Unfortunately, most latches start out in an \emph{unknown} state when they are first powered on.
+This means that if you need it to be in a particular state when it turns on, \emph{you} have to provide circuitry to give the latch its starting value.
+For the circuits in this book, we will not be overly concerned with the starting value of the latch.
+
+\simplegraphicsfigure{Simple Circuit Using an SR Latch}{SRExample}{0.08}
+
+To see the latch in action, Figure~\ref{figSRExample} shows a simple circuit using an SR Latch.
+Notice that both button inputs have pull-down resistors going to ground in order to be sure that the inputs always have a valid state.
+When the upper button is pressed, then the latch sets $Q$ to true and holds it, even after the button is no longer pressed.
+When the lower button is pressed, the latch resets $Q$ to false and holds it, even after the button is no longer pressed.
+Note that in a real circuit, the SR Latch would also need to be powered as well.  
+
+The CD4043 chip is a quad SR Latch integrated circuit and can be used to build the project.
+Figure~\ref{figSRChipExample} shows how to connect the circuit.
+It is just like the circuit in Figure~\ref{figSRExample}, except that we are also showing the connections for the supply voltage.
+Additionally, there is a pin labelled ``ENABLED'' that we are connecting to the power supply.
+On many chips, you have to specifically connect certain pins to ground or to the supply voltage to get them to work like you want them to.
+On this chip, it has a feature that allows you to connect or disconnect all of the outputs using the ENABLED pin (when they are disconnected, they act like there is no circuit there at all---neither true nor false).
+We always want our outputs connected, so we just attach the ENABLED pin to the supply voltage.
+
+\simplegraphicsfigure{An SR Latch Circuit Implemented Using a CD4043}{SRChipExample}{0.08}
+
+Interestingly, SR Latches are fairly easy to implement using the standard gates discussed in Chapter~\ref{chapLogicICs}.
+Figure~\ref{figSRLatch} shows how this is done.
+It is simply two NOR gates wired so that their outputs feed into one another.
+
+To understand how this works, think about what happens when $S$ is true and $R$ is false.
+Since the $S$ is on a NOR gate, the output of the NOR gate will go to false.
+This provides the output signal $\bar{Q}$ as well as one of the inputs to the top NOR gate.
+As long as the $R$ stays at false, the output of the top NOR gate will always stay true, since neither input is true.
+This ``true'' output then becomes $Q$, as well as the input to the bottom NOR gate, which keeps it on even when the $S$ input goes to false.
+It isn't critically important to understand how this latch works, but sometimes knowing how something works can help you solve similar problems, or even just have a deeper intuition about how these work.
+
+\simplegraphicsfigure{An Implementation of an SR Latch}{SRLatch}{0.08}
+
+There are several other types of latches as well.
+An $\bar{SR}$ Latch is just like the SR latch except that the inputs are inverted.
+A JK Latch is similar to an SR Latch, except that $S$ is renamed $J$, $R$ is renamed $K$, and the latch defines a new behavior if \emph{both} $J$ and $K$ are true (the SR Latch usually doesn't define what happens in this case).
+A D Latch is a little bit of a different beast.
+It has an Enable ($E$) pin and a data ($D$) pin.
+When the $E$ pin is true, then whatever is in the $D$ pin becomes $Q$.
+When the $E$ pin goes false, then whatever was the last state of $Q$ stays put there, no matter what $D$ does.
+It remains in that state until $E$ goes positive to allow $D$ to influence $Q$ again.
+
+A flip-flop is similar to a latch, except that it uses an external clock pulse to synchronize changes between states at given intervals.  
+We will not discuss clocked chips here. 
+% FIXME - will we discuss clocked chips anywhere in the book?
+
+

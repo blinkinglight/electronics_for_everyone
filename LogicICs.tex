@@ -1,6 +1,8 @@
 \chapter{Using Logic ICs}
 \label{chapLogicICs}
 
+% FIXME - introduce the concept of inverted and make it a glossterm
+
 In Chapter~\ref{chapIC}, we worked with our first Integrated Circuit, the LM393 Voltage Comparator.  
 In this chapter, we are going to look at other ICs and talk more about how they are named and used in electronics.
 
@@ -79,10 +81,14 @@ If we want to use Gate~1, then we put our inputs on 1A and 1B and then our outpu
 Note that, unlike the IC from the last chapter, this logic gate has a powered output---it actually supplies voltage and current to drive a (small) output signal.
 
 Logic gates are wired to expect relatively fixed, predefined voltages on their inputs, and output the same voltage levels.
-For some logic chips, the input voltage is expected to be around $5\myvolt$, while as for others it is based on the supply voltage.
+They do not need current-limiting resistors for their inputs because the inputs themselves are usually high-resistance (i.e., $1,000,000--10,000,000\myohm$).
+Because of the high resistance on the inputs, it also means that even if there is a resistor on the input, it will not affect the input voltage significantly (think of a voltage divider with $1,000\myohm$ for the first resistor and $10,000,000\myohm$ for the second resistor---the voltage will not change much after the first resistor).
+It also means that the current going into the gate is essentially ignorable ($I = \frac{V}{R} = \frac{5}{10,000,000} = 0.0005\mymamp$).
+
+For some logic chips, the input voltage is expected to be around $3.3\myvolt$ or $5\myvolt$, while as for others it is based on the supply voltage.
 However, nearly all ICs are limited in how much current they can put out before they fry.  
-This is usually somewhere in the range of $8--20\mymamp$.
-Because of this, if you use a logic gate to directly power a device (such as an LED), you probably will need a current limiting resistor to keep the output current down.
+This is usually somewhere in the range of $8--20\mymamp$, depending on the chip.
+Because of this, if you use a logic gate to directly power a device (such as an LED), you probably will need a current limiting resistor to keep the output current down below these limits.
 
 There are logic chips that have open collector outputs (like the LM393 from Chapter~\ref{chapIC}), but they are more rare because they are harder to use.
 
@@ -95,18 +101,24 @@ The output 1Y (pin 3) then goes to an LED with a current limiting resistor.
 You may wonder what the resistors attached to the buttons are doing.
 Those will be explained in Section~\ref{secPullDownResistors}.
 
+For most logic chips, the manufacturers recommend that unused inputs (but not outputs!) be connected to ground. 
+This makes the chip more efficient in power consumption, but for simple projects like these it isn't really necessary.
+If you wish to connect the unused inputs to ground then it is a better circuit design.
+
 Note that the circuit shows a $5\myvolt$ source.
-This is because, like many digital logic circuits, the CD4081 expects that its voltage source will be $5\myvolt$ and its inputs will be about the same.
+While the CD4081 is tolerant of a wide range of input voltages and would operate just fine at $9\myvolt$, many digital logic chips are not.
+Many digital logic chips operate at pre-specified voltages, usually either $5\myvolt$ or $3.3\myvolt$.
+Therefore, we will take a moment and look at how we can get an input source for a specific voltage.
 
 \section{Getting a $5\myvolt$ Source}
 
 So far in this book, however, we have mostly dealt with $9\myvolt$ batteries.
-However, digital logic circuits usually operate at lower voltages ($5\myvolt$ in this case).
+However, digital logic circuits often operate at lower voltages (usually $5\myvolt$ or $3\myvolt$).
 
-Therefore, to actually built the circuit, you need to find a way to convert the $9\myvolt$ source into a $5\myvolt$ source.
+Therefore, we need to find a way to convert a $9\myvolt$ source into a $5\myvolt$ source.
 There are several options for doing this, all depending on your requirements and/or the supplies you have available to you.
 
-One option is to build a simple $5\myvolt$ power supply.
+One option is to build a simple $5\myvolt$ power supply using the knowledge you already have.
 In Chapter~\ref{chapBasicResistorCircuits} we showed how to build a voltage divider to step down the voltage from a higher voltage source to a lower one.
 Although not ideal, this could work fine for simple test circuits.
 A better option would be to build the Zener diode voltage regulator that was shown in Chapter~\ref{chapDiodes} if you have a $5\myvolt$ Zener diode handy.
@@ -153,7 +165,7 @@ For the rest of the book, if the schematic requests a voltage other than $9\myvo
 In Figure~\ref{figLogicGateExample}, we looked at the circuit diagram for a simple AND gate.  
 We noted that each button had a resistor connecting it to ground, but we did not mention why.
 In digital logic circuits, buttons and single-pole switches, when they are open, essentially disconnect the circuit.
-Because the inputs are high-impedance inputs (i.e., they use very little current), simply disconnecting the input circuits is not always enough to turn them off!
+Because the inputs are high-resistance inputs (i.e., they use very little current), simply disconnecting the input circuits is not always enough to turn them off!
 Think of it this way---when you connect the circuit by pushing the button, the whole wire becomes positive.
 When you let go of the button, the state of the wire has not changed.
 Eventually the positive charge will drain out through the gate, but, since the input uses so little current, it will take a while for that to happen.
@@ -192,7 +204,7 @@ As you can see here, there are two logic ICs---the CD4081 having the AND gate an
 The output of the first AND gate is wired into one of the inputs of the OR gate.
 
 This works because, unlike the LM393 (discussed in Chapter~\ref{chapIC}), these logic gates actually supply output voltage and current as well.  
-Because the inputs to the logic gates are high-impedance (they use up very little current), there is no need for a current-limiting resistor when combining gates in this way.
+Because the inputs to the logic gates are high-resistance, there is no need for a current-limiting resistor when combining gates in this way.
 
 Now, it is fine to draw logic circuits the way we have in Figure~\ref{figMultipleGates}.
 However, as the logic becomes more complex, actually drawing all of the connections to voltage and ground become tiring, and trying to get all of the wires to the right spot on the chip can get messy as well.
@@ -217,6 +229,13 @@ For instance, a NAND gate is drawn by first drawing an AND gate, and then adding
 Similarly, the NOR gate is an OR gate with a circle in front of it.
 The XOR gate is similar to the OR gate, but with an extra line going across its inputs.
 
+Many times, the internal schematics of a chip are shown using gate symbols, in order to help you understand the operation of the chip and how the pins work.
+For instance, Figure~\ref{figCD4081InternalLayout} shows how the CD4081 chip is wired up internally.
+You can see the inputs going through the logic gate, and out towards the output.
+While this isn't any new information you didn't already know, if may help you understand why the pins are laid out the way that they are.
+
+\simplegraphicsfigure{The Internal Layout of the CD4081}{CD4081InternalLayout}{0.08}
+
 As an interesting side-note, every logic function can actually be built from NAND gates, though you have to wire them up in strange ways.
 You can actually build a computer entirely from NAND gates if you wanted to.
 It is not incredibly important, but Figure~\ref{figNANDLogic} shows how to build each type of logic gate from NAND gates.
@@ -232,9 +251,12 @@ What language are such people speaking?
 
 There is a huge selection of chips available, and learning their names is a daunting task.
 Appendix~\ref{appICNaming} attempts to offer some method to the madness, but, at the end of the day, chip names are like people's names---you get to know them by using them.
+Nobody knows everybody's name, but, for the types of projects you like to work on (whatever that happens to be), there will be standard chips whose names you will eventually come to know.
 
-However, once you make it through this book, you should have a solid enough background to search for the chips you need, have some understanding of the part names, and be able to find the chips you need for your projects.
+Once you make it through this book, you should have a solid enough background to search for the chips you need, have some understanding of the part names, and be able to find the chips you need for your projects.
 If you buy the chips from a seller geared towards amateurs and hobbyists, they will likely also include tutorials and additional information available in an easier-to-understand format than just datasheets.
+
+% FIXME - refer questions to a forum
 
 \reviewsection
 
@@ -264,12 +286,13 @@ In this chapter, we learned:
 \begin{enumerate}
 \item Draw the circuit in Figure~\ref{figLogicGateExample} yourself.  Identify the function of each resistor.
 \item Build the circuit in Figure~\ref{figLogicGateExample} (don't forget that the power source should be $5\myvolt$).
-\item If you assume that no current flows through the inputs of the AND gate, and that the output functions as a $5\myvolt$ power source how much current flows through each resistor when all of the buttons are pressed?  What, then, is the total current used by the circuit if you ignore the logic gate?
+\item If you assume that no current flows through the inputs of the AND gate, and that the output functions as a $5\myvolt$ power source, how much current flows through each resistor when all of the buttons are pressed?  What, then, is the total current used by the circuit if you ignore the logic gate?
 \item Measure the actual current that flows through each resistor.  If you are having trouble pushing the buttons while you measure the current, just replace the buttons with wires for this test.
 \item Measure the current that it used by the AND gate itself.  You can do this by measuring the supply current of the AND gate.  Measure it both when its output is true and false.
 \item Draw a schematic of a circuit that has two buttons (B1 and B2) which light up an LED if either button is pressed.
 \item Draw a schematic of a circuit that has two buttons (B1 and B2) which light up an LED if neither button is pressed.
 \item Draw a schematic of a circuit that has four buttons (B1--B4) which light up an LED if either B1 and B2 are pressed or if B3 and B4 are pressed.
-\item Look at the construction of the different gates from NAND gates in Figure~\ref{figNANDLogic}.  Copy down the OR gate four times, and trace how the output is generated for each possible set of inputs (true/true, true/false, false/true, false/false).  Show the inputs and outputs on each NAND gate.  Compare the outputs to the truth table for the OR function in Figure~\ref{figTruthTable}.
+\item Look at the construction of the different gates from NAND gates in Figure~\ref{figNANDLogic}.  Copy down the OR gate construction four times, and trace how the output is generated for each possible set of inputs (true/true, true/false, false/true, false/false).  Show the inputs and outputs on each NAND gate.  Compare the outputs to the truth table for the OR function in Figure~\ref{figTruthTable}.
 \item Take the circuit in Figure~\ref{figLogicGateExample} and draw a schematic to use pull-up resistors on the inputs rather than pull-down resistors.  How will this change the behavior of the circuit?
+\item Let's say that we want to create a door buzzer so that someone outside a door can push a button to be let in.  However, the person inside also wants a switch to be able to disable the buzzer.  The buzzer can be thought of as a simple device that buzzes when any positive voltage is applied.  Draw a circuit diagram of this setup using logic gates.  The buzzer can be drawn as a resistor labelled ``buzzer'' (don't forget to connect the other side to ground).
 \end{enumerate}
