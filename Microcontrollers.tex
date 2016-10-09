@@ -27,6 +27,9 @@ The microcontroller we will be focusing on is the ATmega328/P.
 Actually, we will focus less on this specific chip than the overall environment surrounding it, known as Arduino.
 However, it is good to have a quick introduction to this chip and how it works.
 
+The ATmega328/P is part of a family of microcontrollers developed by Atmel known as the AVR family.
+The AVR became popular because it was one of the first chips to use flash memory to store its programs, which allowed the onboard programs to be more easily changed.
+
 Figure~\ref{figATmegaPinout} shows a simplified pin configuration of the chip, focused on how it is used in the Arduino environment.
 The VCC pin and the GND pins are the primary power pins.
 The chip can run on a range of voltages, but $5\myvolt$ is a very common and safe setting.
@@ -49,7 +52,7 @@ The ATmega328/P has an internal clock, but it can also be more efficiently opera
 You might wonder, what does the chip \emph{do} with its input and output pins?
 That is entirely up to you.  
 It does \emph{whatever you program it to do}.
-The ATmega328/P has flash memory on the chip which can store a computer program.
+The ATmega328/P has \glossterm{flash memory} on the chip which can store a computer program (flash memory means that it will remember the program even after the power turns off).
 You have to upload your program to the chip, and then after that it will do whatever you like with its inputs and outputs.
 The D0 and D1 pins, in addition to providing input and output, can also be used to reprogram the chip.
 We will learn how to program the chip in Section~\ref{secProgrammingArduino}.
@@ -73,17 +76,138 @@ Likewise, most chips have a recommended \glossterm{programming environment} as w
 A programming environment is a set of tools for your computer that allow you to create programs for your microcontroller.
 Additionally, a device called an \glossterm{in-system programmer} connects your computer to your chip or development board and will transmit the program from your computer to the chip.
 
-In 2005, a complete, simplified system for doing all of these tasks called \glossterm{Arduino} was created.
+In 2005, a complete, simplified system for doing all of these tasks called \glossterm{Arduino} was created, based off of an earlier system called Wiring.
 Arduino consists of (a) a simplified development environment for your computer to write software for microcontrollers, (b) a simplified development board to make it very easy to build electronics projects, and (c) integrating the in-system programmer into the development board so that all that is required is a USB cable.
 
 The Arduino environment supports a number of different microcontroller chips.
 Because it is a simplified environment, many of the special features of individual chips are not directly supported.
 However, for getting started and doing basic projects, the Arduino environment is excellent.
 
+Even though there is a company behind Arduino, there are many Arduino-compatible boards made by other manufacturers.
+These boards use the same ATmega328/P microcontroller, and often have very similar development boards and functions.
+Most importantly, they are compatible with the programming tools on the Arduino environment.
+
 \section{The Arduino Uno}
 
+\simplegraphicsfigure{The Major Components of the Arduino Uno}{ArduinoUnoDiagram}{0.8}
+
 This book focuses on the Arduino Uno development board.
-Figure~\ref{figUnoBoard}
+Figure~\ref{figArduinoUnoDiagram} shows what the board looks like, as well as a general idea of what the different areas of the board accomplish.
+The Uno is very nice because the USB port allows a whole slew of functions---not only can it be used to receive programs for the chip, but you can also power the board through the USB, as well as send data back-and-forth to the computer through it.
+If you are not connected to USB, there is a separate power plug that can be plugged into the wall or to a $9\myvolt$ battery.
+
+The Arduino Uno provides chips for power regulation, USB communication, as well as the ATmega328/P microcontroller itself.
+It also supplies an external clock for the microcontroller.
+Finally, it provides \glossterm{headers} (places on the board to plug in wires) for the major pins on the microcontroller.
+Thus, everything you need to make use of the chip is provided for you in this development board.
+You simply connect the input and output pins to your own breadboard and you can have a working project that you can program.
 
 \section{Programming the Arduino}
 \label{secProgrammingArduino}
+
+Now that we have seen the pieces of the Arduino environment, let's tackle programming the Arduino.
+This book is not a book about programming, so we will only cover the absolute basics.
+
+The programming tool for the Arduino is called the \glossterm{Arduino IDE}.
+IDE stands for ``Integrated Development Environment''---in other words, the thing that you develop with.
+The Arduino IDE is available for pretty much any computer---Mac, Windows, or Linux.
+You can download the IDE from \icode{http://arduino.cc/}.
+
+Depending on whether you purchased an ``official'' Arduino or a clone, you may also have to download an additional driver for the USB interface.
+You can download the driver from \icode{http://bplearning.net/drivers}.
+Once you have installed the Arduino IDE and the USB driver, you are ready to start!
+
+We will begin by using an example program (called a ``sketch'' in Arduino terminology) that ships with the Arduino.
+First, connect your Arduino to your computer with a USB cable.
+Open up the Arduino IDE, then click ``File,'' then ``Examples,'' then ``01.Basics,'' and finally click on ``Blink.''
+This loads up a ready-made program for your Arduino.
+This program simply turns the D13 pin on and off.
+On an Arduino, the D13 pin already has an LED attached to it, so you don't even need to add any components!
+
+Now that you have the program loaded up, click the button with the checkmark icon.
+This verifies that the program is written in a way that the computer can understand.
+If it has any errors, it will show them in the black panel on the bottom.
+
+Now you need to make sure that the IDE is targetted at your board.
+Go to ``Tools'' and then ``Board'' and make sure that ``Arduino/Genuino Uno'' is selected.
+Then, click on ``Tools'' and then ``Port'' and make sure your Arduino was detected and that it is selected.
+If you don't see your Arduino listed here, you may need to check the USB driver installation.
+
+Once your configuration is verified, click the button with the arrow icon to upload it to the Arduino.
+It should take about 2--5 seconds, and then the LED on your Arduino should start blinking.
+If there are any errors, they will display in the black status area below.
+Note that some Arduinos come with this program pre-installed.
+If this is the case, your Arduino may not have changed what it is doing much.
+You can verify that it is all working by changing the program slightly.
+If you change all of the numbers that say \icode{1000} to \icode{500} it should blink twice as fast.
+Remember, though, that you must verify it (click the checkmark button) and upload it (click the arrow button) to get your new code onto the board.
+
+Now, let's take a look at the code and how it functions.
+The first part of the code should be greyed out.
+That's because it is a \glossterm{comment}, or a note telling you about the program.
+This isn't read by the computer at all.
+Comments start with the characters \icode{/*} and they continue until they reach the characters \icode{*/}.
+Shorter comments are sometimes made with the characters \icode{//}.
+Those comments only continue until the end of the line.
+
+After the comments, there are two \glossterm{functions} defined---\icode{setup()} and \icode{loop()}.
+A function is simply a piece of code that is named.
+In the Arduino environment, the \icode{setup} and \icode{loop} functions are special.
+The \icode{setup} function runs once when the chip first turns on.
+It is used for things such as telling the chip which pins will be used for input and which ones will be used for output and doing other setup-related tasks.
+After the \icode{setup} function completes, the \icode{loop} function runs over and over again for as long as the chip is on.
+
+If you look at the code, the \icode{setup} function contains one command: \\
+\icode{pinMode(13, OUTPUT);}
+
+This tells the microcontroller that digital output~13 (D13) will be used for output.  
+Note that this refers to the D13 pin in Figure~\ref{figATmegaPinout} (usually just labelled \icode{13} on the Arduino Uno), not to pin~13 of the chip itself (which would be D7).
+With the Arduino Uno, we don't actually need to worry about the pinout of the ATmega328/P, we just need to read the names of the pins next to the pin headers.
+
+The \icode{loop} function is the main part of the code. 
+It looks like this: 
+
+\icode{digitalWrite(13, HIGH);} \\
+\icode{delay(1000);} \\
+\icode{digitalWrite(13, LOW);} \\
+\icode{delay(1000);} \\
+
+The first line (\icode{digitalWrite(13, HIGH);}) says to turn D13 to HIGH, which is about $5\myvolt$.
+This provides the power for the LED attached to D13.
+This pin will remain high until we tell it to do something else.
+
+The next line (\icode{delay(1000);}) tells the chip to wait for 1,000 milliseconds (which is one second).
+During this time, nothing happens---the chip just waits.
+Changing this number changes the amount of time that the chip will wait for.
+Changing it to \icode{500} will cause it to wait for half a second, and increasing it to \icode{2000} (note that there are no commas in the number!) will cause it to wait for two seconds.
+
+The next line turns D13 to LOW/false/off/$0\myvolt$.
+This turns off the LED, because there is no longer any voltage supplied to it.
+D13 will stay in this state until told otherwise.
+The next line then waits for one second.
+
+Once this function finishes, the chip will simply run the \icode{loop} function again from the start.
+
+\reviewsection
+
+In this chapter, we learned:
+
+\begin{enumerate}
+\item A microcontroller is a small computer in a single microchip that provides customizable logic for handling digital signals.
+\item A development board is a circuit board that simplifies the process of building circuits with a microchip by providing most of the standard connections for you, allowing you to focus your efforts on the things that make your project distinctive.
+\item In order to use a microcontroller it has to be programmed from a computer.
+\item The Arduino environment is a combination of software and hardware meant to make building microcontroller projects easier.
+\item The Arduino Uno is a development board for the Arduino environment that includes a microcontroller, USB connection, power regulation, and headers for connecting the microcontroller's input/output pins to other circuits.
+\item The ATmega328/P is the microcontroller used in the Arduino Uno.
+\item An Arduino program (called a sketch) has two standard functions---\icode{setup} (which is run once when the chip powers on) and \icode{loop} (which runs over and over again as long as the chip is on).
+\item Once a program is uploaded to the Arduino Uno, it will be saved on the device until another program is loaded.
+\end{enumerate}
+
+\applysection
+
+\begin{enumerate}
+\item Practice modifying and uploading the Blink program to the Arduino Uno.  Change the numbers given to \icode{delay} to different values, and see how that affects the operation of the program.
+\item The ATmega328/P is only one of many different microcontrollers available in the AVR family.  Research online to find one or two other AVR chips and what different features they have.
+\item The AVR family is only one of many microcontroller families.  Research one or two other microcontroller families and look at what features are claimed for each.  Examples of other microcontroller families include: PIC, STM32, MSP432, and the Intel Quark.
+\item Go to the \icode{arduino.cc} website and look at the different types of Arduinos that are available.  What makes them different?  Why might you choose one for a project over another?
+\end{enumerate}
