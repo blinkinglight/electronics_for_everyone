@@ -1,0 +1,58 @@
+$ 1 32 0.00390625 0 5 50 White 1024 1024 false
+
+O 448 128 384 128 0 1
+> RESET
+O 448 192 384 192 0 2
+> Digital I/O 0 (RX)
+O 448 256 384 256 0 3
+> Digital I/O 1 (TX)
+O 448 320 384 320 0 4
+> Digital I/O 2
+O 448 384 384 384 0 5
+> Digital I/O 3 (PWM)
+O 448 448 384 448 0 6
+> Digital I/O 4
+O 448 512 384 512 0 7
+> VCC (5V)
+O 448 576 384 576 0 8
+> GND
+O 448 640 384 640 0 9
+> Clock (IN)
+O 448 704 384 704 0 10
+> Clock (OUT)
+O 448 768 384 768 0 11
+> Digital I/O 5 (PWM)
+O 448 832 384 832 0 12
+> Digital I/O 6 (PWM)
+O 448 896 384 896 0 13
+> Digital I/O 7
+O 448 960 384 960 0 14
+> Digital I/O 8
+O 640 960 704 960 0 15
+> Digital I/O 9 (PWM)
+O 640 896 704 896 0 16
+> Digital I/O 10 (PWM)
+O 640 832 704 832 0 17
+> Digital I/O 11 (PWM)
+O 640 768 704 768 0 18
+> Digital I/O 12
+O 640 704 704 704 0 19
+> Digital I/O 13
+O 640 640 704 640 0 20
+> Analog VCC
+O 640 576 704 576 0 21
+> Analog Reference
+O 640 512 704 512 0 22
+> GND (Alternate)
+O 640 448 704 448 0 23
+> Analog Input 0
+O 640 384 704 384 0 24
+> Analog Input 1
+O 640 320 704 320 0 25
+> Analog Input 2
+O 640 256 704 256 0 26
+> Analog Input 3
+O 640 192 704 192 0 27
+> Analog Input 4
+O 640 128 704 128 0 28
+> Analog Input 5

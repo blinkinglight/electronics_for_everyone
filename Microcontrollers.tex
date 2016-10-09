@@ -15,8 +15,75 @@ A ``real'' computer chip usually relies on a whole slew of other chips (memory c
 A microcontroller contains all of these (though usually on a smaller scale) in a single chip that can be added to an electronics project.
 
 Unlike your typical computer, most microcontrollers can't be connected to a keyboard or other typical input, and can't be connected to a monitor, disk drive, or other typical output.
-Instead, microcontrollers usually communicate entirely through electrical signals on their pins.
+Instead, microcontrollers usually communicate entirely through digital (true/false) electrical signals on their pins.
 
-Instead of using complex logic on your 
+So, instead of wiring complex logic onto their boards, many people opt to have microcontrollers provide the bulk of their digital logic.
+One complication that this adds, however, is that, since the microcontroller is essentially a computer, then just like a computer, it has to be programmed.
+This means that not only must circuit designers be familiar with electronics, they must also be familiar with computer programming.
 
+\section{The ATmega328/P Chip}
 
+The microcontroller we will be focusing on is the ATmega328/P.
+Actually, we will focus less on this specific chip than the overall environment surrounding it, known as Arduino.
+However, it is good to have a quick introduction to this chip and how it works.
+
+Figure~\ref{figATmegaPinout} shows a simplified pin configuration of the chip, focused on how it is used in the Arduino environment.
+The VCC pin and the GND pins are the primary power pins.
+The chip can run on a range of voltages, but $5\myvolt$ is a very common and safe setting.
+AVCC and AGND power the chip's analog-to-digital converter unit.
+
+\simplegraphicsfigure{A Simplified Pinout of the ATmega328/P}{ATmegaPinout}{0.08}
+
+All of the pins labelled ``D'' are digital input/output pins.
+They can be configured as inputs for buttons or other signals, or as outputs for driving LEDs or other output devices.
+The pins labelled ``A'' are analog input pins.
+While the digital input pins can only read that a value is true/false, the analog pins can read voltages and convert them to numbers.
+AREF is a ``reference voltage'' used for setting the maximum voltage for analog inputs, but is usually unconnected (it should also not be higher than AVCC).
+
+Microcontrollers, like most processors, control their operation by using a ``clock.''  
+This is not a clock like you normally think of.
+A better way to think of this is as a heartbeat.
+Basically, there is a continuous signal of pulses that are provided through the clock, and the pulses allow the chip to synchronize all of its activities.
+The ATmega328/P has an internal clock, but it can also be more efficiently operated by connecting an external clock (quartz crystals, for instance, provide a \emph{very} steady pulse).
+
+You might wonder, what does the chip \emph{do} with its input and output pins?
+That is entirely up to you.  
+It does \emph{whatever you program it to do}.
+The ATmega328/P has flash memory on the chip which can store a computer program.
+You have to upload your program to the chip, and then after that it will do whatever you like with its inputs and outputs.
+The D0 and D1 pins, in addition to providing input and output, can also be used to reprogram the chip.
+We will learn how to program the chip in Section~\ref{secProgrammingArduino}.
+
+\section{The Arduino Environment}
+
+The chip itself is just one piece of the puzzle.
+In order to use the chip, you have to be able to program it.
+Programming requires the use of programming tools on your main computer.
+In addition, you also need some way to take the program that you built on your computer and load it onto the chip.
+That takes both software and hardware.
+
+Then, once the program is on the chip, you have to build a circuit to properly power the chip.
+This requires voltage regulation for the VCC pin, and several other recommendations from the manufacturer about how to setup the other pins.  
+All of this can be quite a lot of work, and a lot of pieces that need to be brought together.
+
+Thankfully, most chips have what is called a \glossterm{development board} that can be purchased.
+A development board is a pre-built circuit that has a microcontroller chip pre-connected in its recommended manner.
+It is made to simplify the work of developing circuits.
+Likewise, most chips have a recommended \glossterm{programming environment} as well.
+A programming environment is a set of tools for your computer that allow you to create programs for your microcontroller.
+Additionally, a device called an \glossterm{in-system programmer} connects your computer to your chip or development board and will transmit the program from your computer to the chip.
+
+In 2005, a complete, simplified system for doing all of these tasks called \glossterm{Arduino} was created.
+Arduino consists of (a) a simplified development environment for your computer to write software for microcontrollers, (b) a simplified development board to make it very easy to build electronics projects, and (c) integrating the in-system programmer into the development board so that all that is required is a USB cable.
+
+The Arduino environment supports a number of different microcontroller chips.
+Because it is a simplified environment, many of the special features of individual chips are not directly supported.
+However, for getting started and doing basic projects, the Arduino environment is excellent.
+
+\section{The Arduino Uno}
+
+This book focuses on the Arduino Uno development board.
+Figure~\ref{figUnoBoard}
+
+\section{Programming the Arduino}
+\label{secProgrammingArduino}
