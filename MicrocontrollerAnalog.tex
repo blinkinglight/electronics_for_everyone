@@ -1,0 +1,113 @@
+\chapter{Analog Input and Output on an Arduino}
+
+In Chapter~\ref{chapArduinoProjects}, we learned how to do basic digital input and output with an Arduino using its I/O pins.
+In this chapter, we will cover how to do analog input and output as well.
+
+\section{Reading Analog Inputs}
+
+So far we have been focusing on digital input and output---HIGH and LOW states.
+The Arduino Uno also supports some amount of analog input (through its analog pins) and a sort of ``faked'' analog output (through its PWM pins, which will be covered in the next section).
+
+On the Arduino Uno, the analog input pins are grouped together in a section labelled ``Analog In.''
+These pins are voltage sensors similar to the digital I/O pins, but they can detect a range of values between $0\myvolt$ and $5\myvolt$ (you should never exceed $5\myvolt$ on any Arduino pin).
+The \icode{analogRead()} function is similar to the \icode{digitalRead()} function in that it takes a pin number and returns an output value.
+The difference is that the pin number given to \icode{analogRead()} corresponds to an analog input pin number, not a digital pin number, and the output, rather than being LOW or HIGH, is a number from 0 to 1023 (10 bits of resolution).
+$0\myvolt$ will give you a 0, and $5\myvolt$ will give you 1023.
+
+Because of this, we can rework the darkness sensor we developed in Chapter~\ref{chapIC} to use the Arduino.
+Since the photoresistor is just a resistor, we still need to use a voltage divider to convert the resistance value to a voltage.
+However, we no longer need the voltage comparator to get it to work---we can just directly connect it to an analog port on the Arduino!
+
+\simplegraphicsfigure{The Darkness Sensor Rebuilt for Arduino}{DarknessSensorArduino}{1}
+
+Figure~\ref{figDarknessSensorArduino} shows the darkness sensor rebuilt for the Arduino.
+Notice that we have a lot fewer custom components, because the control has been moved from hardware to the Arduino's software.
+We don't need a reference voltage and we don't need a voltage comparator.
+We just have one voltage divider to convert the photoresistor's resistance to a voltage (with a wire going to the Arduino's analog input pin~1), and an LED with a current limiting resistor for the output (fed from digital pin~2).
+Everything else comes from software.
+
+\begin{typingwithlabel}{Code for the Arduino Darkness Sensor}{figDarknessSensorArduinoCode}
+\lstinputlisting{DarknessSensorArduino.cpp}
+\end{typingwithlabel}
+
+Figure~\ref{figDarknessSensorArduinoCode} shows the code that will run the sensor.
+Note that in the \icode{loop()} function, we are now using \icode{analogRead()} rather than \icode{digitalRead()}. 
+Now, instead of it returning HIGH or LOW, it is returning a number.
+We can then compare that number to a baseline number to tell us whether we should turn the LED on or off.
+
+Now, you may wonder where I got the value to compare against (i.e., 450). 
+What I did was to test the sensor in a variety of conditions, and see which value turned off the light when I wanted it to!
+
+However, you may be wondering what exactly are the values that it is reading.
+Thankfully, the Arduino environment allows a way for us to get feedback from the device while it is running, if it is connected to the computer.
+To do this, we use the what is known as the \glossterm{serial} interface to the Arduino.
+This interface communicates over USB so that we can let our computer know how things are going in the program.
+
+To use the USB serial interface, in your setup function you add the following line:
+
+\icode{Serial.begin(9600);}
+
+This tells the chip to initialize its serial interface at 9600 baud (\glossterm{baud} is an old term meaning ``bits per second''), which allows us to talk back to the computer.
+However, it is important to note that if you use the \icode{Serial} functions, you should not have anything connected to Digital Pin~0 or Pin~1 of the Arduino.
+
+Now, in your program, you can do \icode{Serial.println()} to output any value you want.
+We will do
+
+\icode{Serial.println(analogRead(1));}
+
+to let us know what the current value of the analog input is reading at.
+The new program, with the added feedback, is shown in Figure~\ref{figSimpleArduinoButtonLEDWithSerialCode}.
+After uploading this code to the Arduino, to see your output, click on the magnifying glass on the top right of the screen.  
+You can also go to the ``Tools'' menu and select ``Serial Monitor.''
+Either way gets you to the same screen.
+When the code is running, it should be spewing out pages and pages of numbers.
+Each of these numbers is the current value of \icode{analogRead()} when it is encountered in the code, which happens hundreds or thousands of times each second (it is slowed down a bit by the USB communication).
+
+\begin{typingwithlabel}{Darkness Sensor with Serial Feedback}{figSimpleArduinoButtonLEDWithSerialCode}
+\lstinputlisting{DarknessSensorArduinoSerial.cpp}
+\end{typingwithlabel}
+
+\section{Analog Output with PWM}
+
+So, we have discussed analog \emph{input}, but what about analog \emph{output}.
+Truthfully, the Arduino does not support analog output as such.
+However, analog output is \emph{faked} on an Arduino using a technique known as \glossterm{pulse-width modulation}, abbreviated as \glossterm{PWM}.
+The Arduino only outputs $5\myvolt$ on its output pins.
+But, let's say we wanted to fake a $2.5\myvolt$ signal.
+What might we do?
+Well, if we turned the pin on and off rapidly so that it was only on for half the time, that would give us about the same amount of electricity as $5\myvolt$.
+That's what PWM does---it fakes lower voltages by just flipping the power to the pin on and off very rapidly so that it ``looks'' like a lower voltage.
+
+Arduino programs use the function \icode{analogWrite()} to use a pin for PWM.
+This function is a little confusing because, (a) it uses digital pins, not analog pins, and (b) the value is between 0 and 255, not 0 and 1023 like \icode{analogWrite()}.
+Other than that, it basically does what you might expect.
+\icode{analogWrite(3, 0);} will turn off Digital Pin~3, \icode{analogWrite(3, 255);} will turn it all the way on, \icode{analogWrite(3, 127);} will flick it on and off pretty evenly, and \icode{analogWrite(3, 25);} will keep Pin~3 on only a short time relative to how long the pin stays off.
+
+\simplegraphicsfigure{A Simple Analog Dimmer}{AnalogDimmer}{1}
+
+To get a flavor for PWM, we will do a very simple PWM project---a dimmed LED.
+Figure~\ref{figAnalogDimmer} shows what the connection will look like.
+Just an LED with a current limiting resistor attached to Digital Pin~3 (which is marked with an \icode{~} to indicate that it is capable of PWM).
+Figure~\ref{figAnalogDimmerCode} shows the code to dim the output.
+
+\begin{typingwithlabel}{Code for the Analog Dimmer}{figAnalogDimmerCode}
+\lstinputlisting{AnalogDimmer.cpp}
+\end{typingwithlabel}
+
+This code is a little more complicated.
+It's alright if you don't understand it fully.
+In short, it creates a \glossterm{variable}, which is a named temporary storage location for a value (we are calling it \icode{i} for a short name).
+It is declared an \icode{int}, which means it will hold an integer, and we set it with a starting value of zero.
+
+The \icode{while} loop executes everything within the block of code between \icode{\{} and \icode{\}} over and over again, as long as \icode{i} is less than \icode{255}.
+Within this block, we write the value of \icode{i} to pin \icode{3} using \icode{analogWrite()}.
+Then, we delay for 10~milliseconds to make sure it is visible.
+Then, we increase \icode{i} by one to go to the next value.
+
+The next \icode{while} loop does the same thing but goes the other way.
+It starts at \icode{255} and progresses down to~\icode{0}.
+Then, when it is all the way to zero, it runs the \icode{loop} function over again.
+
+Even though this code is running by switching the pin on and off at different rates, it \emph{looks like} the LED is dimming on and off.
+It is flickering so fast that we merely perceive it as a lower-energy light than as a pulsing light.
+In fact, when it gets to about 180 (about 70\% on and 30\% off), there is not a lot of difference between that and full brightness.

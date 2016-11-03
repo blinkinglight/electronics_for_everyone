@@ -1,0 +1,118 @@
+\chapter{Building Projects with Arduino}
+\label{chapArduinoProjects}
+
+Chapter~\ref{chapMicrocontrollers} covered the basics of what microcontrollers are, what the Arduino environment is, and how to load a program onto an Arduino board.
+In this chapter, we will go into more depth on how to include an Arduino Uno into a project.
+
+\section{Powering Your Breadboard from an Arduino Uno}
+
+The first thing to understand about the Arduino Uno is that one of its main jobs is power regulation.
+As we saw in Chapter~\ref{chapMicrocontrollers}, the Arduino can use a variety of power sources---USB, battery, or a wall plug.
+Additionally, there is a connection on the Uno's headers that allow for you to supply power from some other source.
+
+If you have a power source that just has wires coming out of it---like a $9\myvolt$ battery with a simple wire connector---The Uno has a place that you can plug it in.
+The pin labelled $V_{IN}$ is used for supplying an unregulated voltage supply (7--12 volts) to the Uno (do not use the one labelled 5V).
+Therefore, if you plug the positive wire into $V_{IN}$ and the negative wire into any of the $GND$ pins (it doesn't matter which one), then the Uno will spring to life.
+
+\simplegraphicsfigure{Powering a Simple Project from an Arduino Uno}{PowerFromArduino}{1}
+
+On the flip side, you can actually power the rest of your project from the Uno, and take advantage of its voltage regulation, as well as its numerous methods for getting power.
+To do this, simply take a wire from the 5V connection on the Uno and connect it to the positive rail on your breadboard.
+Then, take another wire from one of the GND connections on the Uno and connect it to the ground rail on the breadboard.
+Viol\`{a}!  A very flexible $5\myvolt$ power supply for your breadboard.
+Figure~\ref{figPowerFromArduino} shows how to use this to light a simple LED circuit.
+
+Also note that there is also a $3.3\myvolt$ connection if you need it, as many small devices are powered at that level.
+
+\section{Wiring Inputs and Outputs to an Arduino Uno}
+
+Now that we know how to power a breadboard from an Arduino Uno, we can now see how to connect inputs and outputs to the Uno.
+
+Wiring inputs and outputs to an Uno is actually very easy.
+Outputs of the Uno can be viewed as simple voltage sources, like a battery, which operate at either $5\myvolt$ (if set to HIGH) or $0\myvolt$ (if set to LOW).
+Remember that any of the digital I/O pins can be set to be input or output pins in your Arduino program with the \icode{pinMode} command.
+
+However, even though an output pin can act as a voltage source, the current needs to be limited to prevent damage to the Arduino.  
+Each output pin should only be sourcing up to $20\mymamp$ of current, and the total amount of output of all pins combined should never exceed $100\mymamp$.
+So, for instance, if you have an LED output, be sure to add a resistor to limit the amount of current.
+Microcontrollers generally cannot drive high-power devices such as motors directly, and must use some sort of a power booster to do so.
+We will learn more about power later in the book.
+
+Inputs to an Arduino are essentially voltage sensors.
+They will detect a HIGH (around $5\myvolt$) or LOW (near $0\myvolt$) signal on the pin.
+You can think of them as having a very large resistor attached to the front (about $100\myMohm$---one hundred million ohms), so they don't actually use up any serious amount of current.
+However, because they use so little current, that means that, just like our inputs in Chapter~\ref{chapLogicICs}, they cannot be left disconnected, or the results may be randomized from static electricity in the air.
+Thus, for inputs, you should always attach a pull-up or a pull-down resistor (usually a pull-down) to the input to make sure that the input is \emph{always} wired into the circuit in a known-valid state.
+
+\section{A Simple Arduino Project with LEDs}
+
+In this section, we are going to look at making a simple Arduino project with two buttons, each controlling one of two LEDs.
+This would actually be simpler to wire without the Arduino, but the goal is to make a baby step to understanding how Arduino projects work.
+
+This project is going to have buttons wired into Digital Pin~2 and Digital Pin~3 of the Arduino, and LEDs wired into Digital Pin~4 and Digital Pin~5.
+Let's think about what these need to look like.
+The LEDs will each need a current limiting resistor, and the buttons will each need a pull-down resistor.
+
+\simplegraphicsfigure{Wiring a Simple Button-based Arduino Project}{SimpleArduinoButtonLED}{1}
+
+Figure~\ref{figSimpleArduinoButtonLED} shows how this should be wired up.
+The breadboard is being powered from the $5\myvolt$ and GND terminals on the ARduino.
+The wires on the right side make sure power is connected to both sides of the breadboad.
+On the bottom, buttons are wired up with pull-down resistors and connected to Digital Pins~2 and~3 on the Arduino.
+On the top, the LEDS are connected to Digital Pins~4 and~5, with current limiting resistors making sure they don't draw too much current.
+
+Now, of course, for an Arduino, this is not enough.
+The Arduino also needs a program to control it!
+Figure~\ref{figSimpleArduinoButtonLEDCode} shows the program you will need to type in to control the LEDs.
+
+\begin{typingwithlabel}{An Arduino Program to Control Two Buttons and Two LEDs}{figSimpleArduinoButtonLEDCode}
+\lstinputlisting{SimpleArduinoButtonLED.cpp}
+\end{typingwithlabel}
+
+Note that, as usual, the project is divided into two pieces---\icode{setup()}, which only occurs once when the chip starts up, and \icode{loop()}, which continuously runs over and over again until the chip is turned off or reset.
+\icode{setup()} simply tells which pins should be in which mode.
+Note that, unless it includes the calls to the \icode{delay()} function, the \icode{loop()} function will literally run thousands of times per second (or more).
+The Arduino Uno can execute approximately 16 million instructions per second.
+Each line of code translates to many instructions, but nonetheless, it goes \emph{really fast}.  
+Just keep this in mind when you are writing programs.
+
+Inside the \icode{loop()} function we have a new Arduino function---\icode{digitalRead()}.
+The \icode{digitalRead} function takes a pin number and returns whether that pin is HIGH or LOW.
+We have put this into a conditional---\emph{if} the read from the button pin is HIGH, then the corresponding LED pin is turned HIGH.  
+Alternatively (i.e., \emph{else}), if the read from the button pin is not HIGH (i.e., it is LOW), then the corresponding LED pin is turned LOW.
+Note that there are \emph{two} equal signs used in the comparison.
+In many programming languages, you use two equal signs to tell the computer to compare values.
+A single equal sign often means that you are setting a value.
+
+This book is not a book on computer programming, so we are not going to cover all of the details.
+Because of this, most of the programs will be given to you, and you will only need to make minor modifications.
+However, if you are interested in learning more, the programming language being used in the Arduino environment is C++, and the Arduino focuses on the easier-to-understand portions of it.
+\fixme{Need a link to a good Arduino programming book}
+
+\section{Changing Functionality without Rewiring}
+
+Now, you might reasonably be thinking, ``wouldn't this be a lot easier if we just directly attached the buttons to the LEDs to turn them off and on?''
+Indeed, it would. 
+However, by having the inputs and outputs all wired to the Arduino, we can actually \emph{change} the functionality of the project \emph{without} having to do a single bit of rewiring!
+For instance, if we wanted to have the left button control the right LED and the right button control the left LED, then all we would have to do is swap all of the \icode{2}s for \icode{3}s in the program, and vice-versa.
+
+Now imagine if we had spent time developing such a device, and even had it sent off to manufacturing, but later decided that we wanted to change the functionality.
+If all of the parts are connected together by hardware, then that means that you have to throw away all of your old inventory to modify your functionality.
+If, instead, you use software to connect your components, then oftentimes you can update your device merely by updating your software.
+
+Other modifications we can think of to this simple device might include:
+\begin{enumerate}
+\item making the LEDs turn off rather than on when the buttons are pressed
+\item making the LEDs blink when the buttons are pressed
+\item changing the buttons to be simple toggles, so that you don't have to keep on holding the buttons down to keep the LED on
+\item requiring that the buttons be pushed in a particular order in order to turn on the LED
+\item requiring that both buttons be pushed to turn on the LEDs.
+\end{enumerate}
+
+This list could go on and on.
+By routing all control processing through your microcontroller, you make your devices much more flexible.
+Additionally, at some point, they also become cheaper.
+When mass-producing, microcontroller chips like the ATmega328/P can be had for just over a dollar.
+Some chips, when purchased in bulk, cost less than fifty cents!
+So, if a microcontroller is replacing a complex sequence of logic gates and other control functionality, moving all of your control logic to a microcontroller can actually be much less expensive than hardwiring it, and you get added flexibility as a side bonus.
+

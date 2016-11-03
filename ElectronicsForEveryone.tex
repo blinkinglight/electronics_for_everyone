@@ -43,6 +43,18 @@
 \usepackage{xcolor}
 \usepackage{maxiplot} % Maxima interface
 
+% Code listings
+\usepackage{listings}
+\lstset{ %
+basicstyle=\ttfamily,
+breakatwhitespace=true,
+breaklines=true,
+tabsize=3
+}
+
+\newenvironment{typing}[1]{\begin{figure}[H] \caption{#1} \begin{mdframed}}{\end{mdframed} \end{figure}}
+\newenvironment{typingwithlabel}[2]{\begin{figure} \caption{#1} \label{#2} \begin{mdframed}}{\end{mdframed} \end{figure}}
+
 \makeatletter
 \@ifpackageloaded{tex4ht}{
 \newcommand{\forebook}[1]{#1}
@@ -256,6 +268,8 @@ set_draw_defaults(grid=true, fill_color=grey, xaxis_type=solid, yaxis_type=solid
 
 % FIXME - on all my Fritzing diagrams, I probably need to mark +/- power rails since it will print black and white
 
+% FIXME - I know I talk about digital, but do I ever *define* analog anywhere?
+
 \include{WhatIsElectricity}
 \include{Voltage}
 \include{FirstCircuit}
@@ -269,6 +283,8 @@ set_draw_defaults(grid=true, fill_color=grey, xaxis_type=solid, yaxis_type=solid
 \include{IntegratedCircuits}
 \include{LogicICs}
 \include{Microcontrollers}
+\include{MicrocontrollerProjects}
+\include{MicrocontrollerAnalog}
 
 \part{Power Circuits}
 
