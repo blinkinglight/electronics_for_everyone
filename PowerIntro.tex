@@ -1,0 +1,110 @@
+\chapter{An Introduction to Power}
+
+So far we have covered the basic ideas of voltage, current, and resistance.
+This is good for lighting up LEDs, but for doing work in the real world, what is really needed is \glossterm{power}.
+
+\section{Important Terms Related to Power}
+
+To understand what power is, we need to go through a few terms from physics (don't worry---they are all easy terms):
+
+\begin{enumerate}
+\item \glossterm{Work} happens when you move stuff.  
+\item Work is measured in \glossterm{joules}. A joule is the amount of work performed when a 1 kilogram object is moved 1 meter.
+\item The capacity to perform work is called \glossterm{energy}.  Energy is also measured in joules.
+\item \glossterm{Power} is the sustained delivery of energy to a process.  
+\item Power is measured \glossterm{watts} (abbreviated W).  Watts are just the number of joules per second.
+\end{enumerate}
+
+One of the interesting things about work, energy, and power is that they can take on a number of forms that are all equivalent.
+For instance, we can have mechanical energy, chemical energy, and electrical energy (as well as others).
+We can also perform mechanical work, chemical work, and electrical work.
+All these types of energy and work can be converted to each other.
+They are all also measured in joules.
+Therefore, we have a common unit of energy for any sort of task we want to accomplish.
+
+Now, when we actually apply energy to perform work, we do not get a 100\% conversion rate.
+That's because the process of conversion is \glossterm{inefficient}---not all of the energy gets directed to the task we want to perform.
+There is no perfectly efficient process of converting energy to work.
+Additionally, there is no way to create energy from nothing---any time you need additional energy you will need a source for it.
+
+When energy is converted to work, \emph{all} of the energy does something, even if it isn't work on the task you want.
+Usually, the inefficiencies get converted to \glossterm{heat}.
+So, if I have a process that is only 10\% efficient, and I give that process 80 joules of energy, then that process will do only 8 joules of work, leaving 72 joules of energy that is converted to heat.
+
+Work and energy are usually used for systems that do one thing and then stop at the end.
+In electronics, we are usually building systems that stay on for long periods of time.
+Therefore, instead of measuring energy, we measure power, which is the continuous delivery of power (or usage of power in doing work).
+
+As we mentioned, power is measured in watts, which is 1 joule per second.
+So, if you have a $100\mywatt$ light bulb, that bulb uses 100 joules of energy each second.
+$100\mywatt$ light bulbs are very inefficient, which is why they get so hot---the energy that is not converted to light gets converted to heat instead.
+
+\section{Power in Electronics}
+
+So, we have a basic idea about what power is in general.
+In electronics, there are two equivalent ways of calculating power.
+
+The first is to multiply the number of volts being consumed by the number of amps of current going through a device:
+
+\begin{equation}
+W = V\cdot I
+\end{equation}
+
+Here, $W$ indicates watts, $V$ indicates volts, and $I$ indicates current measured in amps.
+So, if my circuit is on a 9-volt battery, and I measure that the battery is delivering $20\mymamp$ to the circuit, then that means I can calculate the amount of power that my circuit is using (don't forget to convert milliamps to amps first!):
+
+$$
+W &= V\cdot I \\
+  &= 9\myvolt\cdot 20\mymamp  \\
+  &= 9\myvolt\cdot 0.02\myamp \\
+  &= 0.18\mywatt
+$$
+
+So, our circuit uses 0.18 watts of power.
+
+You can also measure the amount of power that individual components use.
+For instance, let's say that a resistor has a $3\myvolt$ voltage drop and has $12\mymamp$ of current running through it.
+Therefore, the resistor uses up $3 * 0.12 = 0.36$ watts of power.
+
+The second way of calculating power comes from applying Ohm's law.
+Ohm's law say:
+
+\begin{equation}
+V = I\cdot R
+\end{equation}
+
+So, if we have the equation $W = V\cdot I$, Ohm's law allows us to \emph{replace} $V$ with $I\cdot R$.
+Therefore, our new equation becomes:
+
+\begin{equation}
+W = (I\cdot R)\cdot I
+\end{equation}
+
+Or, we can simplify it further and say that
+
+\begin{equation}
+W = I^2\cdot R
+\end{equation}
+
+So, if we have $15\mymamp$ running through a $200\myohm$ resistor, then we can calculate the amount of power being used:
+
+$$
+W &= I^2\cdot R \\
+  &= (15\mymamp)^2\cdot 200\myohm \\
+  &= (0.015\myamp)^2\cdot 200\myohm \\
+  &= 0.000225\cdot 200 \\
+  &= 0.045\mywatt
+$$
+
+Now, if you think about it, the resistor isn't actually \emph{doing} anything.
+It is just sitting there.
+Therefore, since we are not accomplishing any \emph{work} by going through the resistor, the energy gets converted to heat.
+Electronics components are usually rated for how much power they can \glossterm{dissipate}, or easily get rid of.
+Most common resistors, for instance, are rated between $1/16\mywatt$ and $1/4\mywatt$.  
+This means that they will continue to work as long as their power consumption stays under their limit.
+If the power consumption goes too high, they will not be able to handle the increased heat, and will break (and possibly catch fire!).
+
+So far, our projects have dealt with low enough power that this isn't a concern.  
+In fact, using $9\myvolt$ batteries, it is hard to generate more than $1/4\mywatt$ of power.
+
+\section{Transforming Voltage}
