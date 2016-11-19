@@ -1,0 +1,54 @@
+\chapter{Amplifying Power with Transistors}
+
+A very common method of powering projects is with \glossterm{transistors}.
+The term ``transistor'' is short for ``transconductance varistor,'' which means that it is an electrically-controlled variable resistor.
+
+\section{Basic Types of Transistors}
+
+There are many different types of transistors, with a wide variety of ways that they work.
+What they all have in common is that they have three (sometimes four) terminals, and one of the terminals acts as a control valve for the operation of the other two.
+You can think of it as like an outdoor faucet---the water going through the faucet is controlled by the wheel knob on the top.
+The faucet can be fully-on, fully-off or somewhere in-between, all based on where the knob is set.
+
+The main ways that the types of transistors differ is in how the knob is operated.
+In some transistors the knob is operated by current while in others the knob is operated by voltage.
+The transistors operated by current are known as \glossterm{bipolar junction transistors} (BJTs), and the ones operated by voltage are known as \glossterm{field effect transistors} (FETs).
+This book focuses on BJTs because they are simpler to analyze.
+
+BJTs come in two basic forms---NPN and PNP---based on whether the knob is controlled by current going into the transistor or current coming out of the transistor.
+NPNs operate on the idea of current going into the transistor to control the knob, which is much simpler for most people to conceptualize.
+So, for this chapter, we will focus on NPN BJT transistors.
+
+\section{Parts of the Transistor}
+
+\simplegraphicsfigure{The Schematic Symbol for a Transistor}{TransistorSymbol}{0.25}
+
+A transistor has three terminals---the collector, the base, and the emitter.
+Figure~\ref{figTransistorSymbol} shows what this looks like in a schematic.
+The small current comes in at the base, and it controls the larger current coming in at the collector.
+
+In the schematic, the base is the horizontal line coming in from the left in the middle.
+That knob controls the stream of current going across the other two terminals in the direction of the arrow.
+The current goes from the base (with no arrow) to the emitter (the side with the arrow).
+Note that the base current also exits the transistor through the emitter.
+
+\section{Basics of Transistor Operation}
+
+Sometimes it takes a while to wrap your head around the operation of a transistor.
+However, while it is a bit \emph{strange} it is not actually \emph{difficult}.
+You can understand most of how a transistor works by looking at a few simple rules.
+
+The first rule is that the pathway between the base and the emitter \emph{always} \emph{always} acts like a diode.
+That means that we can count on a $0.6\myvolt$ drop between the base and the emitter.
+If we know what the base's voltage is, the emitter's voltage will be \emph{exactly} $0.6\myvolt$ less.
+
+The second rule is that if the base does not rise to at least $0.6\myvolt$ above the emitter, then the transistor \emph{does not conduct}.  If the base doesn't have at least $0.6\myvolt$, the transistor is off, the faucet is closed, and no electricity goes from the collector or the base to the emitter.
+The emitter is basically shut off.
+
+The third rule is that, starting when the base is $0.6\myvolt$ above the emitter, the transistor acts as a variable resistor for the collector.
+The transistor adjusts its resistance so that the collector current is a multiple (usually 100) of the base current.
+This will likewise affect the output current the same way, as it will have \emph{both} the base and collector current added together.
+Note that no matter what the current, the emitter \emph{voltage} will always be $0.6\myvolt$ below what the base voltage is.
+So, the transistor supplies both a voltage drop and a current boost.
+
+The fourth rule is that, at the point where the base voltage is equal to the collector voltage, the transistor allows current to flow freely from the collector to the emitter without any impedance, almost as if the collector was directly wired to the transmitter.
