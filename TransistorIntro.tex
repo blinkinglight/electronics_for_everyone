@@ -1,33 +1,130 @@
 \chapter{Amplifying Power with Transistors}
 
-A very common method of powering projects is with \glossterm{transistors}.
-The term ``transistor'' is short for ``transconductance varistor,'' which means that it is an electrically-controlled variable resistor.
+Many devices have limits to the amount of power they can output, or even the amount of power we want them to output.
+Microcontrollers, for instance, are generally very sensitive with the amount of power they can source.
+The ATmega328P (used in the Arduino Uno), for instance, has a maximum current rating of $40\mymamp$, which is actually quite generous for a microcontroller.  
+Other types of microcontrollers, such as many PIC microcontrollers, are rated for current outputs of $25\mymamp$ or less.
+Additionally, the voltage is more-or-less fixed at the operating voltage of the chip, which is usually 3--5$\myvolt$.
 
-\section{Basic Types of Transistors}
+However, numerous applications require more power (whether current, voltage, or some combination) than these can output.
+A typical toy DC motor, for instance, needs about $250\mymamp$ for operation.
+So, if you want to control the motor with a microcontroller, then you have to have some way to convert your small output current into a larger output current to drive your motor.
+
+\section{An Amplification Parable}
+
+As we noted in Chapter~\ref{chappower}, physics tells us that we can't actually increase the power of something.  
+What we can do, though, is use a smaller power signal to control a larger power source, and that is what we refer to as amplification.
+
+Let's say that we have a dam on a river.
+The river wants to go downstream, but it is blocked by the dam.
+Let's say that we have a giant named Andre, which is able to lift the dam using his strength.
+If Andre lifts the dam a little bit, a little bit of water flows.
+If Andre lifts the dam a lot, all of the water can flow.
+The power of the water itself is actually more than Andre's power.
+Therefore, Andre can ``amplify'' his power by raising and lowering the dam.
+
+Let's say that at the end of the riverbed was a structure than Andre wanted to destroy, but Andre isn't strong enough to do it.
+However, the river is strong enough to do it.
+Therefore, rather than try to destroy the structure on his own, Andre decides to raise dam and let the river's power do it.
+
+Note that Andre didn't actually increase the amount of power in the river.
+Instead, he (a being with lesser power), \emph{controlled} the operation of the river (a higher-powered entity).
+Thus, he \emph{amplified} the effects of his actions by controlling the higher-powered current.
+
+\section{Amplifying with Transistors}
+
+A very common method of amplifying power output in projects is with \glossterm{transistors}.
+The term ``transistor'' is short for ``transconductance varistor,'' which means that it is an electrically-controlled variable resistor.
+In other words, it helps you amplify a signal in your project the same way that the dam allowed Andre to amplify his power.
+The transistor operates as a controllable electric dam, allowing a lesser-powered electric signal to control a higher-powered electric signal.
+Another way you can think of it as like an outdoor faucet---the water going through the faucet is controlled by the wheel knob on the top.
 
 There are many different types of transistors, with a wide variety of ways that they work.
 What they all have in common is that they have three (sometimes four) terminals, and one of the terminals acts as a control valve for the operation of the other two.
-You can think of it as like an outdoor faucet---the water going through the faucet is controlled by the wheel knob on the top.
 The faucet can be fully-on, fully-off or somewhere in-between, all based on where the knob is set.
 
-The main ways that the types of transistors differ is in how the knob is operated.
-In some transistors the knob is operated by current while in others the knob is operated by voltage.
+The main ways that the types of transistors differ is in whether it is a voltage knob or a current knob.
 The transistors operated by current are known as \glossterm{bipolar junction transistors} (BJTs), and the ones operated by voltage are known as \glossterm{field effect transistors} (FETs).
-This book focuses on BJTs because they are simpler to analyze.
 
-BJTs come in two basic forms---NPN and PNP---based on whether the knob is controlled by current going into the transistor or current coming out of the transistor.
-NPNs operate on the idea of current going into the transistor to control the knob, which is much simpler for most people to conceptualize.
-So, for this chapter, we will focus on NPN BJT transistors.
+BJTs come in two basic forms based on whether the knob is activated by positive current (current going into the transistor's base) or negative current (current coming out of the transistor's base).
+With an NPN transistor, the knob is activated by positive current, while with a PNP transistor, the knob is activated by negative current.
+
+In this chapter, we will focus on NPN BJT transistors.
 
 \section{Parts of the Transistor}
 
 \simplegraphicsfigure{The Schematic Symbol for a Transistor}{TransistorSymbol}{0.25}
 
-A transistor has three terminals---the collector, the base, and the emitter.
-Figure~\ref{figTransistorSymbol} shows what this looks like in a schematic.
-The small current comes in at the base, and it controls the larger current coming in at the collector.
+A BJT transistor has three terminals---the collector, the base, and the emitter.
+In BJT NPN transistors small positive current comes in at the base (which you can think of as the knob of a facuet), and it controls the current moving from the collector to the emitter.
+The more current that exists at the base, the more current is allowed to flow between the collector and the emitter.
 
-In the schematic, the base is the horizontal line coming in from the left in the middle.
+Figure~\ref{figTransistorSymbol} shows what an NPN BJT transistor looks like in a schematic.
+The collector is at the top right of this diagram.  
+The emitter is the line with the arrow pointing out.
+The current being controlled is the current between the collector and the emitter.
+The base is the horizontal line coming into the middle of the transistor.
+The base acts as a knob which can limit the flow of current between the collector and emitter.
+
+Figure~\ref{figTransistorConceptual} shows a conceptual picture of how the transistor operates.
+The connection from the base to the emitter operates as a diode, and the connection from the collector to the emitter operates as a variable resistor, offering resistances from zero (completely open dam) to infinity (completely closed dam).
+
+\simplegraphicsfigure{A Conceptual View of Transistor Operation}{TransistorConceptual}{0.25}
+
+\section{A Simple Way to Think About the Transistor}
+
+To fully understand transistor operation requires a lot of math.
+However, we are going to first try to understand the basics of what a transistor is doing without using math.
+To do this, we are going to look at several scenarios, and how the transistor will handle them.
+
+\subsection{Transistor Off}
+
+The easiest thing to envision is the transistor being off.
+The junction between the base and the emitter operates like a diode, with a $0.6\myvolt$ voltage drop between them.
+If the voltage between the base and the emitter (often termed as $\myvolt_{BE}$) is less that $0.6\myvolt$, then the base will not conduct and transistor is effectively off.
+The resistor in Figure~\ref{figTransistorConceptual} is basically set to infinity.
+Therefore, there is no current flowing between either the base or the collector and the emitter.
+
+\subsection{Transistor Partially On}
+
+Once the voltage of the base is high enough, the difference between the base and the emitter voltage will be exactly $0.6\myvolt$.
+Remember, the base-emitter junction acts as a \emph{diode}, and diodes enforce an exact voltage difference. 
+Therefore, whatever the base voltage is, we can expect the emitter voltage to be exactly $0.6\myvolt$ less.
+
+Once current starts flowing from the base to the emitter, current will also start flowing from the collector to the emitter.
+The transistor will always maintain the following balance:
+\begin{itemize}
+\item The base-emitter junction will act as a diode, which means that the emitter will be $0.6\myvolt$ less than the base voltage.
+\item The collector voltage will be greater or equal to the emitter voltage.
+\item The transistor will provide appropriate resistance to reduce the voltage from the collector down to the proper voltage on the emitter.
+\item The transistor can alter current flow on either the base or the collector to maintain this balance.
+\end{itemize}
+
+A lot of that can be confusing.
+The important thing to remember is that the emitter voltage is determined by the \emph{base} (as well as the emitter's own context to some extent), not the collector.
+Then, the transistor controls current parameters on its inputs to maintain a balance of currents and voltages within itself.
+The way that these parameters are managed is known as the \glossterm{Beta} of the transistor.
+
+\subsection{Transistor On All the Way}
+
+Next up we have the idea of the transistor being on all the way.
+For this to happen, the voltage difference between the collector and emitter must be zero.
+Remember that the transistor operates as a variable resistor between the collector and emitter.
+Therefore, if the voltage difference between the collector and emitter is zero, then the transistor is all the way on.
+
+\section{The Transistor as a Switch}
+
+The easiest way to manage a transistor is as an on/off switch.
+That is, we will use a small amount of current at the base to turn the transistor on and off.
+
+For this setup, it will be easiest to show you the schematic for what this looks like, and then tell you why we set it up this way.
+Figure~\ref{
+
+
+
+The base is the horizontal line that comes into the middle.  
+
+
 That knob controls the stream of current going across the other two terminals in the direction of the arrow.
 The current goes from the base (with no arrow) to the emitter (the side with the arrow).
 Note that the base current also exits the transistor through the emitter.
@@ -38,17 +135,71 @@ Sometimes it takes a while to wrap your head around the operation of a transisto
 However, while it is a bit \emph{strange} it is not actually \emph{difficult}.
 You can understand most of how a transistor works by looking at a few simple rules.
 
-The first rule is that the pathway between the base and the emitter \emph{always} \emph{always} acts like a diode.
+\begin{enumerate}
+
+\item The pathway between the base and the emitter \emph{always} \emph{always} acts like a diode.
 That means that we can count on a $0.6\myvolt$ drop between the base and the emitter.
 If we know what the base's voltage is, the emitter's voltage will be \emph{exactly} $0.6\myvolt$ less.
 
-The second rule is that if the base does not rise to at least $0.6\myvolt$ above the emitter, then the transistor \emph{does not conduct}.  If the base doesn't have at least $0.6\myvolt$, the transistor is off, the faucet is closed, and no electricity goes from the collector or the base to the emitter.
+\item If the base voltage does not rise to at least $0.6\myvolt$ above the emitter, then the transistor \emph{does not conduct}.  If the base doesn't have at least $0.6\myvolt$, the transistor is off, the faucet is closed, and no electricity goes from the collector or the base to the emitter.
 The emitter is basically shut off.
 
-The third rule is that, starting when the base is $0.6\myvolt$ above the emitter, the transistor acts as a variable resistor for the collector.
-The transistor adjusts its resistance so that the collector current is a multiple (usually 100) of the base current.
-This will likewise affect the output current the same way, as it will have \emph{both} the base and collector current added together.
-Note that no matter what the current, the emitter \emph{voltage} will always be $0.6\myvolt$ below what the base voltage is.
-So, the transistor supplies both a voltage drop and a current boost.
+\item The collector voltage \emph{must} be greater than the base voltage.
+If this does not hold, strange things will happen to your circuit (it will start conducting in unexpected directions).
 
-The fourth rule is that, at the point where the base voltage is equal to the collector voltage, the transistor allows current to flow freely from the collector to the emitter without any impedance, almost as if the collector was directly wired to the transmitter.
+\item Starting when the base is $0.6\myvolt$ above the emitter, the transistor acts as a variable resistor for the collector.
+The transistor adjusts its resistance so that the collector current is a multiple (usually 50--100) of the base current.
+This will likewise affect the output current the same way, as it will have \emph{both} the base and collector current added together.
+This multiple is known as the \glossterm{gain} of the transistor, and is often represented as either $h_FE$ or $\beta$.
+Note that while the gain ($\beta$) is an important value for a transistor, it can usually be quite a range for any given transistor.
+For instance, on the 2N2222 transistor, this parameter can vary from 35 to 300!
+Therefore, a good circuit will not depend too closely on a particular value for $\beta$.
+We will look into how to compensate for this in Chapter~\ref{FIXME}.
+
+Remember that no matter what the current, the emitter \emph{voltage} will always be $0.6\myvolt$ below what the base voltage is.
+Therefore, the transistor supplies both a voltage drop and a current boost.
+
+\item When the base voltage is near the collector voltage, the transistor allows current to flow freely from the collector to the emitter without any impedance, almost as if the collector was directly wired to the transmitter.
+\end{enumerate}
+
+Using these rules, we can see that, if we use less than $0.6\myvolt$, we can turn off the flow entirely between the collector and the emitter.
+If, on the other hand, the voltage at the base is the near the voltage at the collector, it simply turns the flow between the collector and the emitter all the way on.
+
+Therefore, using these properties, we can use a transistor as a switch to turn a higher-power current on and off.
+
+\section{Using a Transistor as a Switch}
+
+So, let's say that we have program running on an ATmega328/P, and, under certain conditions, we want to turn on a motor.
+So, we choose an output pin to use (we'll say pin~3 just to have an example).
+Now, on this chip, output pins put out $5\myvolt$ but their current rating maxes out at $40\mymamp$.
+Let's say that we were trying to drive a circuit that needed $400\mymamp$.
+
+To do this, we would use a transistor.
+We would connect pin~3 to the base through a resistor; we would connect a $5\myvolt$ power supply to the collector; and we would connect the output circuit to the emitter.
+Now the output pin is supplying a tiny amount of current compared to the collector.
+Note that, without the resistor on the base, the pin~3 could still be overdriven. 
+The resistor should be chosen so as to not make the the pin output more than it can handle in the worst case scenario.
+Imagine that the pin gets tied directly to ground.
+How much resistance would you need to keep that pin under its maximum, $40\mymamp$?
+Using Ohm's law, we just compute:
+
+\begin{align*}
+R &= V / I \\
+  &= 5\myvolt / 0.040\myamp \\
+  &= 125\myohm
+\end{align*}
+
+If we wanted to be even safer (since the board itself has a maximum total), we could calculate for an even lower maximum.
+Just remember that, when multiplied by the gain ($\beta$) of the transistor, we need to have enough current to run our circuit.
+
+\section{Analyzing Transistor Circuits}
+
+Because of the strange way that transistor circuits operate, analyzing them is a little confusing.
+However, if you keep in mind some basic rules, it will make analyzing simple transistor circuits like the ones in this book fairly straightforward.
+
+The first step in analyzing a transistor circuit is to figure out what all of the \emph{fixed} values on the circuit are.
+For instance, are there any diodes forcing a specific voltage drop?
+What is tied to a voltage source (guaranteeing a fixed voltage) and what is tied to ground (guaranteeing a zero voltage)?
+For \emph{any} circuit, finding these fixed points is a good start.
+
+The next step is to pretend that the collector is not present.

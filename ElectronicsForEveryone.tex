@@ -124,6 +124,10 @@ tabsize=3
 \newcommand{\myMohm}{\,\si{\mega\ohm}}
 \newcommand{\mywatt}{\,\si{\watt}}
 \newcommand{\mymwatt}{\,\si{\milli\watt}}
+\newcommand{\myuf}{\,\si{\micro\farad}}
+\newcommand{\mynf}{\,\si{\nano\farad}}
+\newcommand{\mypf}{\,\si{\pico\farad}}
+\newcommand{\myf}{\,\si{\farad}}
 
 \newcommand{\deriv}[1]{\mathrm{d}#1}
 \newcommand{\pd}[2]{\partial{#1}_{#2}}
@@ -288,12 +292,15 @@ set_draw_defaults(grid=true, fill_color=grey, xaxis_type=solid, yaxis_type=solid
 \include{MicrocontrollerProjects}
 \include{MicrocontrollerAnalog}
 
+\part{Audio Circuits}
+
+\include{CapacitorIntro}
+
 \part{Power Circuits}
 
 \include{PowerIntro}
 \include{TransistorIntro}
 
-\part{Audio Circuits}
 
 \part{Other Circuits}
 

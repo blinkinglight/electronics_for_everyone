@@ -1,0 +1,109 @@
+\chapter{Capacitors}
+\label{Capacitors}
+
+In this chapter we will start looking at the \glossterm{capacitor}. 
+
+\section{What is a Capacitor?}
+
+Before we begin discussing the capacitor, we need to quickly review the concepts from Chapter~\ref{electricitybasics} on the relationship between charge, current, and voltage.
+In fact, it might be helpful to re-read that chapter if you find that you have forgotten how those terms related to each other.
+
+To review:
+
+\begin{itemize}
+\item Charge is essentially the amount of electrical ``stuff'' that something contains, measured in coulombs.
+\item Current is the \emph{movement} of charge, measured in coulombs per second, also known as amperes.
+\item Voltage is the amount of force that each column will produce.  You can think of it as the amount of electric energy that each coulomb is capable of producing, or the amount of power that each ampere of current yields.  
+\end{itemize}
+
+A capacitor is a storage device which stores electric \emph{charge}.  
+The amount of charge that the capacitors we will work with hold are very small, but some capacitors can store very large amounts of charge.
+One way to think of a capacitor is as a very, very, very tiny rechargeable battery.
+However, unlike batteries, instead of storing a fixed voltage, a capacitor stores charge.
+The actual voltage a capacitor yields will depend on both the size of the capacitor and the amount of charge it is holding.
+
+The size of a capacitor is known as its \glossterm{capacitance} and it is measured in \glossterm{farads} (abbreviated with the letter F), named after the influential scientist Michael Faraday.
+A capacitance of one farad means that if a capacitor stores one coulomb of charge it will discharge with a force of $1\myvolt$.
+Most capacitors, however, have a capacitance much lower than a farad.
+Capacitors are usually measured in microfarads (1 millionth of a farad, abbreviated as $\myuf$ or uF), nanofarads (1 billionth of a farad, abbreviated as $\mynf$), or picofarads (1 trillionth of a farad, abbreviated as $\mypf$).  
+Capacitors are rarely rated in millifarads (1 thousandth of a farad).
+
+Capacitors usually work by having two conductors that are separated by some sort of non-conductive material.
+Since the two materials are near each other, the voltage difference between the two conductors will pull charge into the conductors.  
+However, since they are not actually touching, the electrons cannot actually jump the gap.
+Therefore, the capacitor will accumulate a certain amount of charge and hold it in its conductors.
+
+If one terminal of the capacitor is connected to the positive side of a battery, and the other terminal is connected to the negative side of a battery, charge will quickly flow into the capacitor.
+The exact amount of charge that flows in depends on the voltage of the battery and the capacitance of the capacitor.
+The equation that tells you the amount of charge is:
+
+\begin{equation}
+Q = C\cdot V
+\end{equation}
+
+In this equation, $V$ is the voltage applied, $C$ is the capacitance (in farads), and $Q$ is the resulting charge (in coulombs).
+So, if I attached a $66\myuf$ capacitor to a $9\myvolt$ source, how much charge gets stored on the capacitor?
+
+Well, first we need to convert the capacitance from microfarads to farads.  
+$66\myuf$ is 66 millionths of a farad, so it would be $0.000066\myf$.
+Now, we just need to plug the numbers into the equation:
+
+\begin{align*}
+Q &= C\cdot V
+  &= 0.000066\cdot 9
+  &= 0.000594 coulombs
+\end{align*}
+
+Likewise, if we know how much charge is stored in the capacitor, we can rearrange the equation slightly to figure out how much voltage it will deliver when it begins to discharge:
+
+\begin{equation}
+V = \frac{Q}{C}
+\end{equation}
+
+Now, as the capacitor discharges, since the charge it is holding will decrease, so will the voltage it delivers.
+
+\section{Types of Capacitors}
+
+There are numerous types of capacitors available, each varying in the types of materials they are made of, the internal geometry of the capacitor, and the packaging.
+
+\fixme{graphic of different types of capacitors}
+
+However, the most important feature of capacitors besides their capacitance is whether they are \glossterm{polarized} or \glossterm{non-polarized}.
+In a \emph{non-polarized capacitor}, it doesn't matter which way you attach the leads.
+Either side can be the positive or negative.
+The most common type of non-polarized capacitor is the circle-shaped ceramic disk capacitor.
+While ceramic disk capacitors are easy to use, they suffer from having limited capacitance.
+
+In a \emph{polarized capacitor}, however, one lead \emph{must} stay more positive than the other lead, or you risk damaging the capacitor.
+The most common type of polarized capacitor is the electrolytic capacitor.
+Electrolytic capacitors look like little barrels with leads coming out of them.
+They usually have much higher capacitances than ceramic disk capacitors, but you have to be sure that the polarity is correct and never switches direction.
+
+On polarized capacitors, it is important to know which lead is positive and which is negative.  
+There are several different ways that a manufacturer might indicate this:
+\begin{enumerate}
+\item One or both of the leads can be marked with their respective polarities (+ or -).
+\item The negative lead can be marked with a large stripe.  
+\item The positive lead can be longer than the negative.
+\end{enumerate}
+Many manufacturers do all three.
+
+On any capacitor, it is important to know the capacitance of the capacitor you are looking at.
+On larger capacitors (especially on electrolytics), manufacturers can print the full capacitance including the units directly on the capacitor.
+However, many capacitors are extremely small, and can't fit that much information on them.
+For these capacitors, the capacitance is given by three digits and an optional letter.
+The third digit is how many zeroes to add to the end of the other two digits, and then the whole number is the capacitance in picofarads.
+So, if the number was 234, then the capacitance is $230,000\mypf$ (23 followed by 4 zeroes).  
+If the number was 230, then the capacitance is $23\mypf$.
+
+The letter at the end tells the \emph{tolerance} of the capacitor---how much the capacitance is likely to vary from its markings.
+Common letters are J ($\pm5\%$), K ($\pm10\%$), and M ($\pm20\%$).
+
+\section{Charging and Discharging a Capacitor}
+
+
+\begin{sidebar}{Capacitor Safety}
+If you see a capacitor in any sort of equipment, do not touch it, even with the power off.
+Because capacitors store charge, they can still hold on to the charge even after the power is off.
+\end{sidebar}
+
