@@ -1,5 +1,5 @@
 \chapter{Capacitors}
-\label{Capacitors}
+\label{chapCapacitors}
 
 In this chapter we will start looking at the \glossterm{capacitor}. 
 
@@ -16,11 +16,11 @@ To review:
 \item Voltage is the amount of force that each column will produce.  You can think of it as the amount of electric energy that each coulomb is capable of producing, or the amount of power that each ampere of current yields.  
 \end{itemize}
 
-A capacitor is a storage device which stores electric \emph{charge}.  
+A capacitor is a storage device which stores electric energy by holding two opposing charges (i.e., positive and negative).  
 The amount of charge that the capacitors we will work with hold are very small, but some capacitors can store very large amounts of charge.
 One way to think of a capacitor is as a very, very, very tiny rechargeable battery.
-However, unlike batteries, instead of storing a fixed voltage, a capacitor stores charge.
-The actual voltage a capacitor yields will depend on both the size of the capacitor and the amount of charge it is holding.
+However, unlike batteries, instead of storing a fixed voltage, a capacitor stores opposing charges.
+The actual voltage a capacitor yields when it discharges will depend on both the size of the capacitor and the amount of charge it is holding.
 
 The size of a capacitor is known as its \glossterm{capacitance} and it is measured in \glossterm{farads} (abbreviated with the letter F), named after the influential scientist Michael Faraday.
 A capacitance of one farad means that if a capacitor stores one coulomb of charge it will discharge with a force of $1\myvolt$.
@@ -28,39 +28,92 @@ Most capacitors, however, have a capacitance much lower than a farad.
 Capacitors are usually measured in microfarads (1 millionth of a farad, abbreviated as $\myuf$ or uF), nanofarads (1 billionth of a farad, abbreviated as $\mynf$), or picofarads (1 trillionth of a farad, abbreviated as $\mypf$).  
 Capacitors are rarely rated in millifarads (1 thousandth of a farad).
 
+\section{How Capacitors Work}
+
+\simplegraphicsfigure{The Symbol for a Capacitor}{CapacitorSymbol}{0.125}
+
+The symbol for a capacitor in a circuit is shown in Figure~\ref{figCapacitorSymbol}.
+This symbol provides a visual reference for how a capacitor works.
 Capacitors usually work by having two conductors that are separated by some sort of non-conductive material.
 Since the two materials are near each other, the voltage difference between the two conductors will pull charge into the conductors.  
 However, since they are not actually touching, the electrons cannot actually jump the gap.
 Therefore, the capacitor will accumulate a certain amount of charge and hold it in its conductors.
 
-If one terminal of the capacitor is connected to the positive side of a battery, and the other terminal is connected to the negative side of a battery, charge will quickly flow into the capacitor.
-The exact amount of charge that flows in depends on the voltage of the battery and the capacitance of the capacitor.
-The equation that tells you the amount of charge is:
+To understand this better, imagine that you are a positive charge.
+You are moving through the circuit, but why?  What are you moving towards?
+As a positive charge, you are trying to move to the negative charge.
+So then, moving along, you see this big swimming pool (i.e., a capacitor).
+At the bottom of the swimming pool, the barrier is so thin that you can see to the other side.
+And what do you see there?  
+It's the negative charges---right there at the bottom of the swimming pool!
+The negative charge has their own swimming pool the size of your own, separated by a barrier so thin that you can see each other.
+
+Because you can see them, you go down into the swimming pool to see if you can interact.
+A lot of other bits of charge sees this, too, and they go down to see what is going on.
+However, when you get there, you realize that no matter how hard you try, you can't get to the negative charge that you can see.
+As more and more charge fills up the swimming pool, it starts to get crowded in the swimming pool.
+This creates \emph{pressure} in the swimming pool---also known as \emph{voltage}.
+As the swimming pool gets more and more crowded, it is harder and harder to fit new charge into it, and so the rate that it gets filled goes down, and the voltage goes up.
+The same thing is happening to the negatively-charged swimming pool on the other side.
+
+When the pressure (voltage) to push charge out of the swimming pool equals the pressure (voltage) of the pipe (wire) leading to the swimming pool (capacitor), then the capacitor is full.
+When the voltage on the wire goes down (i.e., the battery disconnects), then the pressure of the charges in the capacitor pushes them back out into the wire, discharging the capacitor.
+
+\fixme{need graphic for this}
+
+So, if one terminal of the capacitor is connected to the positive side of a battery, and the other terminal is connected to the negative side of a battery, charge will quickly flow into the capacitor, as happened in our example with the swimming pool.
+The exact amount of charge that flows in depends on the voltage of the battery and the capacitance of the capacitor (i.e., the size of the swimming pool)
+.
+
+There is an equation that tells you the amount of charge that can be stored in a capacitor for a given voltage:
 
 \begin{equation}
+\label{eqBasicCapacitance}
 Q = C\cdot V
 \end{equation}
 
 In this equation, $V$ is the voltage applied, $C$ is the capacitance (in farads), and $Q$ is the resulting charge (in coulombs).
-So, if I attached a $66\myuf$ capacitor to a $9\myvolt$ source, how much charge gets stored on the capacitor?
+
+\begin{exampleprob}
+If I attached a $66\myuf$ capacitor to a $9\myvolt$ source, how much charge gets stored on the capacitor?
 
 Well, first we need to convert the capacitance from microfarads to farads.  
 $66\myuf$ is 66 millionths of a farad, so it would be $0.000066\myf$.
 Now, we just need to plug the numbers into the equation:
 
 \begin{align*}
-Q &= C\cdot V
-  &= 0.000066\cdot 9
-  &= 0.000594 coulombs
+Q &= C\cdot V \\
+  &= 0.000066\cdot 9 \\
+  &= 0.000594 \textrm{ coulombs}
 \end{align*}
+
+Therefore, if I attached a $66\myuf$ capacitor to a $9\myvolt$ source, the capacitor would store $0.000594 \textrm{ coulombs}$ of charge.
+\end{exampleprob}
 
 Likewise, if we know how much charge is stored in the capacitor, we can rearrange the equation slightly to figure out how much voltage it will deliver when it begins to discharge:
 
 \begin{equation}
+\label{eqCapacitanceToVoltage}
 V = \frac{Q}{C}
 \end{equation}
 
 Now, as the capacitor discharges, since the charge it is holding will decrease, so will the voltage it delivers.
+
+\begin{exampleprob}
+If I have a charge of $0.0023 \textrm{ coulombs}$ stored in a $33\myuf$ capacitor, if I discharge the capacitor, what voltage will it discharge at?
+
+The first thing to do here is to convert the capacitance to farads.  A microfarad is 1 millionth of a farad, so $33\myuf$ = $0.000033\myf$.
+Now we can just plug numbers into the equation:
+
+\begin{align*}
+V &= \frac{Q}{C} \\
+  &= \frac{0.0023}{0.000033} \\
+  &\approx 69.7\myvolt
+\end{align*}
+
+Therefore, when the capacitor discharges, it will discharge at $69.7\myvolt$.
+
+\end{exampleprob}
 
 \section{Types of Capacitors}
 
@@ -88,10 +141,18 @@ There are several different ways that a manufacturer might indicate this:
 \end{enumerate}
 Many manufacturers do all three.
 
+In a circuit schematic, if a polarized capacitor is called for, it will use a special capacitor symbol as shown in Figure~\ref{figPolarizedCapacitorSymbol}. 
+The only difference is that one side is curved.
+In a polarized capacitor, the straight side is the positive side and the curved side is the negative side.
+Sometimes polarized capacitors are marked with plus (+) and minus symbols (-) instead (or in addition).
+
+\simplegraphicsfigure{A Polarized Capacitor Symbol}{PolarizedCapacitorSymbol}{0.125}
+
 On any capacitor, it is important to know the capacitance of the capacitor you are looking at.
 On larger capacitors (especially on electrolytics), manufacturers can print the full capacitance including the units directly on the capacitor.
 However, many capacitors are extremely small, and can't fit that much information on them.
-For these capacitors, the capacitance is given by three digits and an optional letter.
+
+For smaller-sized capacitors, the capacitance is described by three digits and an optional letter.
 The third digit is how many zeroes to add to the end of the other two digits, and then the whole number is the capacitance in picofarads.
 So, if the number was 234, then the capacitance is $230,000\mypf$ (23 followed by 4 zeroes).  
 If the number was 230, then the capacitance is $23\mypf$.
@@ -101,9 +162,189 @@ Common letters are J ($\pm5\%$), K ($\pm10\%$), and M ($\pm20\%$).
 
 \section{Charging and Discharging a Capacitor}
 
+To charge up a capacitor almost instantly you can connect the positive and negative leads of the battery to the leads of the capacitor.
+Once it it charged, you can use the capacitor as a very tiny battery for a project.
 
-\begin{sidebar}{Capacitor Safety}
-If you see a capacitor in any sort of equipment, do not touch it, even with the power off.
-Because capacitors store charge, they can still hold on to the charge even after the power is off.
-\end{sidebar}
+\simplegraphicsfigure{Using a Capacitor as a Battery}{CapacitorAsABattery}{0.08}
+
+In Figure~\ref{figCapacitoryAsABattery}, we see two simple circuits and an electrolytic capacitor.
+For this circuit to really work, it helps to have an electrolytic capacitor at least $100\myuf$ and a resitor at least $10\mykohm$.
+So, first, build the LED circuit on the right side of Figure~\ref{figCapacitorAsABattery} on a breadboard.
+However, don't connect any power to the power rails.
+Next, take the capacitor, and touch the positive side to the positive terminal of the $9\myvolt$ battery, and the negative side to the negative terminal.
+\emph{Do not let the leads of the capacitor touch each other}.
+Hold it there for a second or two to allow the capacitor to fully charge.
+Now, \emph{without touching the leads of the capacitor}, place the capacitor so that the positive lead goes into the positive rail of your breadboard and the negative lead goes into the negative rail of your breadboard.
+When you do this, the capacitor will power your LED project for a few seconds.
+
+Now, you will notice that the LED gets dimmer before it goes out.  
+Why does this happen?
+
+Remember that the voltage that the capacitor yields is based on the charge that is present in the capacitor.
+So, going back to Equation~\ref{eqCapacitanceToVoltage}, we can see that the voltage is based on the charge that is in the capacitor.
+When the capacitor is connected, it will start with a $9\myvolt$ discharge, since that is what the battery was able to put into the capacitor.
+However, the capacitor is using up its charge to power the project.
+This means that as soon as its charge starts leaving, the voltage starts going down, since the voltage is related to how much charge is inside the capacitor.
+
+\begin{exampleprob}
+If we used the components listed in Figure~\ref{figCapacitoryAsABattery}, how much charge does the battery initially store in the capacitor?
+
+We can use Equation~\ref{eqBasicCapacitance} to determine this:
+\begin{align*}
+Q &= C\cdot V \\
+  &= 100\myuf\cdot 9\myvolt \\
+  &= 0.000100\myf\cdot 9\myvolt \\
+  &= 0.0009 \textrm{ coulombs}
+\end{align*}
+\end{exampleprob}
+
+\begin{exampleprob}
+After $0.0003 \textrm{coulombs}$ of charge have been discharged, what voltage is the caapacitor discharging at?
+
+To find this out, we first have to find out how much charge is \emph{remaining} in the capacitor.  
+So, to find this out, we just subtract the amount of charge that has been discharged from our starting charge.
+This gives $0.0009 - 0.0003 = 0.0006 \textrm{ coulombs}$.
+
+Now, we can use Equation~\ref{eqCapacitanceToVoltage} to find out what the voltage is that the capacitor is discharging at.
+
+\begin{align*}
+V &= \frac{Q}{C} \\
+  &= \frac{0.0006}{0.000100} \\
+  &= 6\myvolt
+\end{align*}
+
+Therefore, the capacitor is discharging at $6\myvolt$
+\end{exampleprob}
+
+\section{Series and Parallel Capacitances}
+
+Just like resistors, capacitors can be used either in series or in parallel.
+In fact, they use the same equations for series and parallel capacitance as do resistors.
+However, there is \emph{one big difference}.  
+The parallel and series versions of the equations are \emph{reversed} for capacitors.
+
+If we wanted to double resistance in a circuit we simply add another resistor of the same size in series.
+If I wanted to double my capacitance, I can add in another capacitor of the same size.
+However, for the capacitor, we would add the capacitor \emph{in parallel}.
+The following is the formula for adding capacitance in parallel:
+
+\begin{equation}
+\label{eqCapacitanceParallel}
+C_T = C_1 + C_2 + \ldots
+\end{equation}
+
+If we want to put capacitors in series, we would use a formula that exactly like the formulat for resistors in parallel:
+
+\begin{equation}
+\label{eqCapacitanceSeries}
+C_T = \frac{1}{\frac{1}{C_1} + \frac{1}{C_2} + \ldots}
+\end{equation}
+
+\begin{exampleprob}
+If I have a $100\myuf$ capacitor in series with a $200\myuf$ capacitor, how much total capacitance do I have?
+
+To do this, we use Equation~\ref{eqCapacitanceSeries}.
+It is best to convert our capacitances to farads first.
+It does not matter as long as the units are the same, but it is good practice to convert to farads so you don't forget when you start doing capacitances in different units.
+$100\myuf$ is the same as $0.0001\myf$ and $200\myuf$ is the same as $0.0002\myuf$.
+Now, we will plug these values into the equation:
+
+\begin{align*}
+C_T &= \frac{1}{\frac{1}{C_1} + \frac{1}{C_2}} \\
+    &= \frac{1}{\frac{1}{0.0001\myf} + \frac{1}{0.0002\myf}} \\
+    &= \frac{1}{10000 + 5000} \\
+    &= \frac{1}{15000} \\
+    &= 0.0000666\myf
+    &= 66.6\myuf
+\end{align*}
+\end{exampleprob}
+
+\begin{exampleprob}
+Just like we did for resistors, we can combine a variety of parallel and series capacitances for a single capacitance value.  For instance, take the circuit in Figure~\ref{figCapacitorsSeriesAndParallel}.  What is the total capacitance of this circuit?
+
+\simplegraphicsfigure{Capacitors in Series and Parallel}{CapacitorsSeriesAndParallel}{0.08}
+
+First, we can start by converting all of the capacitances to farads.
+This will make combining everything easier down the road.
+In that case, $C_1 = 0.00001\myf$, $C_2 = 0.00003\myf$, $C_3 = 0.0000000008\myf$, and $C_4 = 0.0000000005\myf$.
+C3 and C4 are in parallel, so we can combine them using the parallel formula (Equation~\ref{eqCapacitanceParalle}:
+
+\begin{align*}
+C_T &= C_3 + C_4 \\
+    &= 0.0000000008\myf + 0.0000000005\myf \\
+    &= 0.0000000013\myf
+\end{align*}
+
+Now, if we substitute that capacitance in for C3 and C4, we can use the series formula (Equation~\ref{eqCapacitanceSeries}) to find the total capacitance of the circuit:
+
+\begin{align*}
+C_T &= \frac{1}{\frac{1}{C_1} + \frac{1}{C_2} + \frac{1}{C_{3\&4}}} \\
+    &= \frac{1}{\frac{1}{0.00001} + \frac{1}{0.00003} + \frac{1}{0.0000000013}} \\
+    &= \frac{1}{100000 + 33333.33 + 769230769.23} \\
+    &= \frac{1}{769364102.56} \\
+    &= 0.0000000013\myf \\
+    &= 1.3\mynf 
+\end{align*}
+
+So the total capacitance of the circuit is $1.3\mynf$.
+\end{exampleprob}
+
+\section{Capacitors, AC, and DC Currents}
+
+One important characteristic of a capacitor is that they \emph{allow} the flow of AC (alternating current) but they \emph{blocks} the flow of DC (direct current).
+To understand why this is, let's think about how capacitors operate.
+
+Capacitors, when they are charging, essentially act as short circuits.
+As positive charge flows into the capacitor at one terminal, negative charge flows in to the other side.
+An \emph{inflow} of negative charge to that side means that there is a net \emph{outflow} of positive charge on that side.
+So, even though the physical electrons never cross the boundary between the plates, the total charge actually moves from one side to the other.
+
+However, this situation is temporary because, as the capacitor gets more full of charge, new charge is less likely to enter.
+Once the capacitor is fully charged (based on the voltage), no new charge can flow in to one side to cause the charge to go out to the other.
+
+Once the capacitor is charged, \emph{current stops flowing through it}.
+If the voltage level on one of the leads \emph{changes}, then charge will flow until the change is compensated for by the capacitor charging or discharging.
+
+Thus, it is only when the voltage \emph{changes} that the current flows.
+If the voltage stays the same, then charge will stop flowing through the capacitor as soon as it reaches capacity for that voltage.
+
+Because of this, we say that capacitors \emph{allow} AC but \emph{block} DC.
+This rule of thumb will help us use capacitors in a variety of circuits later on.
+
+\section{Using Capacitors in a Circuit}
+
+In this section we will discuss the uses of capacitors in a circuit.
+We haven't discussed enough to actually use capacitors in these ways, but I thought it would be helpful to see why capacitors are used so you can see why you should care about these things.
+
+The first thing that capacitors are used for is for filtering noisy signals.
+Imagine that you had a power source which, instead of delivering a constant voltage, the voltage would wobble a bit.
+If you placed a capacitor in parallel with this circuit, the power source would charge the capacitor up.
+Then, if the power source dropped a bit, the capacitor would start discharging to compensate.
+Likewise, if the power source increased, the capacitor would absorb some of that increase by storing the charge.
+
+Thus, by acting as a temporary location to store extra charge, the capacitor can smooth out ripples in a signal, as seen in Figure~\ref{figCapacitorPowerFiltering}.
+This sort of usage is known as a \emph{filtering} capacitor because it filters out noise.
+
+\simplegraphicsfigure{A Capacitor Filtering a Noisy Power Supply}{CapacitorPowerFiltering}{0.08}
+
+This can be seen as another implementation of our rule that capacitors allow AC current to flow but block DC.
+When the source voltage has a ripple, the \emph{ripple itself} gets shunted to ground by the capacitor.
+However, under normal operation, the DC part of the current can't flow through the capacitor, and just continues on to the load.
+
+Another way of using capacitors is as a \glossterm{coupling capacitor}.
+A coupling capacitor is used when you have \emph{both} and AC signal and a DC signal combined.
+This will happen a lot when we talk about amplification.
+What happens is that we will have an amplified signal, but we \emph{only} want the AC portion of the signal.
+We can do that by adding in a capacitor to join the segment of the circuit that has both AC and DC components to the segment of the circuit that only wants the AC component.
+
+Another way that capacitors are used is for filtering specific frequencies.
+Higher-frequency signals are easily transmitted, but low-frequency signals are essentially blocked as if it were DC current.
+The frequencies that are allowed are based on the capacitance.
+If you put a capacitor in series with the signal path, then it will only allow higher frequencies.
+If you put a capacitor in parallel with the signal path, then it will ony allow lower frequencies (the higher frequencies will be shunted to ground).
+
+%\begin{sidebar}{Capacitor Safety}
+%If you see a capacitor in any sort of equipment, do not touch it, even with the power off.
+%Because capacitors store charge, they can still hold on to the charge even after the power is off.
+%\end{sidebar}
 

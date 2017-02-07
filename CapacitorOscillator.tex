@@ -1,0 +1,61 @@
+\chapter{Capacitors as Timers}
+\label{chapCapacitorTimer}
+
+In this chapter, we are going to learn how to use measure the time it takes for a capacitor to charge.  
+Once we learn this, we can use capacitors for timers---both for delaying signal as well as for creating an oscillating circuit.
+
+\section{Time Constants}
+
+As we learned in Chapter~\ref{chapCapacitors}, when a voltage is applied to a capacitor it will store energy by storing a charge on its plates, the amount of charge being based on the voltage supplied (see Equation~\ref{eqBasicCapacitance}).
+However, if a capacitor charges through a resistor, then it takes much longer to fill the capacitor to capacity than if it were connected to the battery directly.
+In fact, it never \emph{fully} reaches capacity, though it gets close enough that we say that it does.
+
+The amount of time it takes a capacitor to charge is based on both the resistance of the resistor and the capacitance of the capacitor.
+The actual equation for this is kind of complicated but there is a simple trick that suffices for nearly every situation, known as the RC time constant.
+
+The RC time constant is merely the product of the resistance (in ohms) multiplied by the capacitance (in farads) which will yield the RC time constant in seconds.
+The RC time constant can be used to determine how long it will take to charge a capacitor to a given level.
+So, for instance, if I have a $100\myuf$ capacitor and a $500\myohm$ resistor, the RC time constant is $0.0001 * 500 = 0.05\textrm{ seconds}$.
+
+This constant can then be used with the table in Figure~\ref{figTimeConstantTable} to determine how long it will take to charge a capacitor to a given level.
+
+\begin{figure}
+\caption{RC Time Constants}
+\begin{tabular}{|l|l|l}
+\textbf{\# of Time Constants} & \textbf{\% of Voltage} & \textbf{\% of Current} \\
+0.5 & 39.3\% & 60.7\% \\
+0.7 & 50.3\% & 49.7\% \\
+1 & 63.2\% & 36.8\% \\
+2 & 86.5\% & 13.5\% \\
+3 & 95.0\% & 5.0\% \\
+4 & 98.2\% & 1.8\% \\
+5 & 99.3\% & 0.7\% \\
+\end{tabular}
+\end{figure}
+
+For instance, if I wait for 2 time constants (in this case, $0.05 \cdot 2 = 0.1\textrm{ seconds}$), my capacitor will be charged to 86.5\% of the supply voltage.
+The current flowing through it will be at 13.5\% of what current would be flowing if there was just a straight wire instead of a capacitor.
+
+Different people consider different amounts as ``fully charged,'' but in this book, we will use 5 time constants to consider a capacitor fully charged.
+
+\begin{exampleprob}
+I have a power supply that is $7\myvolt$ and a capacitor that is a $100\myuf$ capacitor.
+I want it to take 9 seconds to charge my capacitor.
+What size of resistor do I need to use to do this?
+
+To solve this problem, we need to work backwards.
+Remember, we are considering 5 time constants to be fully charged.
+Therefore, the time constant we are hoping to achieve is $9 / 5 = 1.8\textrm{ seconds}$.
+The capacitance is $100\myuf$, which is $0.0001\myf$.
+Since the time constant is merely the product of the capacitance and resistance, we can solve for this as follows:
+
+\begin{align*}
+\textrm{RC Time Constant} &= \textrm{capacitance} \cdot \textrm{resistance} \\
+1.8 &= 0.0001 \cdot R \\
+0.0001 \cdot R &= 1.8 \\
+R &= \frac{1.8}{0.0001} \\
+R &= 18000
+\end{align*}
+
+Therefore, to make it take 9 seconds to charge the capacitor, we need to use an $18\mykohm$ resistor.
+\end{exampleprob}
