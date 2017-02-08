@@ -1,6 +1,9 @@
 \chapter{Capacitors}
 \label{chapCapacitors}
 
+% FIXME - somewhere towards the beginning of this book (and in the appendix), need to have a unit prefix table
+% FIXME - somewhere I need to write why DC and low-frequency are equivalent
+
 In this chapter we will start looking at the \glossterm{capacitor}. 
 
 \section{What is a Capacitor?}
@@ -27,6 +30,11 @@ A capacitance of one farad means that if a capacitor stores one coulomb of charg
 Most capacitors, however, have a capacitance much lower than a farad.
 Capacitors are usually measured in microfarads (1 millionth of a farad, abbreviated as $\myuf$ or uF), nanofarads (1 billionth of a farad, abbreviated as $\mynf$), or picofarads (1 trillionth of a farad, abbreviated as $\mypf$).  
 Capacitors are rarely rated in millifarads (1 thousandth of a farad).
+
+So, to convert from microfarads to farads, multiply the capacitance by $0.000001$.
+To go back from farads to microfarads, multiply the capacitance by $1000000$.
+To convert from picofarads to farads, multiply the capacitance by $0.000000000001$.
+To go back from farads to picofarads, multiply the capacitance by $1000000000000$.
 
 \section{How Capacitors Work}
 
@@ -316,7 +324,7 @@ This rule of thumb will help us use capacitors in a variety of circuits later on
 In this section we will discuss the uses of capacitors in a circuit.
 We haven't discussed enough to actually use capacitors in these ways, but I thought it would be helpful to see why capacitors are used so you can see why you should care about these things.
 
-The first thing that capacitors are used for is for filtering noisy signals.
+The first thing that capacitors are used for is for filtering noisy signals, especially in power sources.
 Imagine that you had a power source which, instead of delivering a constant voltage, the voltage would wobble a bit.
 If you placed a capacitor in parallel with this circuit, the power source would charge the capacitor up.
 Then, if the power source dropped a bit, the capacitor would start discharging to compensate.
@@ -330,6 +338,8 @@ This sort of usage is known as a \emph{filtering} capacitor because it filters o
 This can be seen as another implementation of our rule that capacitors allow AC current to flow but block DC.
 When the source voltage has a ripple, the \emph{ripple itself} gets shunted to ground by the capacitor.
 However, under normal operation, the DC part of the current can't flow through the capacitor, and just continues on to the load.
+
+On many ICs that have fluctuating power requirements, you will find many of their spec sheets recommending one or more capacitors on their power supply or other pins in order to filter out the noise.
 
 Another way of using capacitors is as a \glossterm{coupling capacitor}.
 A coupling capacitor is used when you have \emph{both} and AC signal and a DC signal combined.
@@ -348,3 +358,38 @@ If you put a capacitor in parallel with the signal path, then it will ony allow 
 %Because capacitors store charge, they can still hold on to the charge even after the power is off.
 %\end{sidebar}
 
+\reviewsection
+
+In this chapter, we learned:
+
+\begin{enumerate}
+\item A capacitor is a device that stores electric energy by holding two opposing charges.
+\item Capacitors are sized by their capacitance which is measured in farads.
+\item Because a farad is so large, capacitors are usually measured in microfarads, nanofarads, and picofarads.
+\item Polarized capacitors (usually electrolytic capacitors) have distinct positive and negative terminals, while non-polarized capacitors (usually ceramic disk capacitors) can go either way.
+\item When a battery is connected to a capacitor, it will store a charge on the capacitor.
+\item The equation for the charge ($Q$) stored on the capacitor when a battery is connected is $Q = C\cdot V$ where $C$ is the capacitance in farads, $V$ is the voltage, and $Q$ is the charge in coulombs.
+\item By rearranging the equation, we can determine, for a given amount of charge, how much voltage a capacitor will discharge when it is allowed to: $V = \frac{Q}{C}$.
+\item As the capacitor discharges its charge through the wire to create current, the amount of charge remaining will decrease, which will also lower the voltage it is putting out.
+\item Capacitors with small packages are often marked with a three-digit code, where the third digit is the number of zeroes to add to the other two digits, and the final number is in picofarads.
+\item When multiple capacitors are used together, their capacitances can be combined similar to resistors, but with the series and parallel equations switched.
+\item Series capacitance equation: $C_T = \frac{1}{\frac{1}{C_1} + \frac{1}{C_2} + \ldots}$
+\item Parallel capacitance equation: $C_T = C_1 + C_2 + \ldots$
+\item Capacitors allow the flow of AC current through them but block the flow of DC current.
+\item Capacitors can be used to split AC (high-frequency) and DC (low-frequency) portions of a signal.  The AC portion will travel through the capacitor while the DC portion will remain on one terminal side.
+\item Capacitors can be used to filter audio frequencies, filter power supply ripples, operate as voltage boosters, and couple together a combined AC/DC circuit with an AC-only circuit.
+\end{enumerate}
+
+\exercisesection
+
+\begin{enumerate}
+\item Convert $23\myf$ to microfarads.
+\item Convert $15\myuf$ to farads.
+\item Convert $0.0002\myf$ to microfarads.
+\item Convert $0.0030\myuf$ to farads.
+\item If a voltage of $6\myvolt$ is applied to a $55\myuf$ capacitor, how much charge would it store?
+\item If a voltage of $2\myvolt$ is applied to a $13\mypf$ capacitor, how much charge would it store?
+\item If a $132\myuf$ capacitor is holding $0.02\textrm{ coulombs}$ of charge, how many volts will it produce when it discharges?
+\item if a $600\mypf$ capacitor is holding $0.03\textrm{ coulombs}$ of charge, how many volts will it produce when it discharges?
+\item If a $121\myuf$ capacitor is connected to a battery.  After some fluctuation, the capacitor has $0.00089\textrm{ coulombs}$ of charge stored in it and the battery is reading $8.9\myvolt$.  Is the capacitor going to be charging or discharging at this point?
+\end{enumerate}
