@@ -1,61 +1,51 @@
-\chapter{Capacitors as Timers}
-\label{chapCapacitorTimer}
+\section{Oscillator Circuits}
+\label{chapOscillators}
 
-In this chapter, we are going to learn how to use measure the time it takes for a capacitor to charge.  
-Once we learn this, we can use capacitors for timers---both for delaying signal as well as for creating an oscillating circuit.
+\section{Using the NE555 Timer Chip}
 
-\section{Time Constants}
+%% FIXME - 
+%% after showing initial timer circuit, modify it so that it shows the light for 5 seconds.  Then modify it so that there is a reset button.
 
-As we learned in Chapter~\ref{chapCapacitors}, when a voltage is applied to a capacitor it will store energy by storing a charge on its plates, the amount of charge being based on the voltage supplied (see Equation~\ref{eqBasicCapacitance}).
-However, if a capacitor charges through a resistor, then it takes much longer to fill the capacitor to capacity than if it were connected to the battery directly.
-In fact, it never \emph{fully} reaches capacity, though it gets close enough that we say that it does.
+In addition to using a voltage comparator with your RC timing circuit, there are other options as well.
+A common chip that is built specifically for working with RC timing circuits is the NE555 Timer (also just called a 555 Timer or just a 555).
+This timer has a number of features which we will explore in this chapter.
 
-The amount of time it takes a capacitor to charge is based on both the resistance of the resistor and the capacitance of the capacitor.
-The actual equation for this is kind of complicated but there is a simple trick that suffices for nearly every situation, known as the RC time constant.
+To see how the 555 Timer works, take a look at Figure~\ref{figSimple555Timer}.
+In this circuit, pushing the button will turn on the LED for 10~seconds.
 
-The RC time constant is merely the product of the resistance (in ohms) multiplied by the capacitance (in farads) which will yield the RC time constant in seconds.
-The RC time constant can be used to determine how long it will take to charge a capacitor to a given level.
-So, for instance, if I have a $100\myuf$ capacitor and a $500\myohm$ resistor, the RC time constant is $0.0001 * 500 = 0.05\textrm{ seconds}$.
 
-This constant can then be used with the table in Figure~\ref{figTimeConstantTable} to determine how long it will take to charge a capacitor to a given level.
+\simplegraphicsfigure{Simple NE555 Timer Example}{Simple555Timer}{0.08}
 
-\begin{figure}
-\caption{RC Time Constants}
-\begin{tabular}{|l|l|l}
-\textbf{\# of Time Constants} & \textbf{\% of Voltage} & \textbf{\% of Current} \\
-0.5 & 39.3\% & 60.7\% \\
-0.7 & 50.3\% & 49.7\% \\
-1 & 63.2\% & 36.8\% \\
-2 & 86.5\% & 13.5\% \\
-3 & 95.0\% & 5.0\% \\
-4 & 98.2\% & 1.8\% \\
-5 & 99.3\% & 0.7\% \\
-\end{tabular}
-\end{figure}
 
-For instance, if I wait for 2 time constants (in this case, $0.05 \cdot 2 = 0.1\textrm{ seconds}$), my capacitor will be charged to 86.5\% of the supply voltage.
-The current flowing through it will be at 13.5\% of what current would be flowing if there was just a straight wire instead of a capacitor.
+So far, all of the circuits we have built have been essentially linear.
+Some input causes some output and then we are done.
+However, other types of circuits rely on \glossterm{oscillations}.
+Oscillate means to move back and forth.
+In our case, an oscillator will go back and forth from zero to positive voltages.
 
-Different people consider different amounts as ``fully charged,'' but in this book, we will use 5 time constants to consider a capacitor fully charged.
+Oscillators have all kinds of uses, usually to drive ongoing processes.
+For instance, in your computer, there is a ``clock.''
+This isn't a clock like your wall clock, but instead it is an oscillator.
+This oscillator coordinates all of the actions in your computer.
+From a simplistic perspective, every time the clock oscillates from a low voltage to a high voltage, the computer processes one instruction.
+The oscillator keeps things happening, and keeps things happening in a well-ordered fashion.
 
-\begin{exampleprob}
-I have a power supply that is $7\myvolt$ and a capacitor that is a $100\myuf$ capacitor.
-I want it to take 9 seconds to charge my capacitor.
-What size of resistor do I need to use to do this?
+Oscillators are also used in audio signals.  
+Any sound that you hear is merely the vibrations of your eardrum.
+In other words, your eardrum \emph{oscillates} back and forth.
+What makes this happen?
+Well, oscillations in the air.
+What makes those happen?
+Oscillations in the sound speaker.
+When the speaker moves back and forth, it moves the air which produces sound that you hear.
+But what moves the speaker back and forth?
+Oscillations in the voltage supplied to the speaker.
 
-To solve this problem, we need to work backwards.
-Remember, we are considering 5 time constants to be fully charged.
-Therefore, the time constant we are hoping to achieve is $9 / 5 = 1.8\textrm{ seconds}$.
-The capacitance is $100\myuf$, which is $0.0001\myf$.
-Since the time constant is merely the product of the capacitance and resistance, we can solve for this as follows:
+So, as you can see, oscillators are very powerful tools.
+But what does this have to do with capacitors?
+Well, if you think about it, an oscillator needs to know \emph{how long} it should take to oscillate back and forth.
+And, if something needs to know how long to do something, we can say how long using a timer circuit with capacitors.
 
-\begin{align*}
-\textrm{RC Time Constant} &= \textrm{capacitance} \cdot \textrm{resistance} \\
-1.8 &= 0.0001 \cdot R \\
-0.0001 \cdot R &= 1.8 \\
-R &= \frac{1.8}{0.0001} \\
-R &= 18000
-\end{align*}
+\section{Building an Oscillator with the NE555}
 
-Therefore, to make it take 9 seconds to charge the capacitor, we need to use an $18\mykohm$ resistor.
-\end{exampleprob}
+A great chip for doing oscillations is the NE555 timer chip.

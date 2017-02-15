@@ -1,0 +1,281 @@
+\chapter{Capacitors as Timers}
+\label{chapCapacitorTimer}
+
+In this chapter, we are going to learn how to use measure the time it takes for a capacitor to charge.  
+Once we learn this, we can use capacitors for timers---both for delaying signal as well as for creating an oscillating circuit.
+
+\section{Time Constants}
+
+As we learned in Chapter~\ref{chapCapacitors}, when a voltage is applied to a capacitor it will store energy by storing a charge on its plates, the amount of charge being based on the voltage supplied (see Equation~\ref{eqBasicCapacitance}).
+However, if a capacitor charges through a resistor, then it takes much longer to fill the capacitor to capacity than if it were connected to the battery directly.
+In fact, it never \emph{fully} reaches capacity, though it gets close enough that we say that it does.
+
+Having a resistor in series with a capacitor is a configuration known as an \glossterm{RC circuit}.
+The amount of time it takes a capacitor to charge is based on both the resistance of the resistor and the capacitance of the capacitor.
+The actual equation for this is kind of complicated but there is a simple trick that suffices for nearly every situation, known as the RC time constant.
+
+The RC time constant is merely the product of the resistance (in ohms) multiplied by the capacitance (in farads) which will yield the RC time constant in seconds.
+The RC time constant can be used to determine how long it will take to charge a capacitor to a given level.
+So, for instance, if I have a $100\myuf$ capacitor and a $500\myohm$ resistor, the RC time constant is $0.0001 * 500 = 0.05\textrm{ seconds}$.
+
+This constant can then be used with the table in Figure~\ref{figTimeConstants} to determine how long it will take to charge a capacitor to a given level.
+
+\begin{figure}
+\caption{RC Time Constants}
+\label{figTimeConstants}
+\begin{tabular}{|l|l|l}
+\textbf{\# of Time Constants} & \textbf{\% of Voltage} & \textbf{\% of Current} \\
+0.5 & 39.3\% & 60.7\% \\
+0.7 & 50.3\% & 49.7\% \\
+1 & 63.2\% & 36.8\% \\
+2 & 86.5\% & 13.5\% \\
+3 & 95.0\% & 5.0\% \\
+4 & 98.2\% & 1.8\% \\
+5 & 99.3\% & 0.7\% \\
+\end{tabular}
+\end{figure}
+
+For instance, if I wait for 2 time constants (in this case, $0.05 \cdot 2 = 0.1\textrm{ seconds}$), my capacitor will be charged to 86.5\% of the supply voltage.
+The current flowing through it will be at 13.5\% of what current would be flowing if there was just a straight wire instead of a capacitor.
+
+While a capacitor is never really ``fully charged'' (because it never fully reaches 100\%), in this book, we will use 5 time constants to consider a capacitor fully charged.
+
+\begin{exampleprob}
+I have a power supply that is $7\myvolt$ and a capacitor that is a $100\myuf$ capacitor.
+I want it to take 9~seconds to charge my capacitor.
+What size of resistor do I need to use to do this?
+
+To solve this problem, we need to work backwards.
+Remember, we are considering 5 time constants to be fully charged.
+Therefore, the time constant we are hoping to achieve is $9 / 5 = 1.8\textrm{ seconds}$.
+The capacitance is $100\myuf$, which is $0.0001\myf$.
+Since the time constant is merely the product of the capacitance and resistance, we can solve for this as follows:
+
+\begin{align*}
+\textrm{RC Time Constant} &= \textrm{capacitance} \cdot \textrm{resistance} \\
+1.8 &= 0.0001 \cdot R \\
+0.0001 \cdot R &= 1.8 \\
+R &= \frac{1.8}{0.0001} \\
+R &= 18000
+\end{align*}
+
+Therefore, to make it take 9~seconds to charge the capacitor, we need to use an $18\mykohm$ resistor.
+\end{exampleprob}
+
+In the same way, if we connect the capacitor to ground through the resistor instead of to the voltage supply, the capacitor will discharge in the same way that it charged.
+It will begin discharging a lot, but then, as it gets closer to zero, it will level off the amount that it is discharging.
+You would then read Figure~\ref{figTimeConstants} to be the percentage \emph{discharged} that the capacitor was.
+
+\begin{exampleprob}
+Suppose a $100\myuf$ capacitor has been charged up to $7\myvolt$ and then is disconnected from the power supply, but the ground connection remains.
+We then connect the positive terminal of the capacitor to a $5\mykohm$ resistor that connects to ground.
+After 2 seconds, how much voltage is remaining in the capacitor?
+
+To find this out, we first need to find the RC time constant of the circuit.
+
+\begin{align*}
+T &= 5\mykohm \cdot 100\myuf \\
+  &= 5,000\myohm \cdot 0.0001\myf \\
+  &= 0.5\textrm{ seconds}
+\end{align*}
+
+So the RC time constant is 0.5 seconds.
+
+So, after 2 seconds, we have performed 4 RC time constants.
+Looking at Figure~\ref{figTimeConstants}, we have discharged 98.2\% of the capacitor's voltage.
+This means that the amount of voltage \emph{lost} should be $0.982 \cdot 7\myvolt = 6.874\myvolt$.
+If we have lost that much voltage, that means we should subtract it, so the remaining voltage is $7\myvolt - 6.874\myvolt = 0.126\myvolt$.
+
+So the voltage after 2 seconds will be $0.125\myvolt$.
+\end{exampleprob}
+
+\section{Constructing a Simple Timer Circuit}
+
+Let's say that we want a circuit that, when turned on, \emph{waits} for a certain amount of time and then does something.
+How might we do it?
+
+Think of it this way.  
+We can use capacitor charging to give us a time delay.
+However, we need something that ``notices'' when the time delay is finished.
+In other words, we need a way to trigger something when a certain threshold is crossed.
+
+What happens to the capacitor as it charges?
+The voltage across its terminals changes.
+When it is first connected to the circuit, there is zero voltage across its terminals.
+As it charges, the voltage across the capacitors terminals keeps going up until it matches the supply voltage.
+Therefore, we know when we have hit our target time based on when the voltage is at a certain level.
+But how will we know when we are at the right voltage?
+Have we done a circuit so far that detects voltages?
+What component did we use?
+
+If you remember back to Chapter~\ref{chapIC}, we used the LM393 to compare voltages.
+We supplied the LM393 with a \emph{reference} voltage, and then it triggered when our other voltage went above that voltage.
+We can do the same thing here.
+
+What we will construct is a circuit that waits for 5~seconds and then turns on an LED.
+In order to do this, we will need to choose (a) a reference voltage to use, (b) a resistor/capacitor combination that will surpass the reference voltage after a certain amount of time, and (c) an output circuit that lights up the LED.
+
+There are virtually infinite combinations we could choose from for our reference voltage, resistance, and capacitance.
+In fact, the supply voltage doesn't matter so much since what we are looking at is \emph{percentages} of the supply voltage, which will be the same not matter what the actual voltage is.
+
+% FIXME - should I use 5V or 9V?
+
+For this example, we will use a basic $5\myvolt$ supply, and make the reference voltage to be half of the supply voltage.
+This allows us to use any two equivalent resistors into a voltage divider to get our reference voltage.
+Technically the voltage itself does not matter nearly as much as the fact that we are using half of the supply voltage as our reference voltage.
+
+Now, since the reference voltage is half of our supply voltage, we will use the table in Figure~\ref{figTimeConstants} to determine how many time constants that needs to be.
+The table says that for 50\% of voltage, it will take 0.7 time constants (it is actually 50.3\%, but we are not being that exact).
+
+Therefore, the equation for our resistor and capacitor is 
+
+\begin{align*}
+T &= 5\textrm{ seconds} \\
+5 \textrm{ seconds} &= 0.7\cdot R\cdot C \\
+\frac{5}{0.7} &= R\cdot C \\
+7.14 &= R\cdot C
+\end{align*}
+
+So, we can use any resistor and capacitor such that the ohms multiplied by the farads equals 7.14.
+I usually use $100\myuf$ capacitors for larger time periods such as this because they are larger and because being exactly $0.0001\myf$ it makes it easier to calculate with.
+Therefore, we can very simply calculate the needed resistor for this capacitor.
+
+\begin{align*}
+7.14 &= R\cdot C \\
+7.14 &= R\cdot 0.0001 \\
+\frac{7.14}{0.0001} = R \\
+71400 = R
+\end{align*}
+
+Therefore, we need a resistor that is about $71,400\myohm$.
+We could choose a combination of resistors that hits this exactly, but for our purposes, we only need to get close.
+In my case, the closest resistor I have is $68,000\myohm$ (i.e., $68\mykohm$).
+That is close enough (though I could get even closer by adding in a $3\mykohm$ resistor in series).
+
+\simplegraphicsfigure{A Simple Timer for an LED}{SimpleTimerCircuit}{0.08}
+
+Figure~\ref{figSimpleTimerCircuit} shows the full circuit.
+When building this circuit, don't forget that the comparator also has to be connected to the supply voltage and ground as well!
+As you can see, R2 and R3 form the voltage divider that provides the reference voltage for the comparator at half of the supply voltage.
+The values for R2 and R3 are arbitrarily chosen, but they must be equal to get the reference voltage.
+I chose medium-high values for these resistors so as to not waste current with the voltage divider.
+The circuit made by R1 and C1 is the timing circuit.
+When the circuit is first plugged in, C1 is at voltage level 0, essentially acting as a short circuit while it first begins to store charge.
+At zero volts, this is obviously less than our reference voltage.
+However, as the capacitor charges, less, and less current can flow into C1.
+Its voltage level increases under the rules of the RC time constant.
+After 0.7 time constants, the voltage will be above the voltage level set by the reference voltage, and our voltage comparator will switch on.
+
+Remember, though, from Chapter~\ref{chapIC}, that the LM393 operates using a pull-up resistor.
+That is, the comparator doesn't ever source current.  
+It will sink current (voltage level 0 when the + input is less than the - input), or disconnect (when the + input is greater than the - input).
+Therefore, R4 is providing a pull-up resistor to supply power to the LED when the LM393 disconnects.
+
+\simplegraphicsfigure{The Capacitor Timer Circuit on a Breadboard}{SimpleTimerBreadboard}{1}
+
+Figure~\ref{figSimpleTimerBreadboard} shows this circuit laid out on the breadboard.
+We are using the second voltage comparator of the LM393 just because it was a little easier to show the wiring for it.
+If you need to see the pinout for the LM393 again, it was back in Figure~\ref{figlm393Pinout}.
+
+Notice the prominence of our basic circuits from Chapter~\ref{chapBasicResistorCircuits}.
+On the top, we have a combination pull-up resistor which is also acting as a current-limiting resistor (as they often do).
+On the bottom left, we have a voltage divider.
+
+On the bottom right, we have our new timing circuit, which looks a lot like a voltage divider.
+In fact, it acts like one, too, where the voltage varies by time!
+If you think about what the capacitor is doing, when we first apply voltage it acts like a short circuit---in other words, no resistance.
+This means that there are zero volts across the capacitor, and the resistor is eating up all of the voltage.
+But, as the capacitor fills up, it increases voltage, which it is \emph{dividing} with the resistor!
+
+\section{Resetting Our Timer}
+
+The timer is great, except for one thing---how do we turn it off?
+You might have noticed that, even if you disconnect power to the circuit, when you turn it back on, it doesn't do any timing anymore!
+Remember, the capacitor is \emph{storing} charge.
+When you turn off the circuit, it is \emph{still} storing the charge.
+
+Now, you can very simply get rid of the charge by putting a wire between the legs of the capacitor.
+However, for larger capacitors, you would need to do this with a resistor instead of a wire in order to keep there from being a dangerous spark (the resistor limits the current, which makes the discharge slower).
+But how do we do this with a circuit?
+
+What we can do is add a switch that will do the same thing as putting a wire or resistor across the legs of the capacitor.
+Figure~\ref{figSimpleTimerCircuitWithReset} shows how to do this.
+
+\simplegraphicsfigure{Adding a Reset to the Capacitor}{SimpleTimerCircuitWithReset}{0.08}
+
+Now let's look at how this circuit works.
+First of all, we added two components, the switch and the R5 resistor connected to it.
+To understand what this does, pretend for a minute that the resistor isn't there.
+What happens when we push the button?
+That would create a direct link from the positive side of the capacitor to ground.
+Since the negative side of the capacitor is also connected to ground, that means that these two points would be directly connected.
+Thus, they would be at the \emph{same} voltage.
+This would happen by the current suddenly rushing from one side to another.
+
+If the capacitor were larger or the voltages greater, this might be somewhat dangerous.
+You would have a large current and a large voltage for a short period of time (which would yield a large wattage), which could blow something out.
+Therefore, it is good practice to use a small resistor between the button and ground.
+The resistor should be \emph{much} smaller than the resistor used to charge the capacitor.
+The specific size doesn't matter too much---it needs to be small enough to discharge it quickly and large enough to prevent a spark when you push the button.
+You can use the same time constants for discharging the capacitor that you used for charging it.
+However, keep in mind that the charging circuit is still running!
+That's why the resistor has to be small---it has to discharge the capacitor \emph{while} the other resistor is trying to charge it.
+
+Also notice R1 and R5.  
+When the button is being pushed, what is happening to them?
+Think back to our basic resistor circuits.  
+If we have two resistors, with a wire coming out of the middle, what is that?
+It's a voltage divider!
+So, not only is R5 being a current-limiting resistor for the button, it is also acting as a voltage divider in concert with R1.
+
+What this means is that the capacitor will only discharge down to the level of voltage division between these resistors. 
+That's fine, as long as it is low enough.
+You will find that in electronics, ``close enough'' often counts.
+The trick is knowing how close is close enough and how close is still too far.
+
+However, usually we can perform some basic calculations to figure this out.
+Since R1 is $68\mykohm$ and R5 is $200\myohm$, what is the voltage at the point of division?
+If we use a $9\myvolt$ supply, then using the formula from Equation~\ref{eqVoltageDivision} then we can see that:
+
+\begin{align*}
+V_{OUT} &= V_{IN} \cdot \frac{R_5}{R_1 + R_5} \\
+ &= 9 \cdot \frac{220}{68000 + 220} \\
+ &= 9 \cdot \frac{220}{68220} \\
+ &\approx 9 \cdot 0.00322 \\
+ &\approx 0.029\myvolt
+\end{align*}
+
+So, as you can see, when the button is pushed, the final voltage of the capacitor, while not \emph{absolutely} zero volts, is pretty darn close.
+
+Also note that, if we wanted, we can reverse the action of this circuit.  
+By swapping our two inputs to the voltage comparator, we can make the circuit be on for 5 seconds and then switch off.
+
+\reviewsection
+
+In this chapter, we learned:
+
+\begin{enumerate}
+\item A resistor and capacitor in series with each other is known as an RC circuit.
+\item In an RC circuit, the amount of time it takes for a capacitor to charge to the supply voltage is based on the capacitance of the capacitor and the resistance of the resistor.
+\item The RC \emph{time constant} is a convenient way to think about how long it takes for a capacitor to charge in RC circuits.
+\item The RC time constant is calculated by multiplying the resistance (in ohms) by the capacitance (in farads) with the result being the number of seconds in 1 RC time constant.
+\item The table in Figure~\ref{figTimeConstants} shows how long it takes to charge a capacitor to different percentages of supply voltage as a multiple of RC time constants.
+\item The RC time constant chart can also be used to calculate the amount of time it takes for a capacitor to discharge to ground if it is disconnected from its source and connected through a resistor to ground.  In this case, Figure~\ref{figTimeConstants} is used to tell the percentage that the voltage has been \emph{discharged}.
+\item A timer can be constructed by using a comparator and an RC circuit along with a reference voltage provided by a voltage divider.  By tweaking the RC circuit, the timing can be changed.
+\item After charging a capacitor, a means needs to be provided to discharge it as well, such as a button leading to ground.
+\item Such discharge methods need to have resistance to prevent sparks and other failures, but not too much resistance as they can accidentally form voltage dividers with other resistors.
+\item Even as our circuits get more advanced, the basic circuits we found in Chapter~\ref{chapBasicResistorCircuits} are still dominating our circuit designs.
+\end{enumerate}
+
+\applysection
+
+\begin{enumerate}
+\item If I have an RC circuit with a resistor of $10\myohm$ and a capacitor of $2\myf$, what is the RC time constant of this circuit?
+\item In the previous question, how many seconds does it take to charge my capacitor to approximately 50\% of supply voltage?
+\item If I have an RC circuit with a resistor of $30,000\myohm$ and a capacitor of $0.001\myf$, what is the RC time constant of this circuit?
+\item In the previous question, what percentage of the way is the capacitor charged after 60 seconds?
+\item If I have an RC circuit with a resistor of $25\mykohm$ and a capacitor of $20\myuf$, what is the RC time constant of this circuit?
+\item Give a resistor and capacitor combination that will yield an RC time constant of 0.25 seconds.
+\item Reconfigure the circuit in Figure~\ref{figSimpleTimerCircuit} to wait for 3 seconds.  Draw the whole circuit.
+\item Redraw the previous circuit, and circle each basic circuit pattern and label it.
+\end{enumerate}

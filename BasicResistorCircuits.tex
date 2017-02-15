@@ -114,6 +114,7 @@ A more explicit way of stating this is with an equation.
 Given a starting voltage $V_{IN}$ connected to the first resistor, $R_1$, and the second resistor ($R_2$) connected to ground, the output voltage ($V_{OUT}$) coming out between the resistors will be given by the equation:
 
 \begin{equation}
+\label{eqVoltageDivision}
 V_{OUT} = V_{IN} * \frac{R_2}{R_1 + R_2}
 \end{equation}
 
@@ -201,10 +202,19 @@ Notice that when the button is pushed, you can trace a path from the positive vo
 \simplegraphicsfigure{Incorrect Way to Wire the Circuit}{PullUpResistorBad}{0.08}
 
 The resistor is called a pull-up resistor because it is connected to the positive voltage source, and is used to ``pull up'' the voltage on the circuit to a positive value when the switch is open.
-In Chapter~FIXME we will look at resistors that are connected to ground, called pull-down resistors.
 
 In short, a pull-up resistor is usually used to supply positive voltage to a circuit which might be turned off by redirecting the voltage to ground.
 The resistor provides both the electrical connection to the positive source and a limit to the amount of current that will flow if the wire is then routed to ground (usually through some kind of switching mechanism).
+
+\section{Pull-Down Resistors}
+
+One more basic resistor circuit that is often used is the pull-down resistor.
+While the pull-up resistor is connected to the positive power rail, the pull-down resistor is instead connected to ground.
+So, in a pull-up resistor, if part of the circuit is disconnected, the voltage goes high.
+In a pull-down resistor, if part of the circuit is disconnected, the voltage goes low.
+However, we don't yet have enough background really to understand how they are used here.
+They are covered more fully in Chapter~\ref{chapLogicICs}.
+They are merely mentioned here because they are one of the basic resistor circuit patterns that are seen throughout electronics.
 
 \reviewsection
 

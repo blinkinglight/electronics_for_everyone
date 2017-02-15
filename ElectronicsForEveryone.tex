@@ -264,7 +264,6 @@ set_draw_defaults(grid=true, fill_color=grey, xaxis_type=solid, yaxis_type=solid
 \include{Introduction}
 \include{BeforeWeBegin}
 
-\part{Basic Concepts}
 
 % FIXME - some things we need to be sure we describe:
 %          1) That current only flows in one direction in a given wire
@@ -277,6 +276,9 @@ set_draw_defaults(grid=true, fill_color=grey, xaxis_type=solid, yaxis_type=solid
 
 % FIXME - I know I talk about digital, but do I ever *define* analog anywhere?
 
+% FIXME - make sure I say that legs, leads, and terminals all mean the same thing
+
+\part{Basic Concepts}
 \include{WhatIsElectricity}
 \include{Voltage}
 \include{FirstCircuit}
@@ -284,25 +286,29 @@ set_draw_defaults(grid=true, fill_color=grey, xaxis_type=solid, yaxis_type=solid
 \include{SeriesAndParallelCircuits}
 \include{DiodeIntro}
 \include{BasicResistorCircuits}
+\include{PowerIntro}
 
 \part{Digital Electronics}
 
 \include{IntegratedCircuits}
 \include{LogicICs}
+\include{LogicStorage}
+\include{OtherICs}
+
+\part{Microcontrollers}
+
 \include{Microcontrollers}
 \include{MicrocontrollerProjects}
 \include{MicrocontrollerAnalog}
 
-
-\part{Power Circuits}
-
-\include{PowerIntro}
-\include{TransistorIntro}
-
-\part{Audio Circuits}
+\part{Capacitors and Inductors}
 
 \include{CapacitorIntro}
+\include{CapacitorTimer}
 \include{CapacitorOscillator}
+
+\part{Amplification Circuits}
+\include{TransistorIntro}
 
 \part{Other Circuits}
 

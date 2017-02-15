@@ -71,7 +71,9 @@ Like most chips, the LM393 is an \emph{active} device, which means that it addit
 Figure~\ref{figlm393Pinout} shows the pin configuration (also called the \glossterm{pinout}) of the LM393.
 The first thing to note on any pinout is where the voltage and ground connections are.
 In this case, the voltage is marked as $V_{CC}$ and the ground is marked as $GND$.
-Down the left side of the chip are the inputs and output for the first voltage comparator, and the inputs and output for the second voltage comparator is on the right.
+Even though the LM393 has \emph{two} voltage comparators on the chip, they both share the power ($V_{CC}$) and ground ($GND$) pins.
+The left side of the chip diagram shows the inputs and output for the first voltage comparator ($1IN+$, $1IN-$, and $1OUT$), and the inputs and output for the second voltage comparator is on the right ($2IN+$, $2IN-$, and $2OUT$).
+In your projects, you can use whichever one is more convenient for you, or even both at the same time.
 
 So, the \icode{1IN+} pin (pin 3) and the \icode{1IN-} pins are where the two voltages are being fed that are being compared by the first comparator.
 The \icode{1OUT} is the pin which will contain the output.
