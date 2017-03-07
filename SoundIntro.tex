@@ -1,0 +1,158 @@
+\chapter{An Introduction to Sound Production}
+
+In Chapter~\ref{chapOscillators}, we learned to make an oscillator circuit.
+Oscillations affect a lot of areas of electronics, but the one that is most directly usable (well, besides making blinky lights) is in making sounds.
+
+\section{How Sound is Produced by Speakers}
+
+As we mentioned in Chapter~\ref{chapOscillators}, sound is the result of vibrations (i.e., oscillating motions) in the air.
+These vibrations are produced in electronics with a speaker when the speaker oscillates back and forth.
+The speaker oscillates back and forth because it is connected to a magnet and a coil.
+When the electricity in the coil oscillates between more positive and more negative charges, the magnet is attracted and repelled from the coil, moving the speaker back and forth.
+
+The frequency of this oscillation will determine the pitch of the sound (i.e., how high or low the sound is).
+If the frequency is higher (shorter periods), then the pitch is higher.
+If the frequency is lower (longer periods), then the pitch is lower.
+
+Now, compared to the blinking lights we worked with in Chapter~\ref{chapOscillators}, sounds that you can hear are all of a much higher frequency.
+The bottom end of the hearable audio is about $20\myhz$---that is, 20 cycles per second.
+The top end is about $20\mykhz$ (i.e., $20,000\myhz$).
+These values vary by individual, but this is a pretty good guide for most people.
+If we tried to blink an LED that fast, we just would not be able to see it---it would just look like a dimmer-than-normal light.
+
+\section{Graphing Electricity}
+
+Now, when we deal with circuits that are oscillating quickly, we need to have a way to visualize what is happening.
+With circuits that have one or two states, we don't need to visualize much---we just need to calculate what the values are.
+However, with circuits that are continually oscillating (such as sound circuits), it is helpful to be able to graph what the voltages are at different points in time.
+
+There are several ways to graph electricity.
+One of the most common ways is to plot \emph{time} on the $x$-axis and \emph{voltage} on the $y$-axis.  
+This gives a visible representation of how the voltage is varying within the circuit.
+Now, because each point in a circuit has a different voltage, you have to specify \emph{which point} on the circuit you are graphing.
+For instance, if you take the circuit in Figure~\ref{figSimple555Oscillator}, the two places which you might want to graph the voltages are either (a) right before the capacitor, or (b) right after the output pin.
+
+These will give \emph{very} different graphs, but both of them are instructive.  The graph of (a) will show you what the input side of the circuit looks like, and the graph of (b) will show you what the output side of the circuit looks like.
+
+\begin{figure}
+\caption{A Graph of the Capacitor Voltage of Figure~\ref{figSimple555Oscillator}}
+\label{fig555CapacitorVoltage}
+FIXME - need graph
+\end{figure}
+
+\begin{figure}
+\caption{A Graph of the Output Voltage of Figure~\ref{figSimple555Oscillator}}
+\label{fig555OutputVoltage}
+FIXME - need graph
+\end{figure}
+
+Notice that Figure~\ref{fig555CapacitorVoltage} is fairly smooth.
+This is because capacitor charging causes the voltage to change smoothly over time.
+It charges up until it reaches $\frac{2}{3}$ supply voltage and then discharges down to $\frac{1}{3}$ supply voltage.
+It does this over and over again as you can see on the graph.
+
+The output, however, is either \emph{on} or \emph{off}.  
+Therefore, Figure~\ref{fig555OutputVoltage} shows a very jagged graph.
+This is known as a \glossterm{square wave}, because it is basically rectangular.
+The voltage just goes from zero to the target voltage almost instantly and then after it stays there a bit the voltage goes back down again just as instantaneously as it rose.
+
+In addition to graphing voltage, we can also graph current in the same way, though it is harder to measure.
+Because voltage can be measured with simple probes and measuring current requires replacing a wire, most of the time people just focus on voltage measurements.
+Special devices known as \glossterm{oscilloscopes} can be used to measure voltage changes over time.
+Figures~\ref{fig555CapacitorVoltage} and~\ref{fig555OutputVoltage} were made by hooking up an oscilloscope to the circuit while it was in operation.
+Oscilloscopes used to cost thousands of dollars, but now you can pick up a small handheld oscilloscope for under \$50.
+
+Usage of an oscilloscope is outside the scope of this book, but the basics are simple enough.
+An oscilloscope usually has an active probe and a ground probe.
+You hook up the ground probe to the ground on your circuit, and you hook up the active probe to the point in the circuit that you want to measure.
+Then, you look at the screen, and it will graph for you what the past and current voltage is at that point.
+Most oscilloscopes have all sorts of adjustments, such as how wide of a voltage range you want to measure, and how long of a time window you want to show on the screen.
+In any case oscilloscopes provide graphical views of oscillating voltages.
+
+\section{Outputting a Tone to Headphones}
+
+In this section, we are going to modify the circuit in Figure~\ref{figSimple555Oscillator} to add in a headphone output.
+Figure~\ref{figSimpleToneGenerator} shows the final circuit, and Figure~\ref{figSimpleToneGeneratorBreadboard} shows how to build it.
+This circuit has several changes to our original circuit that we will discuss in this section.
+
+\simplepdffigure{Schematic for a Simple 555-based Tone Generator}{SimpleToneGenerator}{0.25}
+
+\simplepdffigure{Breadboard Layout for 555-based Tone Generator}{SimpleToneGeneratorBreadboard}{1}
+
+The first changes to this circuit are to the RC time circuit.
+Because we want the circuit to be in audio range, we are making a much higher frequency (i.e., a shorter period).
+To do this, we swapped out the electrolytic capacitor for a ceramic disk capacitor of $10\mynf$.  
+Then, we dropped the resistors down to $10\mykohm$.
+This will make a tone with a period of $0.003\mysec$.
+Taking the reciprocal gives us the frequency---$1\mykhz$.
+This is well within hearing range for most people.
+You can adjust the resistors and capacitors how you wish for different tone frequencies.
+We are merely using the equations from Chapter~\ref{chapOscillators} to determine the period and frequency.
+
+The strange change is in the output circuit.
+When we were blinking the LED, we just used a medium-sized resistor to limit output current.
+Here, however, we are using a combination of a capacitor and a resistor.
+This \emph{looks like} an RC time circuit---and it would be, if it had a constant voltage going to it.
+Instead, in this circuit, the capacitor is used to remove the \glossterm{DC bias voltage} (which we will discuss shortly), and the resistor is used to limit current down to what the headphones/speaker can handle.
+
+\section{DC Bias Voltage and Its Removal}
+
+As mentioned earlier, the speaker is driven by changing voltages in a coil, which alters the attraction of the coil to a magnet.
+These variations in attraction and repulsion moves the coil back and forth, which moves the speaker cone, which vibrates the air, which vibrates your eardrum, which you hear.
+
+If you look at the graph in Figure~\ref{fig555OutputVoltage}, notice that while the voltage goes up to a positive voltage, the \emph{lowest} that it ever goes is zero.
+Speakers, however, are made to utilize \emph{both positive and negative voltages}.
+That is, they expect the current to flow in both directions.
+
+Speakers expect the oscillating current to go back and forth each direction about evenly.
+If the amount of time the current spends in one direction is consistently greater than the other direction, this is known as \glossterm{DC Bias Voltage}.
+This means that, rather than the audio signal being centered on zero-voltage, it is centered somewhere else.
+
+This can lead to a variety of problems.
+At minimum, it reduces the output range of the speaker.
+Since speakers are made to move across the full spectrum of voltages in either direction, a DC bias voltage will cause the speaker to only use part of its range.
+More importantly, however, is that the speaker coils are made to shift back-and-forth across zero volts, and spending too much time with the current flowing in one direction can cause the coil to heat up and burn the speaker out.
+
+Because of this, we want a way to reduce or eliminate bias voltage in the speaker output.
+The standard way of doing this is by inserting a capacitor between the biased output voltage and the speaker.
+Using a capacitor in this way is known as a \glossterm{coupling capacitor}, because it couples together a DC-biased source with an output that expects a true AC signal.
+
+To understand why this works, imagine how a capacitor operates.
+While the capacitor is charging and discharging, charge is moving through both sides of the capacitor.  
+Remember, even though the pathway is blocked, when a positive charge accumulates on one side, it pulls electrons into the other side.
+Since the electrons are moving out of the circuit on the other side, the other side is getting more positive.
+Thus, when the charge on the capacitor is changing, current is indeed flowing.
+
+Now, when the voltage stays the same, no electrons move, no matter what the voltage is.
+Therefore, even though you have a positive voltage on one side, if the voltage is not changing, no current is flowing.
+Therefore, on an unchanging current, the voltage on the other side of the capacitor will be zero.
+
+So, as you can see, the capacitor only allows through \emph{changes} in voltage, not the absolute voltage.
+In other words, a capacitor will \emph{block} DC bias voltages, but allow AC oscillations to pass right through.
+Thus, by adding a capacitor in series, we can eliminate DC bias voltage for the most part.
+For audio applications, a capacitor somewhere between $10\mynf$ and $10\myuf$ should be used.
+
+The resistor is there to limit the output signal to the headphones.
+Headphones and speakers are all a little strange---there is very little standardization.
+Different headphones have different resistances in the speakers, and different tolerances for how much wattage can be put through them.
+However, for headphones, you can be fairly safe by estimating that the headphones will act as $16\myohm$ resistors, and that they can consume a maximum of $20\mymwatt$.
+
+The output of the 555 timer is $1.7\myvolt$ less than my supply voltage.
+So, for a $5\myvolt$ source, the output will be $3.2\myvolt$. 
+We can use the formula $P = \frac{V^2}{R}$ to determine how many watts this will supply.
+If the speaker is $16\myohm$, then the power used by the headphone without the extra resistor will be $\frac{3.2^2}{16} = 0.64\mywatt = 640\mymwatt$.
+Therefore, the R3 resistor pulls out some of that power.
+
+With the resistor, the combined power usage of the resistor and the headphone speaker is $166\myohm$.
+Therefore, the power here is $\frac{3.2^2}{166} = 0.06\mywatt = 60\mymwatt$.
+This looks like it is still over our range, but remember that this is the \emph{combined} power of both the resistor and our speaker.
+The speaker is only supplying about $\frac{1}{10}$ of the resistance, so it is only using up $\frac{1}{10}$ of the power, or $6\mymwatt$, which is well under our maximum.
+
+Now, as I mentioned, all headphones are different, and, with the exception of \emph{having} a coupling capacitor, they all have different ranges and need different amounts of power.
+Usually this is accommodated by having a volume control.
+The volume control is accomplished by merely replacing the output resistor R3 with a variable (i.e., adjustable) resistor or a potentiometer (adjustable voltage divider).
+
+
+% FIXME - mention peak-to-peak voltage (since we are only on half of the voltage)
+% FIXME - talk about how speakers actually care about the average voltage, not the final
+% FIXME - need to add in the final build as well as the oscilloscope stuff

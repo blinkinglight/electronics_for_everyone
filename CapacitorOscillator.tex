@@ -1,4 +1,4 @@
-\section{Oscillator Circuits}
+\chapter{Introduction to Oscillator Circuits}
 \label{chapOscillators}
 
 In Chapter~\ref{chapCapacitorTimer}, we learned how to use RC (resistor-capacitor) circuits to create timers.  
@@ -18,38 +18,41 @@ These lights go from a state of zero voltage (off) to a state of positive voltag
 And they go back and forth between these states over and over again as long as there is power in the circuit.
 These are oscillating circuits.
 
-An oscillator is usually described by either its \glossterm{wavelength} or its \glossterm{frequency}.
-The wavelength of an oscillator is how many seconds it takes to go through one complete cycle.  
-So, if I had lights that blinked on for one second and then off for two seconds (and continued repeating in that fashion), the wavelength would be three seconds.
+An oscillator is usually described by either its \glossterm{period} or its \glossterm{frequency}.
+The period of an oscillator is how many seconds it takes to go through one complete cycle.  
+So, if I had lights that blinked on for one second and then off for two seconds (and continued repeating in that fashion), the period would be three seconds.
 
-The frequency of an oscillation is the number of times that the wave cycles every second, which is merely the reciprocal of the wavelength (i.e., one divided by the wavelength).
-So, in the example given, since the wavelength was 3 seconds, the frequency is $\frac{1}{3}$ cycles per second.
+The frequency of an oscillation is the number of times that the system cycles every second, which is merely the reciprocal of the period (i.e., one divided by the period).
+So, in the example given, since the period was 3 seconds, the frequency is $\frac{1}{3}$ cycles per second.
 The unit ``cycles per second'' also has a special name---\glossterm{hertz} (often abbreviated as hz).
 Therefore, we would say that our blinking lights blinked at a frequency of $3\myhz$.
 
 \begin{exampleprob}
 Let's say that we have an oscillator that turns a light on for four seconds and then turns off for four seconds, and repeats this continually.
-What is the wavelegnth and frequency of this oscillator?
+What is the period and frequency of this oscillator?
 
-The wavelength is merely the total time it takes to go through one complete cycle.
+The period is merely the total time it takes to go through one complete cycle.
 Therefore:
 
 \begin{align*}
-\textrm{wavelenth} &= 4\textrm{seconds} + 4\textrm{seconds} \\
-  &= 8\textrm{seconds}
+\textrm{period} &= 4\mysec + 4\mysec \\
+  &= 8\mysec
 \end{align*}
 
-So, what is the frequency of this oscillator?  Simple, just take the reciprocal of the wavelength.  That makes the frequency $\frac{1}{8}\myhz$.
+So, what is the frequency of this oscillator?  Simple, just take the reciprocal of the period.  That makes the frequency $\frac{1}{8}\myhz$.
 \end{exampleprob} 
 
 \begin{exampleprob}
 On a piano, the Middle-C key plays a sound with a frequency of $261.6\myhz$.
-What is the wavelength of this sound?
+What is the period of this sound?
 
-Since the frequency is the reciprocal of the wavelength, it works the other way around as well---wavelength is the reciprocal of the frequency.
-Therefore, the wavelength is simply $\frac{1}{261.6}$ seconds.
+Since the frequency is the reciprocal of the period, it works the other way around as well---period is the reciprocal of the frequency.
+Therefore, the period is simply $\frac{1}{261.6}$ seconds.
 Or, as a decimal, this is $0.00382$ seconds.
 \end{exampleprob}
+
+There are many other factors that are important to various kinds of oscillations, such as the speed of transition between states, what percentage of time each state is achieved, etc.
+However, the period/frequency is a good way to summarize the behavior of an oscillator into a single number.
 
 \section{The Importance of Oscillating Circuits}
 
@@ -116,6 +119,7 @@ Pin~1 ($Ground$) and Pin~8 ($VCC$) are easy enough---they are connected to groun
 Pin~4 ($\overline{Reset}$) gets connected to the voltage source, too.
 That is a reset pin which is activated if the pin receives a \emph{low} voltage signal.
 Pins that are activated by low-voltage signals are often shown with a line over them.
+Since most pins are activated by a higher voltage, pins that are activated with a lower voltage get a line over them.
 In our case, we never want to reset the chip, so we just tie the reset pin to positive voltage, which will prevent any accidental resets from changes in voltages in the air.
 
 Now, on the right-hand side at the top, you can see the LED connected to Pin~3 ($Output$).
@@ -187,7 +191,7 @@ This is simply because when the circuit first starts up it is charging all the w
 
 You can see the completed 555 circuit on a breadboard in Figure~\ref{figSimple555OscillatorBreadboard}.
 This should blink the light on for about two thirds of a second and off for about a third of a second.
-This gives the total wavelength of about 1 second, and a frequency of about $1\myhz$.
+This gives the total period of about 1 second, and a frequency of about $1\myhz$.
 In the next section, we'll see how to use RC time constants to calculate our own timings.
 
 \section{Calculating On and Off Times with the 555}
@@ -222,7 +226,7 @@ Therefore, the \emph{difference} between the point where we are $\frac{1}{3}$ ch
 Since we were using approximate values from the table, this is only an approximation.
 The circuit actually use a little longer period than that.
 It turns out that to go from $\frac{1}{3}$ supply voltage to $\frac{2}{3}$ supply voltage actually takes 0.693 time constants.
-Since our time constant is 1 second, that makes the calculation really easy: $1\cdot 0.693 = 0.693\textrm{ seconds}$.
+Since our time constant is 1 second, that makes the calculation really easy: $1\cdot 0.693 = 0.693\mysec$.
 
 Now, for discharge, remember that the point that it is discharging to is Pin~7.
 This is \emph{between} R1 and R2.
@@ -230,7 +234,7 @@ That means that it is \emph{only} using R2 to discharge, so the RC time constant
 So, the RC time constant is $50,000 \cdot 0.00001 = 0.5\mysec$.
 Since the charge/discharge time between $\frac{1}{3}$ and $\frac{2}{3}$ is $0.693$ time constants, the resulting time to discharge from from $\frac{2}{3}$ down to $\frac{1}{3}$ is $0.693 \cdot 0.5 = 0.347\mysec$.
 
-The total wavelength will be the total time for one cycle
+The total period will be the total time for one cycle
 This will be our charge time ($0.693\mysec$) plus the discharge time ($0.347\mysec$) which will give us a total of $1.04\mysec$.
 
 The value $0.693$ looks like a strange number, but that will \emph{always} be the value used for th number of time constants for charging/discharging between $\frac{1}{3}$ and $\frac{2}{3}$ of supply voltage.
@@ -239,9 +243,9 @@ If you are going to use the 555 timer, it is best to just memorize it.
 Also note that since the charging goes through \emph{both} resistors while the discharge only goes through \emph{one} resistor, the charge time (with the output on) will \emph{always} be longer than the discharge time (with the output off).
 
 \begin{exampleprob}
-Let's say we have the basic oscillator circuit shown in Figure~\ref{figSimple555Oscillator}, but with a $2,000\myohm$ resistor for R1, a $6,000\myohm$ resistor for R2, and a $10\myuf$ capacitor for C1.  What will be the charge time, the discharge time, the wavelength, and the frequency for our oscillator?
+Let's say we have the basic oscillator circuit shown in Figure~\ref{figSimple555Oscillator}, but with a $2,000\myohm$ resistor for R1, a $6,000\myohm$ resistor for R2, and a $10\myuf$ capacitor for C1.  What will be the charge time, the discharge time, the period, and the frequency for our oscillator?
 
-To find this out, it is easiest to first calculate the charge and discharge times separately, and then use those to find wavelength and frequency.
+To find this out, it is easiest to first calculate the charge and discharge times separately, and then use those to find period and frequency.
 The charge time will be calculated based on \emph{both} resistors in our RC circuit.
 So the resistance will be $2,000\myohm + 6,000\myohm = 8,000\myohm$.
 The capacitance is $10\myuf = 0.00001\myf$.
@@ -254,8 +258,8 @@ The discharge happens only through R2.
 This means that the RC time constant will be $6,000\myohm \cdot 0.00001\myf = 0.06\mysec$.
 Since we will use 0.693 time constants, the total time it takes to discharge from $\frac{2}{3}$ down to $\frac{1}{3}$ is $0.693 * 0.06 = 0.0416\mysec$.
 
-Now that we have the charging and discharging times, we find wavelength by merely adding them together.
-This means the wavelength is $0.0554 + 0.0416 = 0.097\mysec$.
+Now that we have the charging and discharging times, we find the period by merely adding them together.
+This means the period is $0.0554 + 0.0416 = 0.097\mysec$.
 
 The frequency is merely the reciprocal of this number, or $\frac{1}{0.097}$, which gives us $10.3\myhz$.
 \end{exampleprob}
@@ -307,8 +311,74 @@ Depending on our application, we would probably simply choose resistors that wer
 But, for solving equations, it is best to use exact values.
 \end{exampleprob}
 
+%% FIXME - should probably do a chapter on IC block diagrams and show how to build an NE555 from scratch
+%% FIXME - should I show other configurations of the 555?
+
 \section{Choosing the Capacitor}
+
+Ultimately, there are no hard-and-fast rules for choosing capacitors.  
+As long as the RC time constant yields the right value, then you can compensate for pretty much any size capacitor with the right size of resistor.
+However, sometimes just having a little guidance helps people get started, and there are a few situations that you need to watch out for.
+
+First of all, the size of capacitor will affect the size of resistor you need for a given time constant.
+If all you have are smaller-sized resistors, then you should probably use a larger capacitor to compensate.
+
+However, using a smaller capacitor with larger resistors gives a very large advantage in the amount of wasted current.
+If you are using smaller resistors, then Ohm's law indicates that we will have larger currents for a given voltage.  
+Since $V = I\cdot R$, if you lower the $R$ you will increase the $I$.
+So, having a higher resistance means that your RC circuit will use much less current.
+
+Remember that we aren't actually \emph{using} the current to \emph{do} anything except keep time. 
+The current in our RC circuit is not used to power the LED (the 555 does that through the power source), it isn't used for anything else, it is just used to keep time.
+Therefore, pretty much all current used by the RC circuits is wasted.
+We have to use it, but any smaller currents we can get away with, we should!
+
+This gets even more pronounced when the capacitor is discharging.
+When Pin~7 ($DISCHARGE$) switches to ground, not only does it discharge the capacitor, but it also creates a useless waste of current going from the voltage source through R1.
+In our oscillator configuration, you can't get rid of this, but having larger resistors will reduce the amount waste.
+
+So, in short, if you have higher-valued resistors to compensate, your circuit will waste much less current by using smaller capacitors.
 
 \reviewsection
 
+In this chapter, we learned:
+
+\begin{enumerate}
+\item Because this material is based so heavily on RC circuits, you may want to review the material in Chapter~\ref{chapCapacitorTimer}.
+\item When something oscillates it moves back and forth between a set of values.
+\item In electronics, oscillators usually refer to circuits whose output voltages go back and forth between two different values.
+\item Oscillations are usually described by their period or frequency.
+\item The period of an oscillation is the time that it takes to go through one entire cycle (usually in seconds).
+\item The frequency of an oscillation is the number of times that an oscillation occurs per second, which is simply the reciprocal of the period (i.e., $\frac{1}{\textrm{period}}$), with a unit of hertz (cycles per second).
+\item Oscillating circuits are used in a number of circuit applications, including sound production, time keeping, coordinating activities, radio transmissions, and motor control.
+\item Oscillating circuits are often built with RC time circuits which control the time periods of the oscillations.
+\item The NE555 (often referred to as a 555 timer or just the 555) is an integrated circuit which allows for several timing applications including making oscillating circuits.
+\item The NE555, when setup as an oscillator, is controlled by two resistors and a capacitor.
+\item The NE555 can be setup to monitor the charge of the capacitor.  It has two pins for monitoring the voltage, $\overline{Trigger}$ (which checks for the capacitor to drop below $\frac{1}{3}$ supply voltage, and $Threshold$ (which checks to see when the capacitor is charged above $\frac{2}{3}$ of supply voltage.
+\item The NE555 cycles between charging and discharging the capacitor from $\frac{1}{3}$ of supply voltage to $\frac{2}{3}$ of supply voltage and back (using $\overline{Trigger}$ and $Threshold$ to check the voltage level).
+\item The $Discharge$ pin of the NE555 acts like it is disconnected when the capacitor is charging, and is connected to ground to allow for a path for the capacitor to discharge.
+\item The $Output$ pin of the NE555 is turned on (higher voltage level) while the capacitor is charging, and off (low voltage level) when the capacitor is discharging.  The NE555 output operates at about $1.7\myvolt$ less than the source voltage when on, and can source a maximum of $200\mymamp$ to the output circuit.
+\item The $\overline{Reset}$ pin can be given a low voltage to reset the whole device.  If it is unused, it should just be tied to a positive voltage line.
+\item The $Control$ pin is attached to a capacitor in order to regulate and stabilize the circuit operation.
+\item The RC circuit takes $0.693$ time constants to charge from $\frac{1}{3}$ voltage to $\frac{2}{3}$ voltage or to discharge the other way.  Therefore, once you have the RC time constant, multiply by $0.693$ to find the actual time it will take.
+\item The RC circuit utilizes \emph{both} resistors when charging, but only \emph{one} resistor when discharging.  This means that charging and discharging each have their own RC time constants.
+\item Because the charge circuit uses two resistors while the discharge circuit only uses one, the charging portion of the oscillation period will always be at least a little longer than the discharging portion.
+\item The period of the oscillation is the combination of both the charge time and the discharge time.
+\item When calculating resistors for an RC time circuit, it is best to calculate the discharge resistance first, since it only uses one resistor (R2).  Then you can calculate the combined resistance for the charge circuit, which allows you to deduce what the R1 resistor should be.
+\item When choosing components for a given RC time constant, you can choose a variety of combinations of capacitor/resistor values for the same result.  Choosing a smaller capacitor and a larger resistor will save power in the circuit.
+\end{enumerate}
+
 \applysection
+
+\begin{enumerate}
+\item Take a look at the circuit in Figure~\ref{figSimple555Oscillator} (this will be used as the basis for the problems in this section).   Copy this circuit to a piece of paper.  Draw a line in one color showing how the current flows in the main circuit as it charges the capacitor.  With a different color, draw a line showing how current flows as the capacitor discharges.  Use arrows to indicate current direction.
+\item Why is R1 important?  What would happen if we just replaced it with a wire?
+\item Why are there two different pins on the NE555 connected to the capacitor?  What type of circuit (that we have discussed in this book) do you think they are connected to inside the chip?
+\item Why is the charging time of the NE555 always at least a little longer than the discharging time?
+\item Why does the NE555 stay in the on state a little longer when it first turns on?
+\item Let's say that we wanted our circuit to be on for $2\mysec$ and off for $1\mysec$.  Keeping the same capacitor, what values should we use for R1 and R2 to accomplish that?
+\item Let's say that we wanted our circuit to be on for $10\mysec$ and off for $3\mysec$.  Keeping the same capacitor, what values should we use for R1 and R2 to accomplish that?
+\item The factory called and said that they were out of the capacitor we wanted for the circuit, and instead only had a $23\myuf$ capacitor that we could use.  Recalculate the previous problem using this new capacitor value.
+\item How much current is our output sourcing from the chip?
+\item When the chip first turns on (and thus the capacitor is empty and at $0\myvolt$) how much current is the RC circuit using?
+\end{enumerate}
