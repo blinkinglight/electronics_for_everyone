@@ -1,4 +1,5 @@
 \chapter{An Introduction to Sound Production}
+\label{chapSound}
 
 In Chapter~\ref{chapOscillators}, we learned to make an oscillator circuit.
 Oscillations affect a lot of areas of electronics, but the one that is most directly usable (well, besides making blinky lights) is in making sounds.
@@ -30,23 +31,15 @@ There are several ways to graph electricity.
 One of the most common ways is to plot \emph{time} on the $x$-axis and \emph{voltage} on the $y$-axis.  
 This gives a visible representation of how the voltage is varying within the circuit.
 Now, because each point in a circuit has a different voltage, you have to specify \emph{which point} on the circuit you are graphing.
-For instance, if you take the circuit in Figure~\ref{figSimple555Oscillator}, the two places which you might want to graph the voltages are either (a) right before the capacitor, or (b) right after the output pin.
+For instance, if you take the 555 oscillator circuit from Chapter~\ref{chapOscillators} (i.e., Figure~\ref{figSimple555Oscillator}), the two places which you might want to graph the voltages are either (a) right before the capacitor, or (b) right after the output pin.
 
 These will give \emph{very} different graphs, but both of them are instructive.  The graph of (a) will show you what the input side of the circuit looks like, and the graph of (b) will show you what the output side of the circuit looks like.
 
-\begin{figure}
-\caption{A Graph of the Capacitor Voltage of Figure~\ref{figSimple555Oscillator}}
-\label{fig555CapacitorVoltage}
-\fixme{need graph}
-\end{figure}
+\simplegraphicsfigure{A Graph of the Capacitor Voltage in a 555 Oscillator}{555CapacitorVoltage}{0.5}
 
-\begin{figure}
-\caption{A Graph of the Output Voltage of Figure~\ref{figSimple555Oscillator}}
-\label{fig555OutputVoltage}
-\fixme{need graph}
-\end{figure}
+\simplegraphicsfigure{A Graph of the Output Voltage in a 555 Oscillator}{555OutputVoltage}{0.5}
 
-Notice that Figure~\ref{fig555CapacitorVoltage} is fairly smooth.
+Notice that Figure~\ref{fig555CapacitorVoltage} changes fairly smoothly (except when it changes directions).
 This is because capacitor charging causes the voltage to change smoothly over time.
 It charges up until it reaches $\frac{2}{3}$ supply voltage and then discharges down to $\frac{1}{3}$ supply voltage.
 It does this over and over again as you can see on the graph.
@@ -58,6 +51,7 @@ The voltage just goes from zero to the target voltage almost instantly and then 
 
 In addition to graphing voltage, we can also graph current in the same way, though it is harder to measure.
 Because voltage can be measured with simple probes and measuring current requires replacing a wire, most of the time people just focus on voltage measurements.
+
 Special devices known as \glossterm{oscilloscopes} can be used to measure voltage changes over time.
 Figures~\ref{fig555CapacitorVoltage} and~\ref{fig555OutputVoltage} were made by hooking up an oscilloscope to the circuit while it was in operation.
 Oscilloscopes used to cost thousands of dollars, but now you can pick up a small handheld oscilloscope for under \$50.
@@ -93,61 +87,109 @@ The strange change is in the output circuit.
 When we were blinking the LED, we just used a medium-sized resistor to limit output current.
 Here, however, we are using a combination of a capacitor and a resistor.
 This \emph{looks like} an RC time circuit---and it would be, if it had a constant voltage going to it.
-Instead, in this circuit, the capacitor is used to remove the \glossterm{DC bias voltage} (which we will discuss shortly), and the resistor is used to limit current down to what the headphones/speaker can handle.
+However, in this circuit, the voltage going to the RC circuit is fluctuating, and that introduces a whole host of new considerations.
 
-\section{DC Bias Voltage and Its Removal}
+\section{AC vs. DC Current}
 
+In Chapter~\ref{electricitybasics} we introduced the ideas of \emph{direct current} (DC) and \emph{alternating current} (AC).  
+In DC circuits, the circuit has a more-or-less constant voltage.
+Our power supply is at a certain voltage, our output is at a certain voltage, etc.
+In AC circuits, however, the voltage oscillates back-and-forth.
+These oscillations introduce a whole new set of considerations.
+
+In pure AC circuits, voltage and current actually swing both to positive and negative values.
+What is a negative current?
+A negative current happens when the electricity flows in the \emph{opposite} direction.
+Thus, in a \emph{pure} AC circuit, electricity flows back-and-forth, switching off between which direction it is running, spending about even time in each direction.
+
+Some components, such as speakers, assume that they are going to receive or process pure AC currents.
+That is, they \emph{expect} the current to switch direction at some point.
 As mentioned earlier, the speaker is driven by changing voltages in a coil, which alters the attraction of the coil to a magnet.
 These variations in attraction and repulsion moves the coil back and forth, which moves the speaker cone, which vibrates the air, which vibrates your eardrum, which you hear.
-
-If you look at the graph in Figure~\ref{fig555OutputVoltage}, notice that while the voltage goes up to a positive voltage, the \emph{lowest} that it ever goes is zero.
-Speakers, however, are made to utilize \emph{both positive and negative voltages}.
-That is, they expect the current to flow in both directions.
-
 Speakers expect the oscillating current to go back and forth each direction about evenly.
-If the amount of time the current spends in one direction is consistently greater than the other direction, this is known as \glossterm{DC Bias Voltage}.
-This means that, rather than the audio signal being centered on zero-voltage, it is centered somewhere else.
 
-This can lead to a variety of problems.
-At minimum, it reduces the output range of the speaker.
-Since speakers are made to move across the full spectrum of voltages in either direction, a DC bias voltage will cause the speaker to only use part of its range.
-More importantly, however, is that the speaker coils are made to shift back-and-forth across zero volts, and spending too much time with the current flowing in one direction can cause the coil to heat up and burn the speaker out.
+However, in our circuit, the voltage only swings between a positive voltage and $0\myvolt$.
+If you look at the graph in Figure~\ref{fig555OutputVoltage}, notice that while the voltage goes up to a positive voltage, the \emph{lowest} that it ever goes is zero.
+Therefore, it is not a pure AC circuit, because it is not centered around $0\myvolt$.
+Instead, the AC has a \glossterm{DC bias voltage}. 
+That is, the output voltage can be thought of as a combination of an AC voltage signal added to a DC voltage.
 
-Because of this, we want a way to reduce or eliminate bias voltage in the speaker output.
-The standard way of doing this is by inserting a capacitor between the biased output voltage and the speaker.
-Using a capacitor in this way is known as a \glossterm{coupling capacitor}, because it couples together a DC-biased source with an output that expects a true AC signal.
 
-To understand why this works, imagine how a capacitor operates.
+\section{Using Capacitors to Separate AC and DC Components}
+
+Sometimes having a DC bias is good, and sometimes we need to separate out our AC and DC signals.
+Capacitors are excellent at this.  
+Capacitors are said to \emph{allow} AC currents to flow and to \emph{block} DC currents.
+This is a simplistic view, and we will get a little more nuanced in future chapters, but it works for now.
+
+To understand why this happens, let's remember what a capacitor does physically.
+It stores charge---like a small battery.
+Remember, even though the pathway between the plates of a capacitor is blocked, when a positive charge accumulates on one side, it pulls electrons into the other side, which means that the other side gets more positive as well.
+Do you remember what happens when the capacitor \emph{first} starts charging?
+The capacitor basically acts as a short circuit.
+As the capacitor fills up, it starts acting more and more like a resistor, preventing current from flowing.
+
+Thus, when given a constant voltage, once the capacitor is nearly full, it essentially stops getting more charge (or comes very close to it).  
+Therefore, once it is full, it is basically \emph{blocking} any more current from flowing.
+Since what goes onto one side of the capacitor affects what is on the other side, this same blockage will block the \emph{transmission} of the current to the other side as well.
+Thus, in the long run, if you have a DC voltage, the capacitor will eventually block current flow.
+Thus, the current on the \emph{other} side of the capacitor will be \emph{zero}.
+
+However, now consider what happens if the voltage \emph{changes}.
+If the voltage changes, then the capacitor will allow current to flow through.
+If the voltage goes up, then the capacitor has more storage available (since the amount of storage depends on voltage).
+While it is charging to the new level, current will be flowing.
+If the voltage goes down, then the capacitor will actually have to discharge back into the circuit.
+
+Now, if the capacitor discharges back into the circuit, \emph{which way is the current flowing}?
+Well, that means the current from the capacitor is now flowing in the \emph{opposite} direction!
+
+Thus, what ends up happening, is that the capacitor winds up only sending \emph{changes} in voltage and current to the other side of the circuit!
 While the capacitor is charging and discharging, charge is moving through both sides of the capacitor.  
-Remember, even though the pathway is blocked, when a positive charge accumulates on one side, it pulls electrons into the other side.
-Since the electrons are moving out of the circuit on the other side, the other side is getting more positive.
-Thus, when the charge on the capacitor is changing, current is indeed flowing.
-
+Thus, when the voltage (and therefore the charge) on the capacitor is changing, current is indeed flowing.
 Now, when the voltage stays the same, no electrons move, no matter what the voltage is.
 Therefore, even though you have a positive voltage on one side, if the voltage is not changing, no current is flowing.
 Therefore, on an unchanging current, the voltage on the other side of the capacitor will be zero.
 
-So, as you can see, the capacitor only allows through \emph{changes} in voltage, not the absolute voltage.
-In other words, a capacitor will \emph{block} DC bias voltages, but allow AC oscillations to pass right through.
-Thus, by adding a capacitor in series, we can eliminate DC bias voltage for the most part.
-Different capacitor values, however, are optimized for transmitting different frequencies.
+Since the changes go up and down, but the DC bias voltage does not go up and down, this has the effect of sending AC current through the capacitor, but blocking the DC bias voltage.
+
+Therefore, capacitors are often used in series in a circuit to couple together parts of circuits that are pure AC with other parts of the circuit that have a DC bias.
+Since the output of the 555 is DC biased, and speakers generally are optimized for pure AC output, the capacitor in our output circuit filters out the DC bias and gives a pure AC signal.
+
+A capacitor used in this way is known as a \glossterm{coupling capacitor}.
+
+Alternatively, if for some reason you wanted \emph{only} the DC component, you could wire the capacitor to go to ground.
+This sends the AC part of the signal to ground, leaving only the DC component in the circuit.
+In such a scenario, the capacitor is being used as a \glossterm{filter capacitor}.
+
+Now, using a coupling capacitor does add in a small amount of distortion, both because DC bias voltage does have some effect on the signal, and because different capacitor values are optimal for coupling different frequencies.
 For audio applications, a capacitor somewhere between $10\mynf$ and $10\myuf$ should be used.
 
+\section{Speaker Wattage}
+
+Next in the circuit is the R3 resistor.
 The R3 resistor is there to limit the output signal to the headphones.
 Headphones and speakers are all a little strange---there is very little standardization.
 Different headphones have different resistances in the speakers, and different tolerances for how much wattage can be put through them.
-However, for headphones, you can be fairly safe by estimating that the headphones will act as $16\myohm$ resistors, and that they can consume a maximum of $20\mymwatt$.
+Speakers are usually rated by both (a) how much resistance they normally add to the circuit, (b) how loud they are at a given wattage of power, and (c) what their maximum wattage is.
+Even though there is quite a bit of variance, for headphones, you can be fairly safe by estimating that the headphones will act as $16\myohm$ resistors, and that they can consume a maximum of $20\mymwatt$.
 
 The output of the 555 timer is $1.7\myvolt$ less than my supply voltage.
 So, for a $5\myvolt$ source, the output will be $3.2\myvolt$. 
-We can use the formula $P = \frac{V^2}{R}$ to determine how many watts this will supply.
-If the speaker is $16\myohm$, then the power used by the headphone without the extra resistor will be $\frac{3.2^2}{16} = 0.64\mywatt = 640\mymwatt$.
+However, since we have now centered it on $0\myvolt$, the output will actually only be half of that---$1.6\myvolt$.
+We can use the formula $P = \frac{V^2}{R}$ from Chapter~\ref{chappower} to determine how many watts this will supply.
+If the speaker is $16\myohm$, then the power used by the headphone without the extra resistor will be $\frac{1.6^2}{16} = 0.16\mywatt = 160\mymwatt$.
 Therefore, the R3 resistor pulls out some of that power.
 
 With the resistor, the combined power usage of the resistor and the headphone speaker is $166\myohm$.
-Therefore, the power here is $\frac{3.2^2}{166} = 0.06\mywatt = 60\mymwatt$.
-This looks like it is still over our range, but remember that this is the \emph{combined} power of both the resistor and our speaker.
-The speaker is only supplying about $\frac{1}{10}$ of the resistance, so it is only using up $\frac{1}{10}$ of the power, or $6\mymwatt$, which is well under our maximum.
+Therefore, the power here is $\frac{1.6^2}{166} = 0.015\mywatt = 15\mymwatt$.
+Remember, though, that this is the \emph{combined} power of both the resistor and our speaker.
+The speaker is only supplying about $\frac{1}{10}$ of the resistance, so it is only using up $\frac{1}{10}$ of the power, or $1.5\mymwatt$.
+
+Now, the calculation for this is relatively easy because we are working with square waves.
+The calculation becomes harder for different types of output, because you have to take into account the \emph{shape} of the wave.
+However, we won't go into that in this book.
+This calculation using the peak voltage provides a simple method which will give you a good starting point, and you can judge for yourself if you need more or less resistance for your own circuits.
 
 \section{Sound Control}
 
@@ -172,11 +214,6 @@ Most potentiometers are made using what is essentially two variable resistors.
 By using the positive pin and the output pin alone (leaving the ground pin unconnected), the potentiometer becomes a simple variable resistor.
 Potentiometers vary widely in how much resistance they offer, so if we were to add one as a volume control we would need to make sure its resistance range approximately matches what is needed (around $150\myohm$).
 
-% FIXME - need to show symbol for potentiometer
-% FIXME - mention peak-to-peak voltage (since we are only on half of the voltage)
-% FIXME - talk about how speakers actually care about the average voltage, not the final
-% FIXME - need to add in the final build as well as the oscilloscope stuff
-
 \reviewsection
 
 In this chapter, we learned:
@@ -190,14 +227,14 @@ In this chapter, we learned:
 \item On circuits where voltage and/or current change with time, it is often helpful to plot their changes at specific points on a graph to help visualize what is happening.
 \item The output of the 555 timer is known as a square wave because it has steep changes in voltage at specific points, making a rectangular-shaped graph.
 \item An oscilloscope can be used to measure and record these types of graphs.
-\item Voltages that oscillate quickly with time are known as alternating current, or AC voltages. %%% FIXME - make sure this is in the chapter
+\item Voltages that oscillate quickly with time are known as alternating current, or AC voltages. 
 \item Oscillating voltages that do not spend roughly equal amounts of time on either side of zero volts are said to have a DC bias voltage.
-\item The DC bias voltage is how much voltage you would have to subtract from the voltage in order for the voltage to be centered on zero volts.  %%% FIXME - make sure this is in the chapter  %%% FIXME - should also probably have something about measuring the AC voltage
+\item The DC bias voltage is how much voltage you would have to subtract from the voltage in order for the voltage to be centered on zero volts.  
 \item Most circuits have DC bias voltages, but most output devices (such as speakers) need the DC bias voltage removed and only use the AC component of the signal.
 \item DC bias voltage can be removed by placing a coupling capacitor in series with the output signal.  The capacitor will only transmit voltage \emph{changes}, thus removing the DC bias voltage.
 \item Speakers and headphones vary considerably in their properties.
 \item The most important considerations are how many ohms of resistance they have and how many watts are needed to drive the sound.
-\item For headphones, a good starting assumption is that the speaker is $16\myohm$ and needs between $5--20\mymwatt$ of output.
+\item For headphones, a good starting assumption is that the speaker is $16\myohm$ and needs under $20\mymwatt$ of output.
 \item If your output signal is larger than this, be sure to add a resistor in series to consume some of the output signal's power.
 \item The output resistor can be replaced with a variable resistor or a potentiometer to have a user-controlled output setting, also known as a volume control.
 \item A potentiometer is a variable voltage divider.  However, by using only the positive and output terminals, it can be used as a variable resistor instead.
@@ -206,7 +243,7 @@ In this chapter, we learned:
 \applysection
 
 \begin{enumerate}
-\item Why is the input voltage signal to the 555 timer smooth, but the output is jagged?
+\item Why is the input voltage signal to the 555 timer smooth, but the output is square?
 \item Will increasing the resistance of R1 and R2 make the pitch higher or lower?
 \item Can you think of a way to modify the circuit so that the pitch of the sound can be adjusted while the circuit is on? 
 \item Given the circuit in Figure~\ref{figSimpleToneGenerator}, what power would be delivered to your headphones if you were using an $8\myohm$ speaker instead of the $16\myohm$ speaker?  What about a $100\myohm$ speaker?
