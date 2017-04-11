@@ -75,10 +75,10 @@ This circuit has several changes to our original circuit that we will discuss in
 
 The first changes to this circuit are to the RC time circuit.
 Because we want the circuit to be in audio range, we are making a much higher frequency (i.e., a shorter period).
-To do this, we swapped out the electrolytic capacitor for a ceramic disk capacitor of $10\mynf$.  
-Then, we dropped the resistors down to $10\mykohm$.
+To do this, we swapped out the electrolytic capacitor for a ceramic disk capacitor of $100\mynf$.  
+Then, we dropped the resistors down to $10\mykohm$ each.
 This will make a tone with a period of $0.003\mysec$.
-Taking the reciprocal gives us the frequency---$1\mykhz$.
+Taking the reciprocal gives us a frequency of about $333\myhz$.
 This is well within hearing range for most people.
 You can adjust the resistors and capacitors how you wish for different tone frequencies.
 We are merely using the equations from Chapter~\ref{chapOscillators} to determine the period and frequency.
@@ -247,6 +247,6 @@ In this chapter, we learned:
 \item Will increasing the resistance of R1 and R2 make the pitch higher or lower?
 \item Can you think of a way to modify the circuit so that the pitch of the sound can be adjusted while the circuit is on? 
 \item Given the circuit in Figure~\ref{figSimpleToneGenerator}, what power would be delivered to your headphones if you were using an $8\myohm$ speaker instead of the $16\myohm$ speaker?  What about a $100\myohm$ speaker?
-\item The frequency of the A note above middle-C on the piano is $440\myhz$.  Design a modification to this circuit that will yield a middle-C.
+\item The frequency of the A note above middle-C on the piano is $440\myhz$.  Design a modification to this circuit that will yield this frequency.
 \item The output of the 555 is $1.7\myvolt$ less than the power supply used.  What is the effect on the wattage to the headphones if we change the power supply to be a $9\myvolt$ power supply?
 \end{enumerate}
