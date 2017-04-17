@@ -1,0 +1,8 @@
+ElectronicsForEverybody.pdf
+*.aux
+*.log
+*.mac
+*.out
+*.toc
+*.swp
+.DS_Store
