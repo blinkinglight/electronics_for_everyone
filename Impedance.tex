@@ -1,7 +1,7 @@
 \chapter{Reactance and Impedance}
 \label{chapImpedance}
 
-\section{Reactance and Impedance}
+\section{Reactance}
 
 We have discussed resistance quite a bit in this book.  
 Resistance is specifically about the ability of a component to be a good conductor of electricity.
@@ -25,6 +25,52 @@ The lower frequencies, however, give the capacitor time to get full.
 Therefore, for capacitors, lower frequencies create more reactance.
 
 Reactance is measured in ohms, just like resistance.  
+We will see how to combine them in Section~\ref{secImpedance}.
+
+The reactance of a capacitor ($X_C$) is given by the following formula:
+
+\begin{equation}
+\label{eqCapReactance}
+X_C = \frac{1}{2\pi\cdot f\cdot C}
+\end{equation}
+
+In this formula, $f$ is the AC frequency of the signal (in hertz) and $C$ is the capacitance.
+
+\begin{exampleprob}
+What is the reactance of a $100\mynf$ capacitor to a signal of $200\myhz$?
+
+To find this, we merely use the formula:
+\begin{align*}
+X_C &= \frac{1}{2\pi\cdot f\cdot C} \\
+ &= \frac{1}{2\pi\cdot 200\cdot 100} \\
+ &= \frac{1}{2\cdot 3.14\cdot200\cdot100} \\
+ &= \frac{1}{125600} \\
+ &= .00000796\myohm
+\end{align*}
+\end{exampleprob}
+
+You can see from this formula why it is said that a capacitor blocks DC current.
+DC current is, essentially, current that does not oscillate.
+In other words, the frequency is zero.
+Therefore, the formula will reduce to $\frac{1}{0}$, which is infinite.
+Therefore, it has infinite reactance against DC current.
+
+Also note what happens as the frequency increases.
+As the frequency increases, the denominator gets larger and larger.
+That means that the reactance is getting smaller and smaller---closer and closer to zero.
+As the frequency goes up, the reactance is essentially heading towards zero, but will never get there because the frequency can't be infinite.
+
+The formula for inductive reactance ($X_L$) is very similar:
+
+\begin{equation}
+\label{eqReactanceInductor}
+X_L = 2\pi\cdot f\cdot L
+\end{equation}
+
+In this equation, $f$ is the signal frequency and $L$ is the inductance of the inductor in Henries.
+
+\section{Impedance}
+\label{secImpedance}
 In fact, resistance and reactance are usually added together in a circuit to get a quantity known as \glossterm{impedance}, which is simply the combination of resistive and reactive quantities.
 
 Resistance and reactance aren't added together directly, instead you can think of them acting at angles to each other.
@@ -33,9 +79,7 @@ Then, I turn left and walk another ten feet.
 While I have walked twenty feet, I am \emph{not} twenty feet from my door.
 I am, instead, a little over 14 feet from my door.
 
-
-
-
+The total impedance is like the total distance from your door.
 
 \section{LC Circuits and Resonant Frequencies}
 
