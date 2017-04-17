@@ -14,15 +14,26 @@ We learned in Chapter~\ref{chapSound} that capacitors blocked DC signals but all
 \subsection{What is an Inductor?}
 An inductor is kind of like the capacitor's evil twin.  
 It behaves in some ways that remind us a lot of capacitors, but it is operating on a different aspect of electrical behavior.
-Capacitors store charge and release it to maintain a constant voltage.
-Inductors, instead, store \glossterm{magnetic flux} and release it to maintain a constant current.
+Capacitors store charge and release it in response to voltage changes.
+Inductors, instead, store \glossterm{magnetic flux} and release it in response to current changes.
+Thus, capacitors tend to even out voltages, and inductors tend to even out currents.
+
+\simplegraphicsfigure{The Symbol for an Inductor}{InductorSymbol}{0.125}
+
+Figure~\ref{figInductorSymbol} shows what an inductor looks like in a schematic.
+Inductors are non-polarized, so they can be wired in either direction.
+The symbol loosely represents a coil of wire, because that is what inductors are essentially made of.
 
 \subsection{What is magnetic flux?}
-When current moves in a wire, it creates a very tiny magnetic field.  
+When current moves in a wire, it creates a very tiny magnetic field.
 It's not large enough to pick up anything, but it is present.
-Flux is the total amount of magnetism present in an inductor.  
+Flux is the total amount of magnetism present in an inductor.
 Since this is an engineering book, not a physics book, we won't spend a lot of time trying to come to grips with what flux is and how it works.
 We will simply understand that it is the total size of the magnetic field of a component, and it is measured in Webers (Wb).
+To get a feel for what a Weber is like, a small bar magnet has a flux of around $\frac{1}{1000}\mywb$.
+
+As a side note, when we say that something is magnetic, we are usually not talking about the total flux of something, but of the \emph{density} of that flux---the amount of flux in an given area.
+Flux density is measured in Teslas (one Tesla is $\frac{1\mywb}{1\textrm{ meter}^2}$), but we will not concern ourselves with Teslas or flux densities for this course.
 
 \subsection{What is the difference between electric vs. magnetic fields}
 
@@ -33,14 +44,12 @@ Electric fields can exist even when no current is moving at all---there just has
 Basically, any charged object will induce a force on another charged object for a certain distance, and this is the electric field.
 
 The magnetic field, however, only exists when a charge is moving.
-When a charge is in motion, in addition to the electric field, it also creates a \emph{magnetic} field surrounding itself.
-This field also exhibits a force on charged objects within a small distance.
+When a charge is in motion, in addition to the electric field, it also creates a \emph{magnetic} field surrounding itself, going perpendicular to the wire.
+This field also exhibits a force on charged objects within a small distance, but a much larger distance than the electric field.
 Additionally, when the current in the wire slows down, the magnetic field will convert its own energy into current in the wire.
 
-
-
 The size of a magnetic field within a single wire is very, very small, and can be ignored.
-however, the strength of the magnetic field of a wire can be increased by wrapping (coiling) it around a cylindrical core.
+However, the strength of the magnetic field of a wire can be increased by wrapping (coiling) it around a cylindrical core.
 This aligns the magnetic fields of the wires so that the fields can each be added together to produce a combined magnetic field.
 Each turn around the core adds an additional bit to the magnetic field.
 Devices based on this priciple are called coils or an \glossterm{inductors}.
@@ -61,9 +70,10 @@ The defining equation of an inductor is just as simple:
 \end{equation}
 
 In this equation, $\phi$ is the magnetic flux in the inductor (in Webers), $L$ is the inductance (in Henries), and $I$ is the current (in Amperes).
+The \glossterm{Henry} is the primary unit of inductance, and has an abbreviation of $\myhy$.
 
 \begin{exampleprob}
-So, if I have a 50 microhenry inductor and have a constant current of 2 milliamps, how much magnetic flux is being stored?
+If I have a 50 microhenry inductor and have a constant current of 2 milliamps, how much magnetic flux is being stored?
 
 \begin{align*}
 \phi &= L\cdot I \\
@@ -162,17 +172,26 @@ Thus, a sudden decrease in magnetic flux will cause a voltage spike.
 
 But what controls the flux?
 If you go back to Equation~\ref{eqinductance}, we can see that a decrease in current will decrease the magnetic flux.
-Therefore, a sudden decrease in current will cause a sudden decrease in the magnetic flux which will then cause a large voltage spike.
-This spike is known as an \glossterm{inductive kick} and can damage electronic components.
-To avoid an inductive kick, a \glossterm{protection diode} can be used.
+Therefore, a sudden decrease in current will cause a sudden decrease in the magnetic flux which will then cause a large voltage spike within the inductor itself.
+This spike is known as an \glossterm{inductive kick} and can damage nearby electronic components.
+To avoid an inductive kick, a \glossterm{flyback diode}, also called a \glossterm{protection diode} or a \glossterm{snubber diode}, can be used.
 
-A snubber diode is a diode wired backwards across the terminals of an inductor.
+A flyback diode is a regular diode (\emph{not} a Zener diode) wired backwards across the terminals of an inductor.
 Under normal operation the diode won't conduct.
 However, when the diode is shut off, it provides a safe path for the generated voltage to pass through (back through the other side of the inductor), and allows the inductor to bleed off voltage in a much more controlled manner.
 
-\fixme{Need a schematic of a snubber diode}
+\simplepdffigure{A Snubber Diode}{SnubberDiode}{0.25}
 
-Protection diodes are used with all sorts of inductors (motors, electromagnets, etc.) anywhere where there are components that could be damaged by an inductive kick.
+Figure~\ref{figSnubberDiode} shows how this is wired up.  
+As you can see, under normal operation, the current flows in the direction of the arrow.
+Since the left-hand side is more positive than the right-hand side, no current can flow through the diode.
+However, when the current is shut off, the right-hand side becomes more positive very quickly, and the diode feeds the excess current back through the inductor to allow the extra energy dissipate more slowly.
+
+You might be wondering why the voltage doesn't just shift back to the left side on its own once the right-hand side is more positive.
+The answer is that the magnetic field that is generating the voltage is itself directionalized within the inductor.  The field's movement is such that it is essentially pushing current to the right (which is why a voltage is being produced).
+Therefore, the flyback diode carries this excess voltage back to the left-hand side of the diode.
+
+Flyback diodes are used with all sorts of inductors (motors, electromagnets, etc.) anywhere where there are components that could be damaged by an inductive kick.
 
 \reviewsection
 
@@ -201,7 +220,7 @@ In this chapter, we learned:
 \item Draw a schematic of an inductor where the positive side of the inductor has a switch and the negative side is connected to an LED and a resistor.  Add in a snubber diode to protect the LED from the effect of turning off the switch.
 \item If I have an inductor that is $5\myhy$ and has a steady current going through it of $2\myamp$, what is the size of the magnetic flux in the inductor's magnetic field?
 \item If I have an inductor that is $7\myuhy$ and has a steady current going through it of $3\mymamp$, what is the size of the magnetic flux in the inductor's magnetic field?
-\item If I have a $4\myhy$ inductor with $\0.3\mywb$ of flux in its magnetic field, how much current is flowing through it?
+\item If I have a $4\myhy$ inductor with $0.3\mywb$ of flux in its magnetic field, how much current is flowing through it?
 \item If an inductor's magnetic field has $5\mywb$ of flux and it decreases to $3\mywb$ of flux over $2\mysec$, what is the average voltage produced over that timeframe?
 \item If an inductor's magnetic field has $1\myuwb$ of flux and it increates to $2\myuwb$ of flux over $0.4\mysec$, what is the average voltage produced over that timeframe?
 \item If the current flowing through a $3\myhy$ inductor drops from $7\mymamp$ to $1\mymamp$ over a period of $0.01\mysec$, what is the average voltage produced over that time period?

@@ -1,0 +1,152 @@
+\chapter{Inductors and Capacitors in Circuits}
+\label{chapInductorTimer}
+
+In this chapter we will look at a few of the basic uses of simple inductors.
+
+\section{RL Circuits and Time Constants}
+
+Just like we had an RC circuit for capacitors, there is a similar circuit for inductors---the RL circuit.
+Just like inductors are alter ego of the capacitor, the RL circuits are the alter ego of RC circuits.
+
+An RL circuit is a circuit consisting of a resistor (R) and an inductor (L) in series with each other.
+They are similar in construction and usage to the RC circuits we looked at in Chapter~\ref{chapCapacitorTimer}, but have some important differences.
+
+In RC circuits, the RC time constant was the amount of time it took to charge a capacitor to 63.2\% of full voltage when coupled through a resistor.
+That is, after one time constant has passed, the voltage between the legs of the capacitor will be 63.2\% of supply voltage.
+
+In RL circuits, the RL time constant is the amount of time it takes to charge the inductor's magnetic field 63.2\% of its final value.
+Since the size of the magnetic field and the current are directly related to each other, this is also the amount of time it takes to get the current up to 63.2\% of its final rate.
+
+The way that the RL time constant is calculate \emph{is different from} the way that RC time constants are calculated. 
+The RL time constant is found by \emph{dividing} the inductance in henries (L) by the resistance in ohms (R).
+
+\begin{equation}
+\label{eqRLTimeContant}
+\tau = \frac{L}{R}
+\end{equation}
+
+Figure~\ref{figRLTimeConstants} shows the relationship between the number of time constants, the current through the inductor, and the voltage across the inductor.
+This is the same table as the one for RC time constants (Figure~\ref{figTimeConstants}) except that current and voltage are swapped with each other.
+
+\begin{figure}
+\caption{RL Time Constants}
+\label{figRLTimeConstants}
+\begin{tabular}{|l|l|l}
+\textbf{\# of Time Constants} & \textbf{\% of Current} & \textbf{\% of Voltage} \\
+0.5 & 39.3\% & 60.7\% \\
+0.7 & 50.3\% & 49.7\% \\
+1 & 63.2\% & 36.8\% \\
+2 & 86.5\% & 13.5\% \\
+3 & 95.0\% & 5.0\% \\
+4 & 98.2\% & 1.8\% \\
+5 & 99.3\% & 0.7\% \\
+\end{tabular}
+\end{figure}
+
+\begin{exampleprob}
+Let's say that we have a $2\myhy$ inductor in series with a $500\myohm$ resistor connected to a $5\myvolt$ source.
+How long will it take before the inductor has $2.5\myvolt$ across its terminals?
+
+To solve this, recognize that $2.5\myvolt$ is basically half of the voltage source.
+Therefore, we need to look at Figure~\ref{figRLTimeConstants} and find the one which is closest to having 50\% of the voltage.
+That is 0.7 time constants.
+
+Now, we need to figure out what the time constant for this circuit is.
+The inductance is $2\myhy$ and the resistance is $500\myohm$.  
+Therefore, according to Equation~\ref{eqRLTimeContant}, we divide the inductance by the resistance:
+
+\begin{align*}
+\tau &= \frac{2}{500} \\
+     &= 0.004\mysec
+\end{align*}
+
+Therefore the time constant is $0.004\mysec$.
+We are wanting $0.7$ time constants, so the final answer is $0.004 \cdot 0.7 = 0.0028\mysec$.
+\end{exampleprob}
+
+\section{Inductors and Capacitors as Filters}
+
+As we have mentioned, a general way of thinking about capacitors and inductors is that capacitors allow AC current but block DC current.
+Inductors are the other way around.
+Inductors allow DC current but block AC current.
+
+This can also be thought of in terms of frequency response.
+When dealing with signals (audio circuits, radio circuits, etc.) you often times want to deal with certain frequencies and not others.
+With an inductor, the lower the frequency is, the easier it is to pass through from one side to the other.
+With a capacitor, the higher the frequency is, the easier it is to pass through from one side to the other.
+
+Many audio systems have different speakers optimized for different frequencies.
+A common setup is to have two speakers---a woofer which handles the low pitches and a tweeter which handles the higher pitches.
+By using capacitors and inductors, circuit designers can customize which frequencies go to which speakers.
+
+Radio systems also utilize capacitors and inductors.
+Each radio station operates on a specific carrier frequency.
+A \glossterm{carrier frequency} is the dominant frequency used to carry a signal.
+When building a radio receiver, capacitors and inductors are used to isolate the specific frequency from all of the frequencies being transmitted over the air.
+
+Chapter~\ref{chapImpedance} will discuss the mathematics behind this further.
+
+\section{Parallel and Series Capacitors and Inductors}
+
+Capacitors and inductors can each often take on the role of the other in frequency filtering.
+As we have mentioned, you can use a capacitor to allow AC signals and block DC and low frequency signals.
+Inductors do the opposite---they allow DC and low frequency signals and block AC signals.
+However, in a pinch, you can actually get each one to do the job of the other.
+
+\simplepdffigure{Removing High Frequencies Using an Inductor}{HFFilterInductor}{0.25}
+\simplepdffigure{Removing High Frequencies Using a Capacitor}{HFFilterCapacitor}{0.25}
+
+Imagine that you want to get rid of noise in a circuit.
+Noise is essentially high-frequency AC current.
+Using the previously defined rules, we might want to put an inductor in series with the circuit to remove noise.
+Figure~\ref{figHFFilterInductor} shows what this looks like.
+There is, however, another option.
+
+Instead of putting an inductor in series with the circuit, we can instead wire a capacitor that goes to ground in parallel with the circuit.
+Figure~\ref{figHFFilterCapacitor} shows this configuration.
+The way to think about this is that, since AC signals travel through a capacitor, the capacitor is shunting off AC currents to ground before they get to the load.
+
+Likewise, the same can be done for low-frequency filtering.
+Normally a capacitor is used to block low-frequency or DC signals when wired in series.
+However, an inductor can be used in parallel to pass off low frequencies to ground, while letting high frequencies pass through.
+
+In both of these situations, if the currents going to ground will be significant at all, you might also consider putting a small resistor in the parallel circuit as well. 
+This will lessen the ability of the circuit to pass signals off to ground, but will also prevent short circuit behavior if you get significant signals being shunted off to ground.
+
+Additionally, when you switch from the inline to the parallel version of these circuits, you wind up wasting the power that gets shunted off to ground.
+In the series versions of the circuit, any unused power is either blocked or stored.
+Therefore, it doesn't really waste much power.
+However, in the parallel versions, the filtered power is simply sent to ground, essentially wasting it.
+
+\reviewsection
+
+In this chapter, we learned:
+
+\begin{enumerate}
+\item A resistor-inductor series circuit is known as an RL circuit.
+\item RL circuits have time constants very similar to RC circuits.
+\item The time constant for an RL circuit is given by \emph{dividing} the inductance by the resistance.
+\item For RL circuits, the voltage and current values for each time constant are swapped.
+\item Inductors and capacitors can be used to filter specific frequencies.
+\item Capacitors allow high-frequencies to go through, while inductors allow lower frequencies to go through.
+\item Using capacitors and inductors together allow a person to define a specific range of frequencies that they wish to either block or allow.
+\item Radios use this feature which allow people to filter only the specific radio station frequency they want.
+\item Capacitors and inductors can be used for the others' job in filters by wiring them in parallel so that they carry their type of current (AC or DC) to ground instead of letting it pass to the load.
+\end{enumerate}
+
+\applysection
+
+\begin{enumerate}
+\item What is the time constant of a series circuit consisting of a $50\myohm$ resistor and a $2\myhy$ inductor?
+\item What is the time constant of a series circuit consisting of a $10\myohm$ resistor and a $5\myuhy$ inductor?
+\item If I have a $9\myvolt$ battery and I connect it to a series circuit consisting of a $1\mykohm$ resistor and a $23\myuhy$ inductor, how much time will it take before the current through the inductor reaches approximately 87\% of its maximum value?
+\item If I have a $5\myvolt$ source and I connect it to a series circuit consisting of a $2\mykohm$ resistor and a $6\myuhy$ inductor, how much time will it take before the voltage across the inductor falls below $0.25\myvolt$.
+\item If I have a circuit that has unwanted high-pitched noise, what component can I wire in series with the circuit to remove the noise?
+\item If I have a circuit that has unwanted high-pitched noise, what component can I wire in parallel with the circuit to remove the noise?
+\item What types of currents does an inductor (a) block and (b) allow?
+\item What types of currents does a capacitor (a) block and (b) allow?
+\item If I am building a radio, I need to allow through only very specific frequencies.  What component or combination of components would I use to do this?
+\end{enumerate}
+
+
+\end{enumerate}
