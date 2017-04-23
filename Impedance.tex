@@ -17,11 +17,12 @@ This prevents the other side from filling up as well, and current cannot get thr
 This acts \emph{in a similar way to resistance}---it is preventing the flow of current.
 However, it is not dissipating power because it is actually preventing the current from flowing.
 This is known as reactance.
+For capacitors it is called \glossterm{capacitative reactance} and for inductors it is called \glossterm{inductive reactance}.
 
 Reactance is usually frequency-dependent.
-Again, going to the capacitor example, with high frequencies, the capacitor is continually charging and discharging, so it never really gets full.
+Again, going to the capacitor example, with high frequencies, the capacitor is continually charging and discharging, so it never really gets full, so it never impedes the current flow very much.
 Therefore, it adds very little reactance.
-The lower frequencies, however, give the capacitor time to get full.
+The lower frequencies, however, give the capacitor time to get full, and when they are full, they impede the current flow.
 Therefore, for capacitors, lower frequencies create more reactance.
 
 Reactance is measured in ohms, just like resistance.  
@@ -37,15 +38,15 @@ X_C = \frac{1}{2\pi\cdot f\cdot C}
 In this formula, $f$ is the AC frequency of the signal (in hertz) and $C$ is the capacitance.
 
 \begin{exampleprob}
-What is the reactance of a $100\mynf$ capacitor to a signal of $200\myhz$?
+What is the reactance of a $50\mynf$ capacitor to a signal of $200\myhz$?
 
 To find this, we merely use the formula:
 \begin{align*}
 X_C &= \frac{1}{2\pi\cdot f\cdot C} \\
- &= \frac{1}{2\pi\cdot 200\cdot 100} \\
- &= \frac{1}{2\cdot 3.14\cdot200\cdot100} \\
- &= \frac{1}{125600} \\
- &= .00000796\myohm
+ &= \frac{1}{2\pi\cdot 200\cdot 0.00000005} \\
+ &\approx \frac{1}{2\cdot 3.14\cdot200\cdot 0.00000005} \\
+ &= \frac{1}{0.00000624} \\
+ &\approx 160256\myohm
 \end{align*}
 \end{exampleprob}
 
@@ -60,7 +61,7 @@ As the frequency increases, the denominator gets larger and larger.
 That means that the reactance is getting smaller and smaller---closer and closer to zero.
 As the frequency goes up, the reactance is essentially heading towards zero, but will never get there because the frequency can't be infinite.
 
-The formula for inductive reactance ($X_L$) is very similar:
+The formula for \glossterm{inductive reactance} ($X_L$) is very similar:
 
 \begin{equation}
 \label{eqReactanceInductor}
@@ -80,13 +81,207 @@ While I have walked twenty feet, I am \emph{not} twenty feet from my door.
 I am, instead, a little over 14 feet from my door.
 
 The total impedance is like the total distance from your door.
+So how is it calculated? 
+In fact, it is calculated \emph{precisely like} the distance calculation.
+If I proceed in one direction, and then make a 90 degree turn, and go in another direction, I've made a \emph{right triangle}.
+The distance from the start to the end is found on the hypotenuse of this triangle.
+For a right triangle with sides A, B, and C (where C is the hypotenuse), the length of the hypotenuse is given by the famous formula, the Pythagorean Theorem:
 
-\section{LC Circuits and Resonant Frequencies}
+\begin{equation}
+\label{eqPythagoreanTheorem}
+A^2 + B^2 = C^2
+\end{equation}
+
+Or, since we are solving for the hypotenuse (C), we can rewrite it like this:
+
+\begin{equation}
+\label{eqPythagoreanForC}
+C = \sqrt{A^2 + B^2}
+\end{equation}
+
+So, in our distance example, if I went forward 10 feet, turned left, and went another 10 feet, the total distance traveled would be:
+
+\begin{align*}
+C &= \sqrt{A^2 + B^2} \\
+  &= \sqrt{10^2 + 10^2} \\
+  &= \sqrt{100 + 100} \\
+  &= \sqrt{200} \\
+  &\approx 14.14
+\end{align*}
+
+You can do the same procedure to find total impedance.
+If I have a circuit that has $30\myohm$ of resistance and $20\myohm$ of reactance, then the formula for total impedance is:
+
+\begin{align*}
+C &= \sqrt{A^2 + B^2} \\
+  &= \sqrt{30^2 + 20^2} \\
+  &= \sqrt{900 + 400} \\
+  &= \sqrt{1300} \\
+  &\approx 36.1\myohm
+\end{align*}
+
+\begin{exampleprob}
+If I have a $1\mykohm$ resistor in series with a $100\mynf$ capacitor with a signal of $800\myhz$, what is the total impedance to the signal that my circuit is giving?
+
+To find out impedance, we need both resistance and reactance.
+We already have resistance---$1\mykohm$.
+The reactance is found by using Equation~\ref{eqCapReactance}:
+
+\begin{align*}
+X_C &= \frac{1}{2\pi\cdot f\cdot C} \\
+    &= \frac{1}{2\pi\cdot 800 \cdot 0.0000001} \\
+    &\approx \frac{1}{0.0005024} \\
+    &\approx 1990\myohm
+\end{align*}
+
+So the reactance is about $1990\myohm$.
+
+So, if the resistance is $1000\myohm$ and the reactance is $1990\myohm$ what is the impedance?
+The impedance is found by using Equation~\ref{eqPythagoreanForC}:
+
+\begin{align*}
+\textrm{impedance } &= \sqrt{\textrm{resistance}^2 + \textrm{reactance}^2} \\
+ &= \sqrt{1000^2 + 1990^2} \\
+ &= \sqrt{1000000 + 3960100} \\
+ &= \sqrt{4960100} \\
+ &\approx 2227\myohm
+\end{align*}
+
+\end{exampleprob}
+
+
+\section{RLC Circuits}
+
+So far we have discussed RC (resistor-capacitor) and RL (resistor-inductor) circuits.
+When you combine all of these components together, you get an RLC (resistor-inductor-capacitor) circuit.
+
+When you calculate the impedance of such circuits, you have to be sure you include the reactance of \emph{both} the capacitative and the inductive components.
+While inductors and capacitors both offer reactance to certain frequencies, their reactances actually oppose each other.
+That is, the reactance of one cancels out the reactance of the other.
+Therefore, when calculating reactances that include \emph{both} inductance and capacitance, you would subtract the capacitative reactance from the inductive reactance before combining them with resistance.
+
+\begin{exampleprob}
+If I have an inductor of $5\mymhy$ and a capacitor of $5\myuf$ in series with a $200\myohm$ resistor, what is the impedance of the circuit for a frequency of $320\myhz$?
+
+To solve this problem, we need to first find the capacitative reactance ($X_C$ and the inductive reactance($X_L$).
+To get the capacitative reactance, we use Equation~\ref{eqCapReactance}:
+
+\begin{align*}
+X_C &= \frac{1}{2\pi\cdot f\cdot C} \\
+    &= \frac{1}{2\pi\cdot 320\cdot 0.000005} \\
+    &\approx \frac{1}{0.01} \\
+    &\approx 100\myohm
+\end{align*}
+
+The inductive reactance is found using Equation~\ref{eqReactanceInductor}:
+
+\begin{align*}
+X_L &= 2\pi\cdot f\cdot L \\
+    &= 2\pi\cdot 320 \cdot 0.005 \\
+    &\approx 10\myohm
+\end{align*}
+
+Now, because these impedances are against each other, we subtract them.
+
+\begin{align*}
+X_{total} &= X_L - X_C \\
+ &= 10\myohm - 100\myohm \\
+ &= -90\myohm
+\end{align*}
+
+The fact that this is negative is not a problem because it will be squared (which will get rid of the negative) in the next step.
+Now that we know the resistance ($200\myohm$) and the reactance ($-90\myohm$), we just need to use Equation~\ref{eqPythagoreanForC} to calculate the total impedance:
+
+\begin{align*}
+\textrm{impedance } &= \sqrt{\textrm{resistance}^2 + \textrm{reactance}^2} \\ 
+  &= \sqrt{200^2 + (-90)^2} \\
+  &= \sqrt{40000 + 8100} \\
+  &= \sqrt{48100} \\
+  &\approx 219\myohm
+\end{align*}
+\end{exampleprob}
+
+\section{Resonant Frequencies of RLC Circuits}
+
+As we have seen, the capacitative reactance goes down when the frequency goes up.
+Likewise, the inductive reactance goes up when the frequency goes up.
+Additionally, the total reactance is the \emph{difference} between these reactances.
+Well, since they are varying in opposite directions, at some frequency, they are going to have equal reactances, and therefore cancel each other out.
+
+This point is known as the \glossterm{resonant frequency} of the circuit.
 
 When a capacitor and an inductor are in series with each other, it is termed an LC series circuit.
 Because the inductor inhibits high frequencies and the capacitor inhibits low frequencies, LC circuits can be used to let through a very specific frequency range.
 The center of this range is known as the \glossterm{resonant frequency} of the circuit.
 
+Now, if you are good with algebra, you can combine Equation~\ref{eqCapReactance} and Equation~\ref{eqReactanceInductor} to figure out the resonant frequency of a circuit (i.e., set them equal to each other and then solve for the frequency $f$).
+However, to spare you the trouble, there is a formula that you can use to find the resonant frequency of a circuit:
 
+\begin{equation}
+\label{eqResonantFrequency}
+f = \frac{1}{2\pi\sqrt{L\cdot C}}
+\end{equation}
 
+At this frequency, there is no total reactance to the circuit---the only impedance comes from the resistance.
 
+\begin{exampleprob}
+Let's say that you have a $20\myuf$ capacitor in series with a $10\mymhy$ inductor.
+What is the resonant frequency of this circuit?
+
+To find the resonant frequency, we only need to employ Equation~\ref{eqResonantFrequency}:
+
+\begin{align*}
+f &= \frac{1}{2\pi\sqrt{L\cdot C}} \\
+  &= \frac{1}{2\pi\sqrt{0.01 \cdot 0.00002}} \\
+  &= \frac{1}{2\pi\sqrt{0.0000002}} \\
+  &\approx \frac{1}{2\pi\cdot 0.000447} \\
+  &\approx \frac{1}{0.00279} \\
+  &\approx 358\myhz
+\end{align*}
+
+Therefore, this circuit has a resonant frequency of $358\myhz$.  
+This means that, at this frequency, this circuit has no reactive impedance.
+\end{exampleprob}
+
+Resonance frequencies are important in signal processing.
+They can be used in audio equipment to boost the sound of a specific frequency (since all other frequencies will have resistance).
+They can be used to select radio stations in radio equipment (since it will be the only frequency allowed through without resistance).
+You can also remove a specific frequency by taking a resonant frequency circuit to ground, thereby having a specific frequency short-circuited to ground with no resistance.
+
+\reviewsection
+
+In this chapter, we learned:
+
+\begin{enumerate}
+\item Reactance is a property of some electronics components that is similar to resistance, but it \emph{prevents} the flow of current instead of \emph{dissipating} the flow (i.e., converting it to heat).
+\item Reactance, like resistance, is measured in ohms.
+\item Reactance is frequency-dependent---the amount of reactance depends on the frequency of the signal.
+\item Capacitors and inductors each have formulas that can be used to calculate the reactance of the components.
+\item Impedance is the total inhibition of the flow of current, combining both resistive and reactive components.
+\item Reactance and resistance are combined into impedance in the same way that walking two different directions can be combined into a total distance from your originating point---using the Pythagorean theorem.
+\item Capacitors and inductors each exhibit reactance, but in opposite ways, so their reactances should be subtracted from each other when calculating impedance.
+\item The resonant frequency of a circuit is the frequency at which inductive reactance and capacitative reactance cancel each other out.
+\item Resonant frequencies can be used in any application where isolating a frequency is important, because the resonant frequency will be the only frequency not encountering resistance.
+\end{enumerate}
+
+\exercisesection
+
+\begin{enumerate}
+\item As the frequency of a signal goes up, how does that affect the reactance from a capacitor?  What about with an inductor?
+\item As the frequency of a signal goes down, how does that affect the reactance from a capacitor?  What about with an inductor?
+\item What is true about the relationship between the capacitative reactance and the inductive reactance at the resonant frequency?
+\item Why is power not used up with reactance?
+\item How are reactance and resistance combined to yield impedance?
+\item Calculate the capacitative reactance of a $3\myf$ capacitor at $5\myhz$.
+\item Calculate the capacitative reactance of a $20\myuf$ capacitor at $200\myhz$.
+\item Calculate the inductive reactance of a $7\myhy$ inductor at $10\myhz$.
+\item Calculate the inductive reactance of a $8\mymhy$ inductor at $152\myhz$.
+\item Calculate the impedance of a circuit with a $200\myohm$ resistor in series with a $75\myuf$ capacitor with a signal of $345\myhz$.
+\item Calculate the impedance of a circuit with a $310\myohm$ resistor in series with a $90\mynf$ capacitor with a signal of $800\myhz$.
+\item Calculate the impedance of a circuit with no resistor and a $60\mymhy$ inductor with a signal of $89\myhz$.
+\item Calculate the impedance of a circuit with a $50\myohm$ resistor in series with a $75\myuhy$ inductor with a signal of $255\myhz$.
+\item Calculate the impedance of a circuit with a $250\myohm$ resistor in series with a $87\myuhy$ inductor and a $104\myuf$ capacitor with a signal of $745\myhz$.
+\item What is the resonant frequency of the circuit in the previous question?
+\item What is the reactance of a circuit at its resonant frequency?
+\item If I have a $10\myuf$ capacitor, what size inductor do I need to have a resonant frequency of $250\myhz$?
+\end{enumerate}
