@@ -1,0 +1,107 @@
+\chapter{Dealing with Units}
+
+Before we begin our exploration of electronics, we need to talk about \glossterm{units of measurement}.
+A unit of measurement is basically a standard against which we are measuring something.
+For instance, when measuring the length of something, the units of measurement we usually use are feet or meters.
+You can also measure length in inches, yards, centimeters, kilometers, miles, etc.
+Additionally, there are some obscure units of length like furlongs, cubits, leagues, and paces.
+
+Every type of quantity has its own types of units.
+For instance, we measure time in seconds, minutes, hours, days, weeks, and years.
+We measure speed in miles per hour, kilometers per hour, meters per second, etc..
+We measure mass in pounds, ounces, grams, kilograms, grains, etc.
+We measure temperature in Farenheit, Celsius, Kelvin, and Rankine.
+
+Units for the same type of quantity can all be converted into each other using the proper formula.
+
+\section{SI Units}
+
+The scientific community has largely agreed upon a single standard of units known as the \glossterm{International System of Units}, abbreviated as \glossterm{SI Units}.
+This is the modern form of the metric system.
+Because of the large number of unit systems available, the goal of creating the SI standard was to create a single set of units that had a basis in physics and had a standard way of expressing larger and smaller quantities.
+
+The imperial system of volumes illustrates the problem they were trying to solve.  
+In the imperial system, there were gallons.
+If you divided a gallon into four parts, you would get quarts.
+If you divided quarts in half, you get pints.
+If you divided a pint into twentieths, you get ounces.
+
+The imperial system was very confusing.
+Not only were there an enormous number of units, but they all were divisible by differing amounts.
+The case was similar for length---twelve inches in a foot, but three feet to a yard, and 1,760 yards in a mile.
+This was a lot to memorize, and doing the calculations was not easy.
+
+The imperial system does have some benefits (the quantities used in the imperial system match the sizes normally used in human activities---few people order drinks in milliliters), but for doing work which require a lot of calculations and units, the SI system has largely won out.
+Scientific quantities are almost always expressed in SI units.  
+In engineering it is more of a mix, just as engineering is a mix between scientific inquiry and human usefulness.
+However, the more technical fields have started with SI units and kept with them.
+
+So, the base units for the SI system for everyday quantities are the following:
+
+\begin{itemize}
+\item Unit of length---the meter
+\item Unit of time---the second
+\item Unit of mass---the gram
+\item Unit of force---the newton
+\end{itemize}
+
+\section{Scaling Units}
+
+Now, sometimes you are measuring really big quantities and sometimes you are measuring very small quantities.
+In the imperial system, there are different units altogether to reach a different scale of a quantity.
+For instance, there are inches for small distances, yards for medium-sized distances, and miles for large distances.
+There are ounces for small volumes and gallons for larger volumes.
+
+In the SI system, however, there is a uniform standard way of expressing larger and smaller quantities.
+There are a set of modifiers, known as \glossterm{unit prefixes}, which can be added to \emph{any unit} to work at a different scale.
+For example, the prefix \emph{kilo} means thousand.
+So, while a meter is a unit of length, a kilometer is a unit of length that is 1,000 times as large as a meter.
+While a gram is a unit of mass, a kilogram is a unit of mass that is 1,000 times the mass of a gram.
+
+It works the other way as well.
+The prefix \emph{milli} means thousandth, as in $\frac{1}{1000}$.
+So, while meter is a unit of length, a millimeter is a unit of length that is $\frac{1}{1000}$ of a meter.
+While a gram is a unit of mass, a microgram is a unit of mass that is $\frac{1}{1000}$ the mass of a gram.
+
+Therefore, by memorizing one single set of prefixes, you can know how to modify all of the units in the SI system.
+The common prefixes occur at every power of 1,000, as you can see in Figure~\ref{figSIPrefixes}.
+
+\begin{figure}
+\caption{Common SI Prefixes}
+\label{figSIPrefixes}
+\begin{tabular}[|l|l|l|]
+Conversion Factor & Prefix & Abbreviation & Examples \\
+\hrule
+1,000,000,000,000 & tera & T & terameter, terasecond, teragram \\
+1,000,000,000 & giga & G & gigameter, gigasecond, gigagram \\
+1,000,000 & mega & M & megameter, megasecond, megagram \\
+1,000 & kilo & K & kilometer, kilosecond, kilogram \\
+1 & & & meter, second, gram \\
+0.001 & milli & m & millimeter, millisecond, milligram \\
+0.000001 & micro & $\si{\micro}$ or u & micrometer, microsecond, microgram \\
+0.000000001 & nano & n & nanometer, nanosecond, nanogram \\
+0.000000000001 & pico & p & picometer, picosecond, picogram \\
+\end{tabular}
+\end{figure}
+
+To convert between a prefixed unit (i.e., kilogram) and a base unit (i.e., gram), we just apply the conversion factor.
+So, if something weighs $24.32$ kilograms, then I could convert that into grams by multiplying by $1,000$---$24.32 \cdot 1000 = 24320$.
+In other words, $24.32$ kilograms is the same as $24,320$ grams.
+
+To move from the base unit to a prefixed unit, you \emph{divide} by the conversion factor.
+So, if something weighs $35.2$ grams, then I could convert that into kilograms by dividing it by $1,000$---$35.2 / 1000 = 0.0352$.
+In other words, $35.2$ grams is the same as $0.0352$ kilograms.
+
+You can also convert between two prefixed units.  
+You simply multiply by the starting prefix and divide by the target prefix.
+So, if something weight $220$ kilograms and I want to know how many micrograms that is, then I will multiply using the kilo prefix (1,000) and divide by the micro prefix (0.000001):
+
+$$\frac{220 \cdot 1000}{0.000001} = 220000000000$$
+
+In other words, 220 kilograms is the same as 220,000,000,000 micrograms.
+
+\section{Using Abbreviations}
+
+\section{Visualizing the Prefixes}
+
+You can do everything you need just by knowing the multipliers.
