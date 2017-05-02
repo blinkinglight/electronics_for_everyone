@@ -1,3 +1,240 @@
-\chapter{Electronics Equations}
+\chapter{Electronics Equations and Where They Come From}
 \label{appendixElectronicsEquations}
 
+This appendix is a catalog of equations in electronics and where they came from for those who are curious.
+This book is meant more for an introductory approach, but nonetheless many people are curious.
+This chapter isn't for the faint of heart, and it may involve lots of math you haven't taken.
+That's why it is stuck in an appendix.
+
+However, if you are curious, these are the mathematical answers to your questions.
+
+\section{Basic Formulas}
+
+\subsection{Charge and Current Quantities}
+
+\begin{itemize}
+\item $1\textrm{ coulomb}  = 6.241509×10^18\textrm{ electrons}$ (how many electrons in a coulomb)
+\item $I = \frac{dC}{dt}$ (current is the derivative of charge with respect to time)
+\item $1A = 1\frac{C}{s}$ ($A$ = ampere; $C$ = coulomb; $s$ = second)
+\item $3.6C = 1 mAh$ ($C$ = coulomb; $mAh$ is milliamp-hour,  a common unit for batteries)
+\end{itemize}
+
+\subsection{Volt Quantities}
+
+Volts are basically measures of energy per unit of charge. Volts are also known as electromotive force (EMF), or $\epsilon$.  Volts can be expressed in a number of ways:
+
+\begin{itemize}
+\item $V = \frac{J}{C}$ ($J$ = joules; $C$ = coulombs)
+\item $V = \frac{\textrm{potential energy}}{\textrm{charge}}$
+\item $V = \frac{N\cdot m}{C}$ ($N$ = newtons; $m$ = meters; $C$ = coulombs)
+\item $V = \frac{kg\cdot m^2}{A\cdot s^3}$ ($kg$ = kilograms; $m$ = meters; $A$ = amperes; $s$ = seconds)
+\item $V = \frac{d\phi}{dt}$ (Faraday's law of induction---voltage is the derivative of the flux of the magnetic field with respect to time)
+\end{itemize}
+
+\subsection{Resistance and Conductance Quantities}
+
+Resistance is in ohm's.  The inverse of resistance is conductance (the ability of current to flow through a wire) and is measured in Siemens (S).  The Seimens unit is also called a mho (ohm spelled backwards), and is sometimes marked by an upside down omega (℧).
+
+\begin{itemize}
+\item $G = \frac{1}{R}$ ($G$ = conductance in siemens, $R$ = resistance)
+\item $G = \frac{I}{V}$ ($G$ = conductance; $I$ is current; $V$ is voltage)
+\item $R = \frac{V}{I}$ (Ohm's law)
+\end{itemize}
+
+Individual materials have a resistivity ($\rho$).
+
+\begin{equation}
+R = \rho \cdot \frac{\textrm{length}}{\textrm{cross-sectional area}}
+\end{equation}
+
+In other words, from beginning to end, resistance decreases with cross-sectional area, and increases with length.
+
+\subsection{Ohm's Law}
+
+$V$ is voltage (in volts), $I$ is current (in amperes), and $R$ is resistance (in ohms).
+
+\begin{equation}
+V = I\cdot R
+\end{equation}
+
+\subsection{Power}
+
+$P$ is in Watts.
+
+\begin{equation}
+P = V\cdot A
+\end{equation}
+
+Other forms:
+
+\begin{equation}
+P = I^2R
+\end{equation}
+
+\begin{equation}
+P = \frac{V^2}{R}
+\end{equation}
+
+\subsection{Capacitance}
+
+Capacitance is the ability to store charge.
+
+The fundamental equation for a capacitor:
+
+\begin{equation}
+Q = V\cdot C
+\end{equation}
+
+$Q$ is the amount of charge stored, $V$ is the voltage across the terminals, and $C$ is the capacitance in farads.
+
+The derivative of this equation with respect to time is:
+
+\begin{equation}
+\frac{dQ}{dt} = \frac{dV}{dt}\cdot C
+\end{equation}
+
+Because current is the derivative of charge, we can then say:
+
+\begin{equation}
+I = C\frac{dV}{dT}
+\end{equation}
+
+The capacitance of capacitors is given by the equation:
+
+\begin{equation}
+C = \epsilon_r\epsilon_0\frac{A}{d}
+\end{equation}
+
+Here $C$ is capacitance, $\epsilon_r$ is the dielectric constant of whatever separates the capacitor's plates, $\epsilon_0$ is the dielectric constant of free space, $A$ is the area of the plates in square meters, and $d$ is the distance between the plates in meters.
+
+\subsection{Inductance}
+
+The fundamental equation for an inductor is:
+
+\begin{equation}
+\phi = L\cdot I
+\end{equation}
+
+Here, $\phi$ is the flux of the magnetic field in Webers, $L$ is inductance in henries, and $I$ is current in amperes.
+The derivative gives you voltage:
+
+\begin{align}
+\frac{d\phi}{dt} = L\frac{dI}{dt} \\
+V = L\frac{dI}{dt}
+\end{align}
+
+In other words, the voltage produced is proportional to the change in current.
+
+The inductance of a coil of wire can be calculated by:
+
+\begin{equation}
+L = \frac{\mu \cdot N^2 \cdot A}{l}
+\end{equation}
+
+Where $N$ is the number of turns of wire, $A$ is the area of the coil, $l$ is the length of the coil, and $\mu$ depends on the core being used.
+
+\section{Semiconductors}
+
+Components made from silicon are known as semiconductors, and have very useful non-linear properties.
+
+\subsection{Diodes}
+
+Diodes do not have a fixed voltage drop like we assume in this book.  
+It is an exponential function, but is steep enough to act like a fixed $0.6\myvolt$ voltage drop for most purposes.
+The actual equation is:
+
+\begin{equation}
+I = I_S (e^{\frac{V}{\eta V_T}} - 1)
+\end{equation}
+
+$I_S$ is the saturation current (depends on the construction of the diote), $V$ is the voltage, $\eta$ is either 1 for germanium or 2 for silicon, and $V_T$ is known as the thermal voltage (the amount of voltage created just by particles moving around at a given temperature, usually about $0.026\myvolt$ at room temperature).
+
+\subsection{NPN BJT Transistors}
+
+While we discussed general rules about BJT transistors, the technical model used to model them is known as the Ebers-Moll model.
+
+% http://people.seas.harvard.edu/~jones/es154/lectures/lecture_3/bjt_models/ebers_moll/ebers_moll.html
+% http://inderjitsingh87.weebly.com/uploads/2/1/1/4/21144104/the__ebers-moll_bjt_model.pdf
+% http://ecetutorials.com/analog-electronics/ebers-moll-model-of-transistor/
+
+
+
+\subsection{Gain Stabilizing Emitter Resistor for a DC Common Emitter Transistor Amplifier}
+\label{eqGainStabilizingEmitterResistorDCCommonEmitter}
+
+% FIXME - should probably show two circuits
+
+This section will show how we got the equation for the gain stabilizing emitter resistor you encountered in Chapter~\ref{chapTransistorIntro}.
+We will need to imagine two circuits.
+One before we add the emitter resistor (we will call this the \emph{nominal} circuit) and one after (we will call this the \emph{actual} circuit).
+Since the goal is to do our calculations for base current on the circuit \emph{without} the emitter resistor, we will call this current the \emph{nominal base current}, and give it the symbol $I_N$.
+All other values and currents will be determined from the \emph{actual} circuit.
+The final gain between the nominal base current we calculated and the final collector current we will designate as $K$.
+The values that are shared between the nominal and the actual circuit are $V_S$ (source voltage) and $V_B$ (base resistance).
+
+\begin{align*}
+K &= \frac{I_C}{I_N} && \textrm{this is our final gain} \\
+I_N &= \frac{V_S - 0.6}{R_B} && \textrm{Ohm's Law for nominal base} \\
+I_B &= \frac{V_S - V_B}{R_B} && \textrm{Ohm's Law for actual base} \\
+V_B &= V_E + 0.6 && \textrm{transistor rules} \\
+I_B &= \frac{V_S - (V_E + 0.6)}{R_B} && \textrm{substituting} \\
+I_B &= \frac{V_S - V_E - 0.6)}{R_B} && \textrm{simplifying} \\
+V_E &= R_E I_E && \textrm{Ohm's Law} \\
+V_E &= R_E(I_B + I_C) && \textrm{substituting} \\
+V_E &=  R_E I_B + R_E I_C && \textrm{distributing} \\
+I_B &= \frac{V_S - (R_E I_B + R_E I_C) - 0.6}{R_B} && \textrm{substituting} \\
+I_B &= \frac{V_S - R_E I_B - R_E I_C - 0.6}{R_B} && \textrm{simplifying} \\
+I_C &= \beta I_B && \textrm{transistor beta equation} \\
+I_C &= \beta \frac{V_S - R_E I_B - R_E I_C - 0.6}{R_B} && \textrm{substituting} \\
+I_C &= \frac{\beta V_S - \beta R_E I_B - \beta R_E I_C - \beta 0.6}{R_B} \\
+I_N &= \frac{V_S - 0.6}{R_B} && \textrm{Copied from Earlier} \\
+K &= \frac{I_C}{I_N} && \textrm{This is the value we are looking for} \\
+\frac{I_C}{I_N} &= \frac{\frac{\beta V_S - \beta R_E I_B - \beta R_E I_C - \beta 0.6}{R_B}}{\frac{V_S - 0.6}{R_B}} && \textrm{substituting} \\
+\frac{I_C}{I_N} &= \frac{\beta V_S - \beta R_E I_B - \beta R_E I_C - \beta 0.6}{R_B} \frac{R_B}{V_S - 0.6} && \textrm{simplifying} \\
+\frac{I_C}{I_N} &= \frac{\beta V_S - \beta R_E I_B - \beta R_E I_C - \beta 0.6}{V_S - 0.6} && \textrm{simplifying} \\
+I_B &= \frac{I_C}{\beta} && \textrm{transistor beta definition} \\
+\frac{I_C}{I_N} &= \frac{\beta V_S - \beta R_E \frac{I_C}{\beta} - \beta R_E I_C - \beta 0.6}{V_S - 0.6} && \textrm{substituting} \\
+\frac{I_C}{I_N} &= \frac{\beta V_S - R_E I_C - \beta R_E I_C - \beta 0.6}{V_S - 0.6} && \textrm{simplifying} \\
+\end{align*}
+\begin{align*}
+I_C(V_S - 0.6) = I_N(\beta V_S - R_E I_C - \beta R_E I_C - \beta 0.6) && \textrm{cross-multiplying} \\
+I_C V_S - 0.6 I_C = I_N \beta V_S - I_N R_E I_C - I_N \beta R_E IC - I_N \beta 0.6 && \textrm{distributing} \\
+I_C V_S - 0.6 I_C + I_N R_E I_C + I_N \beta R_E I_C =  I_N \beta V_S  -  I_N \beta 0.6 && \textrm{collecting $I_C$ terms} \\
+I_C V_S - 0.6 I_C + \frac{V_S - 0.6}{R_B} R_E I_C + \frac{V_S - 0.6}{R_B} \beta R_E I_C =  I_N \beta V_S  -  I_N \beta 0.6 && \textrm{substituting some $I_N$ terms} \\
+I_C V_S - 0.6 I_C R_B + V_S R_E IC - 0.6 R_E I_C + V_S \beta R_E I_C - 0.6 \beta R_E I_C =  R_B I_N \beta V_S  -  R_B I_N \beta 0.6 && \textrm{getting rid of fraction} \\
+I_C(V_S - 0.6 R_B + V_S R_E - 0.6 R_E + V_S \beta R_E - 0.6 \beta R_E) =  I_N(R_B \beta V_S  -  R_B \beta 0.6) && \textrm{factoring} \\
+\frac{IC}{IN} = \frac{R_B \beta V_S  -  R_B \beta 0.6}{V_S - 0.6 R_B + V_S R_E - 0.6 R_E + V_S \beta R_E - 0.6 \beta R_E}
+\end{align*}
+
+Now, this looks like a huge mess, and it is.
+However, lets look at what happens with reasonable values.
+Let's say our base resistor was $1\mykohm$ and the emitter resistor was $300\mykohm$.  
+Let's also say that the source voltage if $5\myvolt$ and the transistor $\beta$ is 100.
+What does this look like?
+
+\begin{align*}
+\frac{IC}{IN} &= \frac{R_B \beta V_S  -  R_B \beta 0.6}{V_S - 0.6 R_B + V_S R_E - 0.6 R_E + V_S \beta R_E - 0.6 \beta R_E} \\
+\frac{I_C}{I_N} &= \frac{1000 \cdot 100 \cdot 5  -  1000\cdot 100 \cdot 0.6}{5 - 0.6 \cdot 1000 + 5 \cdot 300 - 0.6 \cdot 300 + 5\cdot 100 \cdot 300 - 0.6 \cdot 100 \cdot 300}
+\end{align*}
+
+This then becomes
+
+\begin{align*}
+\frac{I_C}{I_N} = \frac{500000 - 60000}{5 - 600 + 150000 - 180 + 1500 - 18000}
+\end{align*}
+
+Now, on the numerator, the dominating term is $500,000$, and on the bottom it is $150,000$.  
+The other terms pale in comparison.
+This will be true for most ``typical'' situations.
+So, what makes up these two terms?
+
+On the top, the $500,000$ term comes from $R_B \beta V_S$.
+On the bottom, the $150,000$ term comes from $V_S \beta R_E$.
+Therefore, a simplified look at this equation is just:
+
+\begin{align*}
+\frac{I_C}{I_N} = \frac{R_B \beta V_S}{V_S \beta R_E} && \textrm{these are the dominant factors} \\
+\frac{I_C}{I_N} = \frac{R_B}{R_E} && \textrm{cancelling out factors} \\
+\end{align*}
+
+So, even though it isn't an exact result, you can see that the ratio between the actual current in the real circuit and the nominal base current that we calculated will be given by $\frac{R_B}{R_E}$.

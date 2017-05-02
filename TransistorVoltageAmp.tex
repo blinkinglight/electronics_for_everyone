@@ -1,0 +1,139 @@
+\chapter{Transistor Voltage Amplifiers}
+
+% Other biasing methods - http://www.electronics-tutorials.ws/amplifier/transistor-biasing.html
+% https://www.allaboutcircuits.com/textbook/semiconductors/chpt-4/biasing-calculations/
+
+In Chapter~\ref{chapTransistorIntro} we started our study of the BJT NPN transistor.
+We noted that what the transistor actually amplified was \emph{current}, so that the current coming into the collector was a multiple (known as $\beta$) of the current coming into the base.
+
+Even though what a transistor \emph{does} is provide current amplification, in this chapter we will learn how to transform that into voltage amplification.
+
+\section{Converting Current into Voltage with Ohm's Law}
+
+If the transistor provides us with current amplification, how might we translate a change in the amount of current into a change in the amount of voltage?
+The answer is simple---Ohm's Law describes the relationship between current and voltage: $V = I\cdot R$.
+So, a change in current can be translated into a change in voltage if we use a resistor!
+The larger the resistor, the larger the change in voltage drop that a given change in current will induce for that resistor.
+
+\simplepdffigure{A Simple Current-to-Voltage Amplifier}{TransistorSimpleVoltageAmplifier}{0.25}
+
+To see that happening take a look at Figure~\ref{figTransistorSimpleVoltageAmplifier}.
+In this figure, the current at the base is controlled by the resistor $R_B$.
+This current will drive be amplified into an increased current from the collector.
+However, the current at the collector is driven through a resistor, $R_C$.
+Because this is through a resistor, that means that Ohm's law will take effect, and the size of the voltage drop across $R_C$ will depending on the current running through it.
+
+Remember, Ohm's law states that $V = I\cdot R$, so any increase in current will increase the voltage drop across $R_C$, at least until the voltage at the collector is equal to the base voltage (which, in this circuit, is $0.6\myvolt$).
+If that happens, there is nothing more the transistor can do---it will just treat the collector-emitter junction as a short circuit.
+
+Let's calculate to see what our circuit is actually doing.
+The voltage across the base is $5\myvolt - 0.6\myvolt = 4.4\myvolt$ (remember---we have to account for the diode-like voltage drop in the transistor from the base to the emitter).
+Therefore, using Ohm's law, we can calculate the base current at $I = V / R = 4.4 / 10000 = 0.0004\myamp$.
+
+Let's assume the transistor beta is 100.
+Therefore, the current flowing at the collector will be $0.0004 \cdot 100 = 0.040\myamp$.
+So, the voltage drop across the resistor can be calculated using Ohm's law.
+$V = I\cdot R = 0.040 \cdot 50 = 2\myvolt$.
+
+No, let's say that we change $R_B$ so that we have more current running in the transistor.
+Let's increase $R_B$ from $10\mykohm$ to $6\mykohm$.
+Now the base current will be $I = V / R = 4.4 / 6000 = 0.000733\myamp$.
+Now the current flowing at the collector will be $100 \cdot 0.000733 = 0.0733\myamp$.
+So the voltage drop across the resistor is now $V = I \cdot R = 0.0733 \cdot 50 \approx 3.67\myvolt$.
+
+When we increase the current, we increase the voltage drop across the resistor.
+You may be wondering what happens to the extra voltage.
+That is, since the emitter of the resistor is at ground, and the voltage across $R_C$ keeps changing, where is the remainder of the voltage?
+The transistor essentially swallows it up.
+
+Remember in our model of the transistor in Figure~\ref{figTransistorConceptual}, the transistor acts as a variable resistor for the collector current.
+Therefore, the rest of the voltage drop happens \emph{within} the transistor.
+
+So, in effect, what we are doing is to use the resistor $R_C$ to translate changes in current at the base into changes in the voltage drop across $R_B$.
+
+As you might have noticed, when dealing with transistors, the place where the ``action'' occurs is not always right where you might expect it.
+In this circuit, the location where the voltage amplification \emph{actually occurs} is at a resistor ($R_C$) connected to the collector.
+
+\begin{exampleprob}
+In the circuit given, what is the voltage across the resistor if the base resistor $R_B$ goes up to $20\mykohm$?
+
+\begin{align*}
+I_B = 4.4 / 20000 = 0.00022 \myamp \\
+I_C = 100 \cdot I_B = 100\cdot 0.00022 = 0.022\myamp \\
+V_{R_B} = I_C \cdot R_B = 0.022 \cdot 50 \approx 1.1\myvolt
+\end{align*}
+\end{exampleprob}
+
+Just to see where we are going, eventually we will use small voltage changes in the base to trigger current changes in the base which will then be amplified into a larger change in the voltage across $R_B$.
+
+\section{Reading the Amplified Signal}
+
+So, we have managed to create a voltage drop which changes in response to changes in current at the base.
+But how do we read this voltage drop?
+It is rather difficult to read it directly, but we can read its \emph{inverse} directly.
+
+\simplepdffigure{Reading the Amplified Signal from a Voltage Amplifier}{ReadingTransistorSimpleVoltageAmplifier}{0.25}
+
+Take a look at Figure~\ref{figReadingTransistorSimpleVoltageAmplifier}.
+In this figure, we added some output signal lines to show where we would read the output of the amplifier.
+We put the output line \emph{between} the collector resistor $R_C$ and the transistor.
+What this will do is give us the voltage of the source voltage ($5\myvolt$) \emph{minus} the voltage across $R_C$.
+So, when we have a large voltage across $R_C$, that will be reflected in a low voltage in our output.
+Likewise, when there is a low voltage across $R_C$, that will be reflected in a high voltage in our output.
+
+This sort of an output is known as an \glossterm{inverted output}, because the output voltage is essentially reverse-amplified.
+That actually works just fine for audio signals, as it does not matter to the listener if the signal is inverted or not.
+However, if we needed to get it back to the non-inverted form, we could just add another amplification stage onto the end (we will see how to do this later on).
+
+Having said all that, I should point out that we still don't know how to amplify an audio signal---yet.
+That is coming in the next section.
+
+\section{Amplifying an Audio Signal}
+
+What we really want to do is to amplify an audio signal.
+Imagine that someone is singing into a microphone, and we want to amplify the signal we get so that we can send it to a speaker.
+How would we do that?
+
+There are a number of problems that you have to solve in order to get this done.
+You might imagine that you could just connect a microphone to the base of the transistor, and just amplify directly.
+That's a good idea, but sadly life is not always that easy.
+To understand why, remember that audio signals are basically alternating current.
+That means that the signal will swing both positive \emph{and} negative.
+Also remember that the base voltage has to remain \emph{above} the emitter voltage, but the emitter is tied to ground.
+Therefore, if we tried to do this, we would lose the bottom (negative) half of the signal.
+In fact, if it was a small signal, we might lose the \emph{entire} signal if it never reached the required $0.6\myvolt$ above ground.
+
+So what do we do?
+Well, what we want to do is to add a DC offset to the audio signal so that its midpoint is no longer zero volts, but close to the middle of the range where the transistor operates well.
+Adding a DC voltage is called \glossterm{biasing} the signal.
+We are moving the midpoint of the signal to the point where the transistor will always be responding to it.
+
+\simplepdffigure{Components of a Transistor Biasing Circuit}{TransistorBiasCircuitOutline}{0.25}
+
+A bias circuit is simply a voltage divider that, in addition to a signal coming out, also has a signal coming in.
+Figure~\ref{figTransistorBiasCircuitOutline} shows the basic outline of what a transistor biasing circuit looks like.
+The main feature is a voltage divider which sets the bias voltage.
+The audio signal is coupled into the voltage divider through a capacitor.
+The capacitor is important because it couples together the unbiased AC signal with the biased AC signal. 
+It performs the same function as the coupling capacitor in our tone generator (Section~\ref{secCouplingCapacitor}) but in reverse.
+It allows an alternative current to \emph{feed into} a DC bias circuit.
+
+Without the capacitor to couple the signals together, the voltage divider would likely send all of the current from the top resistor into the audio source, since it would be at a lower voltage than the bottom resistor!
+Thus, instead of biasing the signal, the top resistor would actual just feed current through your audio source.
+This is not really the result we want!
+
+Instead, by coupling through a capacitor, when your circuit first turns on, the capacitor will charge up to the voltage divider voltage.
+Then, variations in the audio signal will push and pull charge onto the negative side of the capacitor, which will push and pull charge through the positive side of the capacitor.
+Note that if you use an electrolytic (i.e., polarized) capacitor, the positive side of the capacitor should be on the same side as the voltage divider.
+
+So, in this scenario, what values should we use for the components?
+For the capacitor, we need a capacitor large enough so that audio frequencies don't encounter a lot of resistance.
+You can use Equation~\ref{eqCapReactance} from Chapter~\ref{chapImpedance} to see how much reactance the capacitor will have at various frequencies, but for audio frequencies $10\myuf$ is usually a good choice.
+
+As for the resistors, if the voltage divider is too stiff (i.e., the resistors are too small), then the current coming in from the audio signal will have less influence---most of it will leak out through the bottom resistor.
+If we make our voltage divider looser (i.e., higher resistance values), then the signal from the audio source will have a much stronger influence on the current going through the base of the transistor, which is exactly what we want.
+
+
+
+
+Note that there are other methods for biasing transistors, but using a voltage divider is a straightforward application of principles we have already learned in this book.

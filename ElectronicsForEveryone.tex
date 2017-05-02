@@ -1,5 +1,7 @@
 \documentclass{book}
 
+% FIXME - move everything to a power module early on
+
 %% Math font options
 % \usepackage[math]{iwona}
 % \usepackage[math]{kurier}
@@ -137,7 +139,6 @@ tabsize=3
 \newcommand{\mywb}{\,\si{\weber}}
 \newcommand{\myuwb}{\,\si{\micro\weber}}
 \newcommand{\mysec}{\textrm{ seconds}}
-
 \newcommand{\deriv}[1]{\mathrm{d}#1}
 \newcommand{\pd}[2]{\partial{#1}_{#2}}
 \newcommand{\myint}{\int\!}
@@ -339,6 +340,7 @@ set_draw_defaults(grid=true, fill_color=grey, xaxis_type=solid, yaxis_type=solid
 
 \part{Amplification Circuits}
 \include{TransistorIntro}
+\include{TransistorVoltageAmp}
 
 \part{Other Circuits}
 
