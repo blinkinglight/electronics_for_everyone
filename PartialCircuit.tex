@@ -1,10 +1,11 @@
 \chapter{Examining Partial Circuits}
 
+% FIXME - somewhere I need to be sure I state the requirements for doing power calculations with AC (i.e., RMS provides the average power that it will use in any direction)
+
 We will end our discussion of amplification by discussing partial circuits.
 Often times you will need to design a circuit which connects to another circuit, either powering it or receiving power from it.
 For instance, in the amplification circuits from Chapter~\ref{chapTransVoltageAmp}, the outputs were connected to a speaker.
 They could also be connected to another amplifier, or to a stomp box (a device to modulate the incoming signal in some way), or a recording circuit.
-
 
 \section{The Need for a Model}
 
@@ -17,18 +18,25 @@ Early on (in Chapter~\ref{chSeriesParallel}), we learned how to take multiple re
 When dealing with a power amplification circuit, it is often necessary look at various parts of the circuit by themselves, and figure out how they \emph{look} to other parts of the circuit.
 The way that a partial circuit looks to other parts of the circuit is called the circuit's \glossterm{\thev Equivalent} circuit.
 
+\simplepdffigure{A Complicated Circuit and its \thev Equivalent Circuit}{TheveninEquivalentExample}{0.25}
+
 A \thev equivalent circuit takes a partial circuit and reduces it to:
+
 \begin{itemize}
 \item A single voltage source (AC, DC, or DC-biased AC, expressed in RMS voltage)
-\item A single impedance (i.e., resistance)
+\item A single impedance (i.e., resistance) in series with the voltage source
 \end{itemize}
 
 Note that the single voltage source may be \emph{different} than the voltage source that is actually connected.
 What you are doing is see what the circuit looks like to another circuit.
 For instance, a voltage divider circuit makes the output of the voltage divider \emph{look like} it is coming from a lower voltage source.
 
+Figure~\ref{figTheveninEquivalentExample} shows a circuit and its \thev Equivalent circuit.
+For purposes of thinking about and understanding the relationship between the circuit and things attached to the circuit, we can view the circuit as being the same as its \thev Equivalent.
+Thus, having a \thev Equivalent circuit greatly simplifies our modeling, calculating, and understanding of how circuits work together.
+
 Any network of power sources and resistances can be converted into a \thev Equivalent circuit.
-You can also get a \thev Equivalent circuit for a circuit that includes capacitors and inductors, but the calculations become more difficult and the results are only valid for a specific frequency.
+You can also get a \thev Equivalent circuit for a circuit that includes capacitors and inductors, but the calculations become more difficult and the results are only valid for a specific frequency (each frequency will have a different \thev Equivalent circuit).
 For simplicity we will just focus on resistive circuits.
 
 \section{Calculating \thev  Equivalent Values}
@@ -118,7 +126,6 @@ R_{Thevenin} &= \frac{V_{Thevenin}}{I_{SHORT}} \\
 
 As you can see, this is the same value that we got from the previous method.
 
-
 \section{Finding the \thev Equivalent of an AC Circuit with Reactive Elements}
 
 If a circuit has reactive elements (inductors and capacitors), we have to do a little more work to find the \thev Equivalent circuit.
@@ -152,31 +159,135 @@ Let's say that a circuit yields a \thev Equivalent output of $4\myvolt$ with an 
 If I connect a $3,000\myohm$ output circuit, how much current will flow?
 The total resistance will be $3,800\myohm$, so the current will be $V / R = 4 / 3800 \approx 1.05\mymamp$.
 
-The same is true for an input to a circuit.
+The same is true for connecting an input circuit that you make to an output circuit someone else made.
+For instance, speakers and headphones are normally rated as an impedance---$8\myohm$, $16\myohm$, etc.
+They aren't, strictly speaking, resistors, but at normal audio frequencies they behave essentially like one---they have a \thev Equivalent impedance (their \thev Equivalent voltage is zero).
+
+\begin{exampleprob}
+If I have an output circuit which is \thev Equivalent to $3\myvolt$ RMS and $200\myohm$, and I connect it to a set of $16\myohm$ headphones, what will the power of the headphones be in watts?
+
+We can understand this circuit as simply being a voltage source followed by two resistors in series.
+The voltage source will be $3\myvolt$ and the resistances will be $200\myohm$ and $16\myohm$, totalling $216\myohm$.  
+The current will therefor be $V / R = 3 / 216 \approx 0.0139 \myamp$.
+The voltage drop in the headphones will be $I \cdot R = 0.0139\cdot 16 \approx 0.222\myvolt$.
+Therefore the power delivered to the headphones will be $V\cdot I = 0.222 \cdot 0.0139 \approx 0.00309\mywatt$, or $3.09\mymwatt$.
+\end{exampleprob}
 
 
+\section{Finding \thev Equivalent Circuits Experimentally}
 
-\section{Finding \thev Equivalence Experimentally}
+In addition to using circuit schematics to determine \thev Equivalent Circuits, it is also possible to determine them experimentally.
+This way, if you are unsure of the input or output characteristics of your device, you can measure it yourself.
+The problem with measuring it yourself is that it requires attaching a load to the circuit.
+Some circuits will fry if a wrongly-sized load is attached.
+You have been warned.
 
+The easiest way to determine \thev Equivalency experimentally is rather unsafe, but it will help us understand better why the method works.
+Imagine a voltage divider where the bottom resistor has an extremely large resistance---say $100\myMohm$.
+In such a voltage divider, the bottom resistor will have almost the entirety of the voltage drop, right?
+In fact, if the bottom resistor was infinite, it would in fact have all of the voltage drop.
 
-What makes this method valuable is that it allows a way to \emph{experimentally} determine the \thev Equivalent of a partial circuit that you don't have a schematic for.
+Because of this, we can determine the \thev Equivalent voltage by measuring the output voltage when there is nothing connected, because no connection means that there is infinite resistance between the output and ground.
+Measuring this value will give us the \thev Equivalent voltage.
 
-Imagine that you are going to design a circuit that receives a signal from another circuit.
-You have access to the circuit itself, but not the schematic.
-To know how you need to design your circuit, you need to know the \thev Equivalent for the other circuit so you know how it will respond and how it will fit in with your own calculations.
-You can do this with a multimeter.
+To determine the \thev Equivalent current, we can short-circuit the output.
+When doing this, the \emph{only} impedances to the current will be within the device itself.
+Therefore, using Ohm's law, the amount of current this draws will tell us how large of a resistance the output is yielding.
 
-First, you disconnect your circuit from the feeding circuit, and use your multimeter to measure the voltage with nothing attached.
-This is your \thev voltage.
-Next, you put your multimeter in current mode, and measure the current directly flowing from the terminals.
-This creates a short circuit, and your multimeter will measure the current flow.
-Note that this is a little dangerous if you have no idea what will happen---many circuits aren't built to withstand short-circuits.
-But, you can do something similar with just putting in a small resistance inline with your multimeter as well, and you will get fairly accurate results.
+\begin{exampleprob}
+If I measure the open-circuit (i.e., disconnected) voltage of the output of an unknown circuit as $8\myvolt$ and the short-circuit current of the output as $10\mymamp$, what is the \thev Equivalent circuit?
 
-Now that you have your \thev voltage and your $I_{SHORT}$ current, you can calculate the \thev resistance by dividing the \thev voltage by the $I_{SHORT}$ current.
+To find this out, we simply use Ohm's law.
+What resistance would cause an $8\myvolt$ source have $10\mymamp$ of current?
 
+\begin{align*}
+R &= V / I \\
+  &= 8 / 0.010 \\
+  &= 800
+\end{align*}
 
+Therefore, our \thev Equivalent circuit is $8\myvolt$ with an impedance of $800\myohm$.
+\end{exampleprob}
+
+The problem with this method is that you don't normally want to short circuit your output.  
+Additionally, some circuits require some sort of a load to work properly.
+In order to adjust to such scenarios, there is a set of equations that allow us to measure the voltage drop across a large and small resistance (instead of infinite and no resistance) and come up with a \thev Equivalent circuit.
+
+The equations are a little complex, but you can actually derive them directly from Ohm's law if you work at it.
+The first one calculates the \thev Equivalent voltage ($V_T$) from the voltage with a high resistance ($V_H$), the high resistance value ($R_H$), the voltage with a low resistance ($V_L$), and the low resistance value ($R_L$):
+
+\begin{equation}
+\label{eqThevEqVoltExp}
+V_T = \frac{\frac{V_H}{R_H}(R_H - R_L)}{1 - \frac{V_H R_L}{R_H V_L}}
+\end{equation}
+
+Then, we can calculate the \thev Equivalent resistance:
+
+\begin{equation}
+\label{eqThevEqResExp}
+R_T = \frac{V_T R_L}{V_L} - R_L
+\end{equation}
+
+For a basic starting point, you can use $1\myMohm$ for the high resistance value, and $1\mykohm$ for the low resistance value.
+
+\begin{exampleprob}
+I have a circuit that generates an output for which I need to know its \thev Equivalent properties.
+I tested the circuit with a $200\myohm$ resistance and a $1000\myohm$ resistance.
+With the $200\myohm$ resistance, there was a $2\myvolt$ drop across the resistance.
+With the $1000\myohm$ resistance, there was a $5\myvolt$ drop across the resistance.
+What is the \thev Equivalent circuit for this circuit?
+
+First we find the \thev Equivalent voltage using Equation~\ref{eqThevEqVoltExp}:
+
+\begin{align*}
+V_T &= \frac{\frac{V_H}{R_H}(R_H - R_L)}{1 - \frac{V_H R_L}{R_H V_L}} \\
+    &= \frac{\frac{5}{1000}(1000 - 200)}{1 - \frac{5\cdot 200}{1000\cdot 2}} \\
+    &= \frac{0.005\cdot800}{1 - \frac{1000}{2000}} \\
+    &= \frac{4}{0.5} \\
+    &= 8\myvolt
+\end{align*}
+
+Next we can find the \thev Equivalent resistance using Equation~\ref{eqThevEqResExp}:
+
+\begin{align*}
+R_T &= \frac{V_T R_L}{V_L} - R_L \\
+    &= \frac{8\cdot 200}{2} - 200 \\
+    &= 800 - 200 \\
+    &= 600\myohm
+\end{align*}
+
+Therefore, our unknown circuit has a \thev Equivalent voltage of $8\myvolt$ and a \thev Equivalent impedance of $600\myohm$.
+\end{exampleprob}
+
+What makes this method valuable is that it allows a way to \emph{experimentally} determine the \thev Equivalent of a partial circuit that you don't have a schematic for, or for which determining the \thev Equivalent circuit might be difficult due to non-linear components such as transistors.
 
 \reviewsection
 
+In this chapter, we learned:
+
+\begin{enumerate}
+\item In order to be able to connect circuits together without knowing all of the details of how they are implemented, we need a simplified model of how those circuits work with other circuits they are connected to.
+\item A \thev Equivalent circuit is a combination of a single voltage source and a single series impedance which models the way that the given circuit will respond to other attached circuits.
+\item To calculate \thev Equivalent voltage, calculate the voltage drop for an open circuit between the two terminals.  This is the \thev Equivalent voltage.
+\item To calculate \thev Equivalent impedance, calculate the impedance from one terminal to another (or to ground if there is only one terminal), replacing any voltage sources with short circuits.
+\item Alternatively, to calculate \thev Equivalent impedance, calculate the current flowing from one terminal to another if there was a short circuit between them.  Then use Ohm's law to calculate the resistance.
+\item \thev Equivalent circuits can be used to understand how the resistances of attached circuits will affect the signal coming out of or into a  circuit.
+\item \thev Equivalent circuits can also be found experimentally.  
+\item \thev Equivalent voltage can be determined by simply measuring the voltage drop of an open circuit across the terminals.
+\item \thev Equivalent resistance can be determined by measuring the current flow of a short circuit across the terminals, though it isn't recommended.
+\item Alternatively, given two different load resistances across the terminals, a \thev Equivalent circuit can be calculated using Equations~\ref{eqThevEqVoltExp} and~\ref{eqThevEqResExp}.
+\end{enumerate}
+
 \applysection
+
+\begin{enumerate}
+\item Why would we want to know what a circuit's \thev Equivalent circuit is?
+\item What are the two components of a \thev Equivalent circuit?
+\item Think about the two-stage amplifier that you built in Chapter~\ref{chapTransVoltageAmp}.  How would you go about finding the \thev Equivalent circuit as it is seen by the headphones?
+\item Suppose I have a circuit where the output terminals have a $2\myvolt$ drop when it is an open circuit, and have $2\mymamp$ of current flowing through it when it is a short circuit.  Draw the \thev Equivalent circuit.
+\item If I have a \thev Equivalent circuit of $4\myvolt$ with an impedance of $400\myohm$, what will be the voltage drop of the load if I attach a $2000\myohm$ resistor across the output?
+\item If I have a \thev Equivalent circuit of $3\myvolt$ with an impedance of $100\myohm$, what will be the voltage drop, the current, and the power of the load if I attach headphones rated at $32\myohm$?
+\item Calculate and draw the \thev Equivalent circuit of the circuit below: 
+\includegraphics[scale=0.25]{ThevProblem1.pdf}
+\item Suppose I have a circuit where, when I add a load of $350\myohm$ I get a $7\myvolt$ drop, and when I add a load of $2000\myohm$ I get an $8\myvolt$ drop.  Calculate and draw the \thev Equivalent circuit.
+\end{enumerate}
