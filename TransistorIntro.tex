@@ -303,6 +303,18 @@ You may be wondering \emph{how} the equation for calculating the size of the emi
 It isn't fancy, it is just very long.
 However, if you are interested, the details can be found in Section~\ref{eqGainStabilizingEmitterResistorDCCommonEmitter}.
 
+\section{A Word of Caution}
+
+One thing to keep in mind with transistors is that they can get very hot!
+Transistors have a maximum current rating, and that often is based on the amount of heat that they are able to dissipate.
+Transistors that are able to handle large currents are called \glossterm{power transistors}, and usually have an attachment for a \glossterm{heat sink}, which helps it dissipate heat to the air more efficiently.
+
+If you build a circuit similar to the one in this chapter, be sure to keep in mind both the specs of the motor (how much voltage and current is required for it to operate) and the specs of the transistor (how much current the transistor can handle).
+If the motor doesn't have enough voltage or current it might not turn on, and if the transistor can't handle the current it could easily burn out.
+
+If you wanted to see inductive kick in action, you can replace the diode in the circuit with an LED.
+Every time you let go of the button, the LED will light up for a moment.
+
 \reviewsection
 
 In this chapter, we learned:
@@ -334,7 +346,7 @@ In this chapter, we learned:
 
 \applysection
 
-For these problems, assume that the transistor is a BJT NPN transistor and that the beta is stable.
+Unless otherwise specified, assume that the transistor is a BJT NPN transistor and that the beta is stable.
 
 \begin{enumerate}
 \item If the base of a transistor is at $3\myvolt$ and the transistor is on, what will be the emitter voltage?

@@ -1,7 +1,10 @@
 \chapter{Transistor Voltage Amplifiers}
+\label{chapTransVoltageAmp}
 
 % Other biasing methods - http://www.electronics-tutorials.ws/amplifier/transistor-biasing.html
 % https://www.allaboutcircuits.com/textbook/semiconductors/chpt-4/biasing-calculations/
+
+% https://www.youtube.com/watch?v=pcp0IggRqC0
 
 In Chapter~\ref{chapTransistorIntro} we started our study of the BJT NPN transistor.
 We noted that what the transistor actually amplified was \emph{current}, so that the current coming into the collector was a multiple (known as $\beta$) of the current coming into the base.
@@ -10,18 +13,19 @@ Even though what a transistor \emph{does} is provide current amplification, in t
 
 \section{Converting Current into Voltage with Ohm's Law}
 
-If the transistor provides us with current amplification, how might we translate a change in the amount of current into a change in the amount of voltage?
+If the transistor provides us with current amplification, how might we translate an amplification in the amount of current into an amplification in the amount of voltage?
 The answer is simple---Ohm's Law describes the relationship between current and voltage: $V = I\cdot R$.
-So, a change in current can be translated into a change in voltage if we use a resistor!
+Therefore, a current amplification can be transformed into a voltage amplification if we use a resistor!
 The larger the resistor, the larger the change in voltage drop that a given change in current will induce for that resistor.
 
 \simplepdffigure{A Simple Current-to-Voltage Amplifier}{TransistorSimpleVoltageAmplifier}{0.25}
 
-To see that happening take a look at Figure~\ref{figTransistorSimpleVoltageAmplifier}.
-In this figure, the current at the base is controlled by the resistor $R_B$.
+To see that happening take a look at the circuit in Figure~\ref{figTransistorSimpleVoltageAmplifier}.  
+Note that this circuit on its own is rather useless, but it is helpful for illustrating how the calculations work.
+In this circuit, the current at the base is controlled by the resistor $R_B$.
 This current will drive be amplified into an increased current from the collector.
 However, the current at the collector is driven through a resistor, $R_C$.
-Because this is through a resistor, that means that Ohm's law will take effect, and the size of the voltage drop across $R_C$ will depending on the current running through it.
+Because this is through a resistor, that means that Ohm's law will take effect, and the size of the voltage drop across $R_C$ will depend on the current running through it.
 
 Remember, Ohm's law states that $V = I\cdot R$, so any increase in current will increase the voltage drop across $R_C$, at least until the voltage at the collector is equal to the base voltage (which, in this circuit, is $0.6\myvolt$).
 If that happens, there is nothing more the transistor can do---it will just treat the collector-emitter junction as a short circuit.
@@ -44,7 +48,7 @@ So the voltage drop across the resistor is now $V = I \cdot R = 0.0733 \cdot 50 
 When we increase the current, we increase the voltage drop across the resistor.
 You may be wondering what happens to the extra voltage.
 That is, since the emitter of the resistor is at ground, and the voltage across $R_C$ keeps changing, where is the remainder of the voltage?
-The transistor essentially swallows it up.
+The transistor essentially swallows it up (technically, it dissipates it as heat).
 
 Remember in our model of the transistor in Figure~\ref{figTransistorConceptual}, the transistor acts as a variable resistor for the collector current.
 Therefore, the rest of the voltage drop happens \emph{within} the transistor.
@@ -75,7 +79,7 @@ It is rather difficult to read it directly, but we can read its \emph{inverse} d
 \simplepdffigure{Reading the Amplified Signal from a Voltage Amplifier}{ReadingTransistorSimpleVoltageAmplifier}{0.25}
 
 Take a look at Figure~\ref{figReadingTransistorSimpleVoltageAmplifier}.
-In this figure, we added some output signal lines to show where we would read the output of the amplifier.
+In this figure, we added some output signal lines to show where we would read the output of the amplifier (i.e., where we would connect the rest of the circuit that receives the amplification).
 We put the output line \emph{between} the collector resistor $R_C$ and the transistor.
 What this will do is give us the voltage of the source voltage ($5\myvolt$) \emph{minus} the voltage across $R_C$.
 So, when we have a large voltage across $R_C$, that will be reflected in a low voltage in our output.
@@ -83,7 +87,7 @@ Likewise, when there is a low voltage across $R_C$, that will be reflected in a 
 
 This sort of an output is known as an \glossterm{inverted output}, because the output voltage is essentially reverse-amplified.
 That actually works just fine for audio signals, as it does not matter to the listener if the signal is inverted or not.
-However, if we needed to get it back to the non-inverted form, we could just add another amplification stage onto the end (we will see how to do this later on).
+However, if we needed to get it back to the non-inverted form, we could just add another amplification stage onto the end (we will see how to do this in Section~\ref{secMultiStageAmp}).
 
 Having said all that, I should point out that we still don't know how to amplify an audio signal---yet.
 That is coming in the next section.
@@ -99,9 +103,11 @@ You might imagine that you could just connect a microphone to the base of the tr
 That's a good idea, but sadly life is not always that easy.
 To understand why, remember that audio signals are basically alternating current.
 That means that the signal will swing both positive \emph{and} negative.
-Also remember that the base voltage has to remain \emph{above} the emitter voltage, but the emitter is tied to ground.
+Also remember that the base voltage has to remain \emph{above} the emitter voltage, and the emitter is tied to ground.
 Therefore, if we tried to do this, we would lose the bottom (negative) half of the signal.
 In fact, if it was a small signal, we might lose the \emph{entire} signal if it never reached the required $0.6\myvolt$ above ground.
+
+\subsection{Biasing the Transistor Base Current}
 
 So what do we do?
 Well, what we want to do is to add a DC offset to the audio signal so that its midpoint is no longer zero volts, but close to the middle of the range where the transistor operates well.
@@ -116,15 +122,19 @@ The main feature is a voltage divider which sets the bias voltage.
 The audio signal is coupled into the voltage divider through a capacitor.
 The capacitor is important because it couples together the unbiased AC signal with the biased AC signal. 
 It performs the same function as the coupling capacitor in our tone generator (Section~\ref{secCouplingCapacitor}) but in reverse.
-It allows an alternative current to \emph{feed into} a DC bias circuit.
+It allows an alternating (AC) current to \emph{feed into} a DC bias circuit.
 
 Without the capacitor to couple the signals together, the voltage divider would likely send all of the current from the top resistor into the audio source, since it would be at a lower voltage than the bottom resistor!
-Thus, instead of biasing the signal, the top resistor would actual just feed current through your audio source.
+Thus, instead of biasing the signal, the top resistor would actual just send current through your microphone or other audio source.
 This is not really the result we want!
 
-Instead, by coupling through a capacitor, when your circuit first turns on, the capacitor will charge up to the voltage divider voltage.
+Instead, we use a capacitor to couple together our AC source and our DC bias circuit.
+Let's think about how this works in a circuit.
+When your circuit first turns on, the capacitor will charge up to the voltage divider voltage.
 Then, variations in the audio signal will push and pull charge onto the negative side of the capacitor, which will push and pull charge through the positive side of the capacitor.
 Note that if you use an electrolytic (i.e., polarized) capacitor, the positive side of the capacitor should be on the same side as the voltage divider.
+When the charge is pushed through the capacitor, that results in an increased current through the base of the transistor (although some of the additional current will also leak out through the resistor).
+The increase of the current through the base is then amplified using increased current in the collector.
 
 So, in this scenario, what values should we use for the components?
 For the capacitor, we need a capacitor large enough so that audio frequencies don't encounter a lot of resistance.
@@ -133,7 +143,136 @@ You can use Equation~\ref{eqCapReactance} from Chapter~\ref{chapImpedance} to se
 As for the resistors, if the voltage divider is too stiff (i.e., the resistors are too small), then the current coming in from the audio signal will have less influence---most of it will leak out through the bottom resistor.
 If we make our voltage divider looser (i.e., higher resistance values), then the signal from the audio source will have a much stronger influence on the current going through the base of the transistor, which is exactly what we want.
 
+However, we don't want the signal current to swing the final current too much, either.
+Since this is AC current, if the total current (bias current + signal current) ever causes the bottom resistor to drop below $0.6\myvolt$, the transistor will turn off, and we will get clipping.
 
+So, we have given a lot of considerations for how to setup your bias circuit, and you may be wondering how to fulfill them.
+Here is a basic process you can follow for creating your transistor bias circuit:
 
+\begin{enumerate}
+\item Find out how much current your source (microphone, antenna, etc.) will produce.  The likely value will be well below a milliamp.
+\item Pick a ``no signal'' current, known as the \glossterm{quiescent} current for your base.  This is the amount of current that will be flowing from your voltage divider before the signal is added in.  This needs to be large enough to be sure that the current at the base will never totally swing negative, but small enough to prevent the current variations from the signal being drowned out by the quiescent current.  $0.1\mymamp$ is usually a good starting value if you don't know what to pick (this is what we will use here).
+\item Create a voltage divider which will (a) produce the given quiescent current with nothing coming in, and (b) have an output voltage that is about $10--20\%$ of the supply voltage plus the $0.6\myvolt$ drop. This will keep the transistor conducting throughout the up-and-down swings of the input current.  In our case, since we have a $5\myvolt$ source, the voltage divider should give about a $1.1\myvolt--1.6\myvolt$ drop.
+\end{enumerate}
+
+To achieve a $1\mymamp$ quiescent current, we need to have a total resistance of $5\mykohm$.
+Because we are using such a small voltage ($5\myvolt$), this means that the $0.6\myvolt$ diode drop takes up a lot of our headroom, so we will probably want to use a $40\mykohm$ resistor (or the nearest value you have---the schematic calls for a $47\mykohm$ resistor because that is a fairly standard value) for the top resistor, and a $10\mykohm$ resistor for the bottom.
 
 Note that there are other methods for biasing transistors, but using a voltage divider is a straightforward application of principles we have already learned in this book.
+
+\subsection{Choosing a Collector and Emitter Resistor}
+
+To choose the collector resistor ($R_C$), you need to think about how much voltage swing there will be.
+The most voltage we could have is our supply voltage---$5\myvolt$.
+The least voltage we could have is $0.6\myvolt$ before the transistor turns off.
+Therefore, to maximize the potential swings in voltage, we want to choose our quiescent (i.e., ``no signal'') voltage so that it hits right in the middle. 
+That way, it has the most room to swing either direction.
+
+Therefore, to reach the midpoing between $5\myvolt$ and $0.6\myvolt$ the resistor will need to drop $2.2\myvolt$.
+At the quiescent point, our base current is $0.1\mymamp$.
+If our transistor's beta is $100$, then our collector current will be $10\mymamp$.
+If we want to clamp our transistor's amplification to $20$ (to keep it from drifting), then the collector current will be $2\mymamp$.
+Therefore, we need a resistor that drops $2.2\myvolt$ with $2\mymamp$.
+Using Ohm's law, we find that $R = V / I = 2.2 / 0.002 = 220$
+
+As we mentioned earlier, the transistor beta is highly variable.
+So, if we wanted a configuration that was more stable (but with less gain), we can add a small emitter resistor to provide some negative feedback.
+If you add in an emitter resistor ($R_E$), you will limit your voltage gain to approximately $\frac{R_C}{R_E}$.
+So, if we wanted to limit our gain to around $20$, we need to add in a small $10\myohm$ resistor to the emitter.
+
+\simplepdffigure{A Single-Stage Transistor Voltage Amplifier}{BasicTransistorAmplifier}{0.25}
+
+The final amplifier circuit is shown in Figure~\ref{figBasicTransistorAmplifier}.
+Remember that the output is still DC biased, and therefore would need a coupling capacitor to go to audio equipment.
+However, depending on the audio source, the present amplifier may not have enough gain to be readily audible.
+
+\section{Adding a Second Stage}
+\label{secMultiStageAmp}
+
+A single amplification stage is not always enough.
+If your signal source is weak enough, sometimes you need more power just to hear it.
+This can be accomplished in a number of ways.
+The simplest, conceptually, is to add another output stage to your amplifier.
+
+In order to do this, we need to design the next stage to take into account the output of our first stage.
+We will need to use a coupling capacitor to handle the change in voltage from the output of the first stage into our bias circuit for the second stage.
+This needs to be a non-polarized capacitor, because of the potential for either side to be more positive than the other at any given moment (both sides are DC-biased, but the input has the potential to swing below the bias point of the next stage).
+
+Figure~\ref{figTwoStageAmplifier} shows the complete two-stage amplifier.
+With this circuit, you can use most microphones and most headphones to get enough output power to hear yourself in your headphones.
+Figure~\ref{figTwoStageAmplifierBuild} shows the two-stage amplifier built into a breadboard.
+
+\simplepdffigure{The Complete Two-Stage Amplifier Circuit}{TwoStageAmplifier}{0.25}
+
+\simplepdffigure{The Two-Stage Amplifier Built into a Breadboard}{TwoStageAmplifierBuild}{1}
+
+In this circuit, the quiescent point of both stages are set to the same value.
+This is because the initial source current is so low that a quiescent point high enough for the transistor to behave well is far above what is actually needed for the signal.
+Further amplification stages would require a higher quiescent current, because the signal is now large enough to overwhelm another bias stage of the same size.
+Additionally, not every stage must add to the voltage swing of the output.
+Once the voltage swings across the entire range, additional stages will add power (through increased current), not necessarily additional voltage.
+Nonetheless, that will still make it louder!
+
+Also note that it may take a few seconds for the circuit to start operating after it is switched on.
+In the bias circuit, notice that there is both a resistor and a capacitor.
+This means that the bias circuit \emph{also} forms an RC time circuit, which means that it will take a little time to get the bias circuit up to the proper voltage level.
+
+One thing in this circuit we haven't discussed is the bleed-off resistors connected right next to the coupling capacitors for the input and output circuit.
+These are very large ($1,000,000\myohm$) resistors.
+They are large so that they do not have any effect on the calculations in the circuit itself, but they do provide a place for the negative side of the capacitor to drain out when nothing is connected.
+Otherwise, any residual charge on the capacitor has no place to go, and will remain even when the circuit is turned off and the devices are unplugged.
+
+Designing transistor amplifiers can be tricky because there are a lot of things that can go wrong.
+Although there is some leeway, using the wrong resistors can result in distortion, or a loss of gain.
+Misconnecting a single component can render the entirety of the circuit inaudible.
+
+If your bias circuit is too stiff (too high of a quiescent current), then the input signal won't have enough influence on the sound.  
+If it is too weak, the sound will clip whenever the voltage drops too far.
+If the bias voltage is too low, the transistor won't conduct.
+If the bias voltage is too high, there isn't enough room for the voltage to swing.
+If the collector resistor is too large, the transistor will clip the signal when the current is at its highest.
+If the collector resistor is too small, the transistor will not sufficiently amplify your signal.
+If the emitter resistor is too large, you won't have enough gain, and if the emitter resistor is too small, your gain will be unstable (honestly, though, if you aren't getting enough gain, just connect your emitter directly to ground and don't worry about the stability so much).
+Some transistors also have quiescent currents which are more amenable to amplification than others.
+If the quiescent current is too low or too high, the transistor gain may be impacted.
+All of these also depend on knowing how much current your source will provide.
+
+Because of these things, when building audio circuits, it is best to use an oscilloscope.
+An oscilloscope can help you visually see what the voltages look like at each point in your circuit.
+Oscilloscopes can cost as little or as much as you want them to.
+There are pocket oscilloscopes that you can purchase for less than a nice dinner out, and there are bench oscilloscopes that you would need several months salary to purchase.
+Any of those are helpful in analyzing your circuit.
+
+\reviewsection
+
+In this chapter, we learned:
+
+\begin{enumerate}
+\item Although transistors provide current amplification, current changes can be transformed into voltage changes using Ohm's law.
+\item Using a resistor at the collector allows us to ``read'' a voltage change based on the changes in the currents going through the transistor.
+\item Using a resistor in this way \emph{inverts} the waveform---it will show low voltage when there is a lot of current, and high voltage when there isn't much current.
+\item Adding in an emitter resistor limits the amount of voltage gain in the circuit to $\frac{R_C}{R_E}$ in order to compensate for variable/drifting transistor betas.
+\item In order to amplify an audio signal, we have to add a DC bias to the signal so that the transistor stays in its operating range (positive voltage).
+\item The simplest way to do use a transistor to amplify a signal is to add a voltage divider to the base of the transistor, with a coupling capacitor feeding the signal into the voltage divider.
+\item The voltage divider should be designed to keep the transistor in its prime current/voltage range for amplification when the signal is neutral, and to keep voltage at the base above the $0.6\myvolt$ level above the emitter no matter how far the signal swings negative.  It also needs to be low enough that the collector never swings below it.  Usually having the bias at $10--20\%$ of DC voltage works well.
+\item The neutral, ``no signal'' design point is known as the quiescent point of a circuit.  The quiescent point is the state of the circuit when the AC signal coming in is neutral ($0\myvolt$).  
+\item Designing for a quiescent point simplifies the design process since all of the design considerations are simple DC considerations.
+\item There are numerous ways to bias the base of a transistor, but a voltage divider is the simplest.
+\item The AC signal is coupled into the voltage divider through a coupling capacitor in order to manage the difference between the pure AC signal and the DC biased signal.
+\item The collector resistor should be chosen in order to place the quiescent output voltage right in the middle of the possible output range (i.e., quiescent collector current multiplied by the collector resistance should give you about half of the voltage range between voltage source and emitter voltage).
+\item Weak AC signals often need multiple amplification stages to provide sufficient output power for driving outputs.
+\item The output of one amplifier can be coupled through a capacitor into the input of a second amplifier.
+\item If the signal sources and outputs are not permanently connected, adding a bleed-off resistor will enable the coupling capacitors to drain out after the jacks are disconnected.
+\item There are numerous things that can go wrong in a transistor amplifier, including clipping the audio signal, having a bad quiescent current, or accidentally losing your gain, not to mention building the circuit wrong.
+\item Because of the number of things that can go wrong, it is easiest to diagnose problems in an amplifier using an oscilloscope, which allows you to visualize what is happening at each point in the circuit.
+\end{enumerate}
+
+\applysection
+\begin{enumerate}
+\item What is the purpose of the resistor in the collector of a transistor amplifier?
+\item What is the purpose of the resistor in the emitter of a transistor amplifier?
+\item Why is there a bias voltage on the base of the transistor?  Why can't the signal just be connected in directly to the base?
+\item Why is the signal coupled in through a capacitor?
+\item Why does the single stage voltage amplifier discussed in this chapter invert its output?
+\item If the output of the two-stage amplifier is coupled into a third stage, the signal current would swing $1.85\mymamp$ in either direction.  Design a third amplification stage which can handle this amount of current.
+\end{enumerate}

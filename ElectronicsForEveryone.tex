@@ -117,10 +117,11 @@ tabsize=3
 
 
 % \pgfplotsset{compat=1.10}
-
+\newcommand{\thev}{Th\'{e}venin\ } % Thevenin
 \newcommand{\booktitle}[1]{\emph{#1}}
 \newcommand{\myamp}{\,\si{\ampere}}
 \newcommand{\mymamp}{\,\si{\milli\ampere}}
+\newcommand{\myuamp}{\,\si{\micro\ampere}}
 \newcommand{\myvolt}{\,\si{\volt}}
 \newcommand{\myohm}{\,\si{\ohm}}
 \newcommand{\mykohm}{\,\si{\kilo\ohm}}
@@ -341,6 +342,7 @@ set_draw_defaults(grid=true, fill_color=grey, xaxis_type=solid, yaxis_type=solid
 \part{Amplification Circuits}
 \include{TransistorIntro}
 \include{TransistorVoltageAmp}
+\include{PartialCircuit}
 
 \part{Other Circuits}
 
@@ -353,6 +355,7 @@ set_draw_defaults(grid=true, fill_color=grey, xaxis_type=solid, yaxis_type=solid
 \include{AppendixSymbols}
 \include{AppendixEquations}
 \include{AppendixChipNaming}
+\include{AppendixACThevenin}
 \include{SimplifiedDatasheets}
 
 \end{document}

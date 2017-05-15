@@ -1,0 +1,182 @@
+\chapter{Examining Partial Circuits}
+
+We will end our discussion of amplification by discussing partial circuits.
+Often times you will need to design a circuit which connects to another circuit, either powering it or receiving power from it.
+For instance, in the amplification circuits from Chapter~\ref{chapTransVoltageAmp}, the outputs were connected to a speaker.
+They could also be connected to another amplifier, or to a stomp box (a device to modulate the incoming signal in some way), or a recording circuit.
+
+
+\section{The Need for a Model}
+
+In order to connect circuits together, we need to be able to describe, in general terms, the ways that circuits fit together.
+In our early attempts to analyze circuits, we looked at how we could combine a lot of resistors in series and parallel to come up with a single resistance for the whole circuit.
+
+When dealing with transistors and other power amplification devices, we often need to come up with a simplified model for how the input to a circuit or the output from a circuit behaves.
+Early on (in Chapter~\ref{chSeriesParallel}), we learned how to take multiple resistors in series and parallel and combine them into an equivalent single resistor.
+
+When dealing with a power amplification circuit, it is often necessary look at various parts of the circuit by themselves, and figure out how they \emph{look} to other parts of the circuit.
+The way that a partial circuit looks to other parts of the circuit is called the circuit's \glossterm{\thev Equivalent} circuit.
+
+A \thev equivalent circuit takes a partial circuit and reduces it to:
+\begin{itemize}
+\item A single voltage source (AC, DC, or DC-biased AC, expressed in RMS voltage)
+\item A single impedance (i.e., resistance)
+\end{itemize}
+
+Note that the single voltage source may be \emph{different} than the voltage source that is actually connected.
+What you are doing is see what the circuit looks like to another circuit.
+For instance, a voltage divider circuit makes the output of the voltage divider \emph{look like} it is coming from a lower voltage source.
+
+Any network of power sources and resistances can be converted into a \thev Equivalent circuit.
+You can also get a \thev Equivalent circuit for a circuit that includes capacitors and inductors, but the calculations become more difficult and the results are only valid for a specific frequency.
+For simplicity we will just focus on resistive circuits.
+
+\section{Calculating \thev  Equivalent Values}
+
+% FIXME - somewhere I need to note that resistors hanging off the end don't count for Thevenin voltage
+
+\simplepdffigure{A Voltage Divider Partial Circuit}{TheveninDividerBasic}{0.25}
+
+To see how to calculate the voltage and resistance for a \thev Equivalent circuit, this section will take a classic voltage divider circuit and analyze how it ``looks'' to other attached circuits.
+Figure~\ref{figTheveninDividerBasic} shows an example of a partial circuit.
+Like most partial circuits, this circuit has two output points---A and B.
+What we are wanting to know is this---if we attach another circuit up to A and B, is there a model that we can use to understand how the other circuit ``sees'' our circuit?
+The goal of a making a \thev Equivalent circuit is to understand what our circuit will look like to other attached circuits.
+
+So, since our \thev Equivalent circuit will have a voltage source and a single resistor, we need to calculate what the voltage and resistance of this circuit will be.
+To calculate the voltage, find out what the voltage of the circuit at the output is when there is \emph{nothing connected}.
+That is, if we were to leave A and B disconnected, and I were to connect my multimeter to A and B, what would the voltage be?
+This is your \thev voltage.
+Since this is a voltage divider, you can just use normal voltage divider calculations to find this out.
+In this case, we have a $12\myvolt$ source, and the voltage divider divides it exactly in half ($1\mykohm$ for each half).
+Therefore, the output voltage is $6\myvolt$.  
+Therefore, our \thev Equivalent circuit will have a $6\myvolt$ source.
+
+Now we need to find our \thev resistance.
+There are multiple tricks to do this, but the simplest one is to replace all voltage sources in your circuit with a wire (i.e., a short circuit), and simply compute the total resistance between A and B.\footnote{We haven't talked about \emph{current} sources much in this book.  However, for completeness, I should note that if you have a current source, you should replace it with an open circuit (i.e., a gap in the wire) when calculating \thev resistance.}
+
+\simplepdffigure{Calculating the \thev Resistance of the Circuit}{TheveninDividerBasicForResistance}{0.25}
+
+Figure~\ref{figTheveninDividerBasicForResistance} shows what this looks like.
+Therefore, to calculate the \thev resistance of this circuit, simply calculate the total resistance from A to B.
+In this case, there are two parallel paths from A to B---one through the first resistor and one through the second.
+Therefore, we add up the resistors as parallel resistances.
+As a result, our \thev resistance will be:
+
+\begin{align*}
+R_T &= \frac{1}{\frac{1}{R_1} + \frac{1}{R_2}} \\
+    &= \frac{1}{\frac{1}{1000} + \frac{1}{1000}} \\
+    &= \frac{1}{0.001 + 0.001} \\
+    &= \frac{1}{0.002} \\
+    &= 500\myohm
+\end{align*}
+
+Therefore, we would say that this partial circuit has a \thev voltage of $6\myvolt$ and a \thev resistance of $500\myohm$.
+Whenever we attach a circuit to this circuit, what that other circuit will ``see'' is a circuit like the one in Figure~\ref{figTheveninEquivalentBasic}.
+
+\simplepdffigure{The \thev Equivalent of the Voltage Divider}{TheveninEquivalentBasic}{0.25}
+
+If you wanted to prove this to yourself, you can imagine a variety of different circuits attached to both our original circuit and to the \thev Equivalent circuit.
+You will find that, in all cases, the amount of voltage and current the \thev Equivalent circuit provides to the other circuit is the exact same as what the original circuit will provide.
+
+That isn't to say that the circuits themselves are exactly equivalent.
+Our original voltage divider uses up a lot of current stepping down the voltage of the voltage source.
+Not only does that waste energy from our battery, but it probably also causes a lot of heat.
+However, \emph{the subcircuit that gets attached to A and B} will see both our original circuit and the \thev Equivalent circuit as providing the same output.
+
+\section{Another Way of Calculating \thev Resistance}
+
+There is another way of calculating \thev resistance.  
+In this method, we first calculate what the current would be if you shorted A to B directly with a wire.
+This is known as the short-circuit current, or $I_{SHORT}$.
+Then, after calculating this, you can divide the \thev voltage by $I_{SHORT}$ to obtain the \thev resistance.
+
+When doing this, you have to remember that anything in parallel with our short will be essentially ignored---the current will always want to go through our short circuit.
+
+\simplepdffigure{Finding the Short Circuit Voltage}{TheveninDividerABShort}{0.25}
+
+Figure~\ref{figTheveninDividerABShort} shows what this looks like.
+What we want to do is to calculate the current going from A to B.
+Since A to B is a short circuit in parallel with our second resistor, we know that \emph{all} of the current will prefer the short circuit.
+This means that the current going through A and B will simply be the current that is limited by the first resistor.
+
+So, since we have a $12\myvolt$ source and a $1\mykohm$ resistor, the short circuit current will be:
+
+\begin{align*}
+I_{SHORT} &= \frac{V}{R} \\
+          &= \frac{12}{1000} \\
+          &= 0.012\myamp
+\end{align*}
+
+Now, to determine the \thev resistance, we divide the \thev voltage by this number:
+
+\begin{align*}
+R_{Thevenin} &= \frac{V_{Thevenin}}{I_{SHORT}} \\
+  &= \frac{6}{0.012} \\
+  &= 500\myohm
+\end{align*}
+
+As you can see, this is the same value that we got from the previous method.
+
+
+\section{Finding the \thev Equivalent of an AC Circuit with Reactive Elements}
+
+If a circuit has reactive elements (inductors and capacitors), we have to do a little more work to find the \thev Equivalent circuit.
+
+For DC circuits, this is relatively simple. 
+Since capacitors block DC currents and inductors are a short circuit for DC currents, we can simply treat the capacitors as open circuits (i.e., unconnected) and treat the inductors as short circuits (simple wires).
+For AC circuits, you can get a feel for what this will be by assuming the opposite---that capacitors will be short circuits and inductors will be open circuits.
+
+However, if you were to try to solve it explicitly, the problem is a little more difficult.
+The problem is that a full analysis of such circuits requires math involving complex numbers (i.e., numbers involving the imaginary unit $i$).  
+While the technique is roughly equivalent to adding resistances in series and parallel as we have done before, it is much more difficult to do the math with complex numbers.
+For those who want to see this technique in action, I have included more discussion on this topic in Appendix~\ref{appThevEquivAC}.
+
+For the purposes of this book, the previous statements about DC and AC should suffice for a general understanding of how your circuit works.
+In this book will typically use this for analyzing circuits that are mixed between AC and DC signals---small AC signals with a DC offset.
+We will generally concern ourselves with the DC offset for purposes of computation.
+
+\section{Using \thev Equivalent Descriptions}
+
+Many circuits are described to users of that circuit using \thev Equivalent descriptions.
+For instance, many circuits are described by their input or output impedance.
+This gives you a rough guide to imagine what will happen if you connect your own circuit to such circuits.
+Imagine that you have a circuit that has a \thev Equivalent output impedance of $500\myohms$.
+If you connect an output circuit that only has $250\myohm$ of resistance, what do you think that will do to the signal?
+Well, since the output of the circuit is equivalent to going through a $500\myohm$ resistor (that's what \thev Equivalence means), then if I connect a $250\myohm$ resistor, then I will have created a voltage divider in which two thirds of the voltage will be dropped by the circuit I am connecting to, and I will only get one third of the output voltage.
+On the other hand, if my output circuit is $50,000\myohm$, then the voltage drop within the output circuit is negligible compared to the voltage drop within my circuit.
+This means that my circuit will essentially receive the full \thev Equivalent voltage.
+
+We can also use this to calculate the amount of current that our circuit will draw.
+Let's say that a circuit yields a \thev Equivalent output of $4\myvolt$ with an $800\myohm$ impedance.
+If I connect a $3,000\myohm$ output circuit, how much current will flow?
+The total resistance will be $3,800\myohm$, so the current will be $V / R = 4 / 3800 \approx 1.05\mymamp$.
+
+The same is true for an input to a circuit.
+
+
+
+\section{Finding \thev Equivalence Experimentally}
+
+
+What makes this method valuable is that it allows a way to \emph{experimentally} determine the \thev Equivalent of a partial circuit that you don't have a schematic for.
+
+Imagine that you are going to design a circuit that receives a signal from another circuit.
+You have access to the circuit itself, but not the schematic.
+To know how you need to design your circuit, you need to know the \thev Equivalent for the other circuit so you know how it will respond and how it will fit in with your own calculations.
+You can do this with a multimeter.
+
+First, you disconnect your circuit from the feeding circuit, and use your multimeter to measure the voltage with nothing attached.
+This is your \thev voltage.
+Next, you put your multimeter in current mode, and measure the current directly flowing from the terminals.
+This creates a short circuit, and your multimeter will measure the current flow.
+Note that this is a little dangerous if you have no idea what will happen---many circuits aren't built to withstand short-circuits.
+But, you can do something similar with just putting in a small resistance inline with your multimeter as well, and you will get fairly accurate results.
+
+Now that you have your \thev voltage and your $I_{SHORT}$ current, you can calculate the \thev resistance by dividing the \thev voltage by the $I_{SHORT}$ current.
+
+
+
+\reviewsection
+
+\applysection
