@@ -153,9 +153,63 @@ While we discussed general rules about BJT transistors, the technical model used
 % http://inderjitsingh87.weebly.com/uploads/2/1/1/4/21144104/the__ebers-moll_bjt_model.pdf
 % http://ecetutorials.com/analog-electronics/ebers-moll-model-of-transistor/
 
+\section{555 Timer Oscillator Frequency Equation}
 
+In Chapter~\ref{chapOscillators} we learned to make oscillators using the 555 timer chip.
+In the actual chapter, I wanted you to focus on actually learning what was happening with the 555 timer rather than using a formula.
+However, there is a nice, simple formula that allows you to relate the resistor/capacitor network of the 555 timer to the final output frequency.
 
-\subsection{Gain Stabilizing Emitter Resistor for a DC Common Emitter Transistor Amplifier}
+The formula is as follows:
+
+\begin{equation}
+f = \frac{1.44}{C(R_1 + 2 R_2)}
+\end{equation}
+
+In this equation, $f$ is the frequency, $R_1$ is the resistor coming from the supply voltage, $R_2$ is the resistor next to the capacitor, and $C$ is the timer capacitor.
+
+To understand where this equation comes from, remember that frequency is just $\frac{1}{\textrm{period}$.
+We can use time constant formulas to find the period, and then just flip it to find the frequency.
+
+If you recall, the period is just the total time it takes to complete a charge/discharge cycle.  
+The 555 charges through \emph{both} $R_1$ and $R_2$, but only discharges through $R_2$.
+Additionally, since it is just bouncing back-and-forth between $\frac{1}{3}$ and $\frac{2}{3}$ full, it only uses $0.693$ time constants.
+
+Therefore, we can have two formulas, one for the time charging and one for the time discharging:
+
+\begin{align*}
+T_{CHARGE} &= 0.693 C (R_1 + R_2) \\
+T_{DISCHARGE} &= 0.693 C R_2
+\end{align*}
+
+The total period is just these two time periods added together.
+Therefore, you get:
+
+\begin{align*}
+T_{PERIOD} &= 0.693 C (R_1 + R_2) + 0.693 C R_2 \\
+ &= 0.693 C((R_1 + R_2) + R_2) && \textrm{Factoring out $0.693 C$} \\
+ &= 0.693 C(R_1 + 2 R_2) && \textrm{Regrouping}
+\end{align*}
+
+Since $f = \frac{1}{T_{PERIOD}}$, we can flip the above equation and get:
+
+\begin{align*}
+f &= \frac{1}{0.693 C(R_1 + 2 R_2)} \\
+  &= \frac{1}{0.693}\frac{1}{C(R_1 + 2 R_2)} && \textrm{Regrouping} \\
+  &\approx 1.44 \frac{1}{C(R_1 + 2 R_2)} \\
+  &= \frac{1.44}{C(R_1 + 2 R_2)}
+\end{align*}
+
+At the end of the day, this is exactly what you did when you solved those problems, you just did it by hand instead of using a nice little formula.
+All a formula does is encapsulate the things that you normally do anyway, but simplifies it down to a set of pre-defined steps.
+
+I have a love/hate relationship with formulas.  
+Formulas are nice because they are easy to use.
+However, when you use them, it makes it easy to forget the basic facts behind them.
+The basic facts are more important than the formula, because you can rearrange the basic facts and develop all sorts of formulas depending on your needs.
+In fact, if you know the basic facts, and you know how to make formulas, if you ever forget a formula it is easy to determine one from the basic facts.
+Therefore, while memorizing formulas is important, knowing \emph{why} formulas work is just as important, as it allows you to think more deeply and broadly and adapt your knowledge to new situations.
+
+\section{Current Gain Stabilization in BJT Common Emitter Applications}
 \label{eqGainStabilizingEmitterResistorDCCommonEmitter}
 
 % FIXME - should probably show two circuits
@@ -234,3 +288,126 @@ Therefore, a simplified look at this equation is just:
 \end{align*}
 
 So, even though it isn't an exact result, you can see that the ratio between the actual current in the real circuit and the nominal base current that we calculated will be given by $\frac{R_B}{R_E}$.
+
+\section{Voltage Gain Stabilization in BJT Common Emitter Applications}
+
+The previous section told you how to stabilize the current gain from an emitter resistor, with the final gain being $\frac{R_B}{R_E}$.
+For \emph{voltage} gain, the final gain is limited by $\frac{R_C}{R_E}$, and we will show that here using similar reasoning.
+
+The voltage at the emitter and the base will be:
+
+\begin{align*}
+V_E &= I_E R_E \\
+V_B &= V_E + 0.6 \\
+V_B &= I_E R_E + 0.6 \\
+\end{align*}
+
+The voltage at the collector will be:
+
+\begin{align*}
+V_C &= I_C R_C
+\end{align*}
+
+However, the collector current and the emitter current are very close.
+Therefore, we can simplify this to say:
+
+\begin{align*}
+V_C &= I_E R_C
+\end{align*}
+
+We can then divide our equation for the collector voltage by our equation for the base voltage, and get:
+
+\begin{align*}
+\frac{V_C}{V_B} &= \frac{I_E R_C}{I_E R_E + 0.6}
+\end{align*}
+
+If we remove the diode voltage, this simply becomes:
+
+\begin{align*}
+\frac{V_C}{V_B} &= \frac{I_E R_C}{I_E R_E} \\
+ &= \frac{R_C}{R_E}
+\end{align*}
+
+Therefore, the ratio of base voltage to output voltage is approximately equal to the ratio of collector to emitter.
+However, also keep in mind that this is the voltage \emph{drop} in the collector.  
+What we actually send to the output is actually our supply voltage with $V_C$ subtracted from it.
+
+As you can see, there is a lot of simplification involved.
+However, such simplifications allow us to think more clearly about our circuits.
+Since there are so many moving parts, looking for and finding the dominating factors is very important.
+
+Note that this is important in life, too.
+Sometimes we get so enmeshed in the details that we forget what factors dominate our quality of life.
+Finding out what the important factors are help us to focus on the things that matter most, and let the details sort themselves out.
+
+\section{The \thev Formula}
+
+In Chapter~\ref{chapPartialCircuits}, we used two formulas which allowed us to calculate the \thev Equivalent circuit for circuits experimentally.
+Equations~\ref{eqThevEqVoltExp} and~\ref{eqThevEqResExp} seem strange and complicated, but they are actually directly deducible from Ohm's law and the concept of an equivalent circuit.
+
+The \thev Theorem states that any combinations of voltage sources and resistances can be replaced by a single voltage source and a single resistance.  
+We will call this our \thev voltage source ($V_T$) and our \thev impedance ($R_T$).
+If we hook up a load (i.e., a fixed resistance) across the output terminals of this circuit, we will know the resistance that was added (because \emph{we} added it), and we can measure the voltage drop across the resistor easily enough with a multimeter or oscilloscope.
+
+We will need to measure this using two different loads because we have two unknowns---$V_T$ and $R_T$.
+Using two different loads will give us two different equations using Ohm's law that will allow us to solve for two variables.
+We will call our lower-resistance load $R_L$ and the voltage drop across the $R_L$ resistor will be $V_L$.
+Likewise, our higher-resistance load we will call $R_H$ and the voltage drop across it will be $V_H$.
+The current running through each of these loads ($I_L$ and $I_H$) can be given by:
+
+\begin{align*}
+V_L &= I_L \cdot R_L \\
+V_H &= I_H \cdot R_H
+\end{align*}
+
+That is just simply Ohm's law.
+We can also use Ohm's law to develop equations for the whole circuit, including the \thev Equivalent voltage and impedance.
+Remember, because of the current rules, whatever current is flowing through our resistor must also be flowing in our \thev Equivalent impedance.
+Therefore, the \thev Equivalent voltage will be the current multiplied by the two impedances together.
+Therefore, this yields the following equations:
+
+\begin{align*}
+V_T &= I_L (R_L + R_T) \\
+V_T &= I_H (R_H + R_T)
+\end{align*}
+
+Both of these equations solve for $V_T$, given an unknown of $R_T$.  
+We can also rearrange either of these to solve for $R_T$.  
+Let's rearrange the first one to do that:
+
+\begin{align*}
+V_T &= I_L (R_L + R_T) && \textrm{Original equation} \\
+\frac{V_T}{I_L} &= R_L + R_T  && \textrm{Divide both sides} \\
+\frac{V_T}{I_L} - R_L &= R_T && \textrm{Subtract $R_L$} \\
+R_T &= \frac{V_T}{I_L} - R_L && \textrm{Solved for $R_T$} \\
+\end{align*}
+
+This is the same as Equation~\ref{eqThevEqResExp}.
+However, it requires $V_T$ to work.
+Now that we have an equation for $R_T$, we can substitute that back in and get an equation for $V_T$ without using $R_T$.
+Using basic algebra manipulations, we can do the following:
+
+\begin{align*}
+V_T &= I_H (R_T + R_H) && \textrm{Original equation} \\
+V_T &= I_H R_T + I_H R_H && \textrm{Distributive rule} \\
+V_T &= I_H (\frac{V_T}{I_L} - R_L) + I_H R_H && \textrm{Substituting for $R_T$} \\
+V_T &= I_H \frac{V_T}{I_L} - I_H R_L + I_H R_H && \textrm{Distributing} \\
+V_T - I_H \frac{V_T}{I_L} &= - I_H R_L + I_H R_H && \textrm{Get the $V_T$s together} \\
+V_T(1 - \frac{I_H}{I_L}) &= I_H (R_H - R_L) && \textrm{Factor both sides} \\
+V_T &= \frac{I_H (R_H - R_L)}{1 - \frac{I_H}{I_L}} && \textrm{Divide both sides} \\
+V_T &= \frac{\frac{V_H}{R_H} (R_H - R_L)}{1 - \frac{V_H R_L}{R_H V_L}} && \textrm{Replace currents with Ohm's law equivalents ($\frac{V}{R}$)}
+\end{align*}
+
+As you can see, this is Equation~\ref{eqThevEqVoltExp}.
+
+% Basic algebra is easier but gives a different (slightly more complex) form
+%I_H V_T &= I_H I_L R_L + I_H I_L R_T && \textrm{Multiply both sides by $I_H$} \\
+%I_L V_T &= I_H I_L R_H + I_H I_L R_T && \textrm{Multiply both sides by $I_L$} \\
+%I_H V_T - I_L V_T &= I_H I_L R_L + I_H I_L R_T - (I_H I_L R_H + I_H I_H R_T) && \textrm{Subtract both equations} \\
+%I_H V_T - I_L V_T &= I_H I_L R_L + I_H I_L R_T - I_H I_L R_H - I_H I_H R_T && \textrm{Distribute the subtraction} \\
+%I_H V_T - I_L V_T &= I_H I_L R_L - I_H I_L R_H  && \textrm{Simplify} \\
+%V_T (I_H - I_L) &= I_H I_L R_L - I_H I_L R_H && \textrm{Regroup the left-hand side} \\
+%V_T &= \frac{I_H I_L R_L - I_H I_L R_H}{I_H - I_L} && \textrm{Divide both sides by $I_H - I_L$} \\
+%V_T &= \frac{I_H I_L (R_L - R_H)}{I_H - I_L} && \textrm{Regroup the top} \\
+%V_T &= \frac{\frac{V_H}{R_H} \frac{V_L}{R_L} (R_L - R_H)}{\frac{V_H}{R_H} - \frac{V_L}{R_L} && \textrm{Replace currents with their Ohm's law equivalents}
+
