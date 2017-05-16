@@ -1,6 +1,8 @@
 \documentclass{book}
 
 % FIXME - move everything to a power module early on
+% FIXME - for some reason, Fritzing sometimes puts out a PDF 1.4 and sometimes 1.3.  xetex is choking on the 1.4s.  If this happens, to convert, rename FILE.pdf to FILE.1.4.pdf and run 
+% gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.3 -o FILE.pdf FILE.1.4.pdf 
 
 %% Math font options
 % \usepackage[math]{iwona}
@@ -16,7 +18,7 @@
 \usepackage{amsfonts}
 \usepackage{textcomp}
 \usepackage{newtxmath} % Better math lettering (v vs u)
-\usepackage{hyperref}
+% \usepackage{hyperref}
 
 
 \usepackage{amsmath}
@@ -316,15 +318,12 @@ set_draw_defaults(grid=true, fill_color=grey, xaxis_type=solid, yaxis_type=solid
 \include{BasicResistorCircuits}
 \include{PowerIntro}
 
-\part{Digital Electronics}
+\part{Digital Electronics and Microcontrollers}
 
 \include{IntegratedCircuits}
 \include{LogicICs}
-\include{LogicStorage}
-\include{OtherICs}
-
-\part{Microcontrollers}
-
+%\include{LogicStorage}
+%\include{OtherICs}
 \include{Microcontrollers}
 \include{MicrocontrollerProjects}
 \include{MicrocontrollerAnalog}
@@ -340,23 +339,27 @@ set_draw_defaults(grid=true, fill_color=grey, xaxis_type=solid, yaxis_type=solid
 \include{Impedance}
 
 \part{Amplification Circuits}
+\include{DCMotor}
 \include{TransistorIntro}
 \include{TransistorVoltageAmp}
 \include{PartialCircuit}
 
-\part{Other Circuits}
+\include{GoingFurther}
+
+% \part{Other Circuits}
 
 % \include{OtherICs}
 
 \appendix
 
 \include{Glossary}
-\include{AppendixFindingValues}
+%\include{AppendixFindingValues}
 \include{AppendixSymbols}
-\include{AppendixEquations}
 \include{AppendixChipNaming}
-\include{AppendixACThevenin}
+% \include{AppendixACThevenin}
 \include{SimplifiedDatasheets}
+\XeTeXpdffile "SimplifiedDatasheetsPages.pdf"
+\include{AppendixEquations}
 
 \end{document}
 

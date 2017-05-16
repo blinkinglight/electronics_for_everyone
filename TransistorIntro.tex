@@ -66,9 +66,18 @@ What they all have in common is that they have three (sometimes four) terminals,
 The main way that the types of transistors differ is in whether the knob on the faucet is controlled by voltage or by current.
 The transistors operated by current are known as \glossterm{bipolar junction transistors} (BJTs), and the ones operated by voltage are known as \glossterm{field effect transistors} (FETs).
 
-BJTs come in two basic forms based on whether the knob is normally closed but turned on by positive current (an NPN transistor) or whether the knob turned on by negative current (a PNP transistor).
+FETs are very interesting because their inputs read voltage levels without consuming any current.
+However, their usage is somewhat difficult for a number of reasons.
+First of all, they don't provide nearly as much gain as BJTs.
+Secondly, BJTs are much more stable and linear in the way that they operate.
+FETs are more complicated to use correctly, and depend a lot more on understanding their physics than BJTs do.
+Many modern integrated circuits have switched to using FETs for their inputs since the power consumption is greatly reduced.
+\glossterm{CMOS} chips are chips that use FET technology to limit the power consumption inside the chip.
+Some of these, however, still use BJTs to provide the final output stages if they need higher output gain.
+This book focuses on BJTs because they have a simpler conceptual operation.
 
-In this chapter, we will focus on NPN BJT transistors.
+BJTs come in two basic forms based on whether the knob is normally closed but turned on by positive current (an NPN transistor) or whether the knob is normally open but closed off by positive current (a PNP transistor).
+In this book, we will focus on NPN BJT transistors. % FIXME - if I change the book, need to update this
 
 \section{Parts of the Transistor}
 
@@ -326,6 +335,7 @@ In this chapter, we learned:
 \item Voltages and currents going through a transistor are labeled using the terminals that the current is passing through.  For instance, $I_{BE}$ refers to the current flowing between the base (B) and the emitter (E), and $V_{CE}$ refers to the voltage difference between the collector (C) and the emitter (E).
 \item BJTs come in two main configurations---NPN and PNP.
 \item With NPN transistors, a small positive current at the base causes a larger current to flow from the collector to the emitter.
+\item With PNP transistors, current at the base reduces the current flow from collector to the emitter.
 \item NPN transistors can be analyzed using these seven rules:
 \begin{enumerate}
 \item The transistor is off by default.
