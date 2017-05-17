@@ -1,7 +1,6 @@
 \chapter{Electronics Equations and Where They Come From}
 \label{appendixElectronicsEquations}
 
-% 555 Timer equation
 % Thevenin Equivalent Equation
 % Gain resistor equation
 
@@ -154,6 +153,7 @@ While we discussed general rules about BJT transistors, the technical model used
 % http://ecetutorials.com/analog-electronics/ebers-moll-model-of-transistor/
 
 \section{555 Timer Oscillator Frequency Equation}
+\label{apOscillatorFreq}
 
 In Chapter~\ref{chapOscillators} we learned to make oscillators using the 555 timer chip.
 In the actual chapter, I wanted you to focus on actually learning what was happening with the 555 timer rather than using a formula.
@@ -167,7 +167,7 @@ f = \frac{1.44}{C(R_1 + 2 R_2)}
 
 In this equation, $f$ is the frequency, $R_1$ is the resistor coming from the supply voltage, $R_2$ is the resistor next to the capacitor, and $C$ is the timer capacitor.
 
-To understand where this equation comes from, remember that frequency is just $\frac{1}{\textrm{period}$.
+To understand where this equation comes from, remember that frequency is just $\frac{1}{\textrm{period}}$.
 We can use time constant formulas to find the period, and then just flip it to find the frequency.
 
 If you recall, the period is just the total time it takes to complete a charge/discharge cycle.  
@@ -253,7 +253,7 @@ I_C V_S - 0.6 I_C + I_N R_E I_C + I_N \beta R_E I_C =  I_N \beta V_S  -  I_N \be
 I_C V_S - 0.6 I_C + \frac{V_S - 0.6}{R_B} R_E I_C + \frac{V_S - 0.6}{R_B} \beta R_E I_C =  I_N \beta V_S  -  I_N \beta 0.6 && \textrm{substituting some $I_N$ terms} \\
 I_C V_S - 0.6 I_C R_B + V_S R_E IC - 0.6 R_E I_C + V_S \beta R_E I_C - 0.6 \beta R_E I_C =  R_B I_N \beta V_S  -  R_B I_N \beta 0.6 && \textrm{getting rid of fraction} \\
 I_C(V_S - 0.6 R_B + V_S R_E - 0.6 R_E + V_S \beta R_E - 0.6 \beta R_E) =  I_N(R_B \beta V_S  -  R_B \beta 0.6) && \textrm{factoring} \\
-\frac{IC}{IN} = \frac{R_B \beta V_S  -  R_B \beta 0.6}{V_S - 0.6 R_B + V_S R_E - 0.6 R_E + V_S \beta R_E - 0.6 \beta R_E}
+\frac{I_C}{I_N} = \frac{R_B \beta V_S  -  R_B \beta 0.6}{V_S - 0.6 R_B + V_S R_E - 0.6 R_E + V_S \beta R_E - 0.6 \beta R_E}
 \end{align*}
 
 Now, this looks like a huge mess, and it is.
@@ -290,6 +290,7 @@ Therefore, a simplified look at this equation is just:
 So, even though it isn't an exact result, you can see that the ratio between the actual current in the real circuit and the nominal base current that we calculated will be given by $\frac{R_B}{R_E}$.
 
 \section{Voltage Gain Stabilization in BJT Common Emitter Applications}
+\label{apTransistorVoltageGain}
 
 The previous section told you how to stabilize the current gain from an emitter resistor, with the final gain being $\frac{R_B}{R_E}$.
 For \emph{voltage} gain, the final gain is limited by $\frac{R_C}{R_E}$, and we will show that here using similar reasoning.
@@ -321,7 +322,7 @@ We can then divide our equation for the collector voltage by our equation for th
 \frac{V_C}{V_B} &= \frac{I_E R_C}{I_E R_E + 0.6}
 \end{align*}
 
-If we remove the diode voltage, this simply becomes:
+If we remove the diode voltage (which has relatively little influence overall), this simply becomes:
 
 \begin{align*}
 \frac{V_C}{V_B} &= \frac{I_E R_C}{I_E R_E} \\

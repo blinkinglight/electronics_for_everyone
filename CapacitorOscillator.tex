@@ -109,7 +109,7 @@ However, we will just focus on using it as a basic oscillator.
 It is easiest to describe how a 555 works if we start out by showing a simple circuit with it.
 The circuit in Figure~\ref{figSimple555Oscillator} blinks an LED on and off.
 
-\simplegraphicsfigure{A Schematic of a Simple 555 Oscillation Circuit}{Simple555Oscillator}{0.08}
+\simplepdffigure{A Schematic of a Simple 555 Oscillation Circuit}{Simple555Oscillator}{0.5}
 
 The order of the pins on the actual 555 chip is a little confusing.
 In order to make it easier, I have simply put tags for each pin, so you can see where they each belong \emph{functionally}.
@@ -366,6 +366,7 @@ In this chapter, we learned:
 \item The period of the oscillation is the combination of both the charge time and the discharge time.
 \item When calculating resistors for an RC time circuit, it is best to calculate the discharge resistance first, since it only uses one resistor (R2).  Then you can calculate the combined resistance for the charge circuit, which allows you to deduce what the R1 resistor should be.
 \item When choosing components for a given RC time constant, you can choose a variety of combinations of capacitor/resistor values for the same result.  Choosing a smaller capacitor and a larger resistor will save power in the circuit.
+\item An equation for determining the frequency of a 555 oscillator circuit can be found in Appendix~\ref{apOscillatorFreq}.
 \end{enumerate}
 
 \applysection
