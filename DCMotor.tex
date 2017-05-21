@@ -2,3 +2,202 @@
 
 % FIXME - I should talk about this info about motors somewhere - http://www.robotshop.com/blog/en/how-do-i-interpret-dc-motor-specifications-3657
 % Also here - https://electronics.stackexchange.com/questions/145203/why-dont-brushless-motors-short
+
+A \glossterm{DC motor} is a device that converts DC electrical power into mechanical power.
+It operates by rotating a shaft using electromagnetism.
+DC motors are fairly simple to use, though they require slightly different reasoning from the way we have been examining circuits so far.
+
+\section{Theory of Operation}
+
+While there are more than one kind of motor, the ``typical'' DC motor is known as a \glossterm{brushed electric motor}.
+This motor has a fixed outside container (called a \glossterm{stator} because it is stationary) that contains magnets with opposite poles.
+Within the stator is an armature with electromagnets that is connected to the \glossterm{shaft} (the shaft is the thing that turns).
+The electromagnets on the shaft's armature are then energized to be the same pole of the current magnetic orientation.
+
+If you have ever tried to push two magnets together that have the same pole, you know that the magnetic fields exhibit a lot of physical force to try to prevent this from happening. 
+Therefore, the fixed magnets' magnetic fields push on the temporarily-created electromagnets' fields on the shaft's armature.
+When the shaft turns to align itself with the fixed magnets, it also turns the connector that connects the shaft to the electricity.
+When it is turned, the connectors on the shaft are now connected to the \emph{opposite} polarity than they were, so their fields are no longer aligned again!
+Thus, the shaft continues rotating on.
+
+A certain type of motor, called a \glossterm{brushless motor} has a similar operation, except that instead of having the rotating shaft change the polarity of the current, it uses fixed magnets on the shaft, and uses electromagnets for fixed magnets.  
+Then, by pushing AC current through the electromagnets, it changes the polarity of the fixed magnets back-and-forth, moving the shaft through the magnetic field.
+Brushless motors tend to be more expensive, but can rotate faster and have fewer parts which can wear out.
+
+Even though brushless motors use AC current internally, they are operated just like DC motors from the outside.
+Brushless motors have internal circuitry that converts the DC current into an AC waveform for energizing the electromagnets appropriately.
+
+\section{Important Facts About Motors}
+
+Motors require a lot of current, especially to startup.
+Starting up, they require even more current (often ten times their normal current).
+This is also the amount of current they require if they ever stop rotating (known as stalling).
+
+Motors are rated according to their most efficient operating voltage.
+If a motor is rated at $5\myvolt$, then it's not that you can't operate it at a different voltage, but that operating it at different voltages will change some of their characteristics and probably won't be as efficient.
+
+Motors generate a negative voltage called \emph{Back EMF} that is in opposition to the voltage provided it.
+Motors generate more back EMF the faster that they spin.
+At the point at which the back EMF is equal to the voltage provided, the motor will no longer spin faster.
+There is also some voltage drop by the internal resistance of the motor's coils, but it is relatively minor compared to the back EMF drop.
+
+If there is nothing attached to the shaft, the amount of current the motor operates with is known as the \glossterm{no load current}, and the speed that the motor spins is known as the \glossterm{no load RPM} (\glossterm{RPM} means ``revolutions per minute'').
+
+However, the most difficult thing that a motor does is to \emph{start} rotating.
+When the motor isn't moving, and is exhibiting its maximum rotational power (known as \glossterm{torque} to try to move, this is known as a \glossterm{stall} condition.
+This is the most strenuous thing a motor can do, and many motors can't survive more than a few seconds in stall conditions.
+The amount of torque that a motor supplies in stall conditions is known as the \glossterm{stall torque}, and the amount of current that the motor uses in these conditions is known as the \glossterm{stall current}.
+Oftentimes, if you think you have a circuit that is properly sized for a motor, but it won't start spinning, this is because it isn't getting enough current for stall conditions.
+You can sometimes even check this by spinning the shaft by hand and seeing if the motor then springs to life.
+
+Note that when a motor first turns on, it is always in stall conditions.
+
+\section{Using a Motor in a Circuit}
+
+DC motors are nice because they basically self-regulate.  
+They spin fast enough to match whatever voltage is given to them, and draw enough current to manage the proper torque for the load.
+If you want to know the details and calculations behind these things, see Appendix~\ref{appDCMotorCalculations}.
+However, if you stick with the voltage listed in the specs, the RPM of the motor generally gets fairly close to the specifications.
+In general, lower voltages lead to lower RPMs, and higher voltages lead to higher RPMs.
+
+It is pretty rare to add series resistance to a motor circuit.
+There are several reasons for this.
+The first is that, as mentioned, motors basically self-regulate.
+This means that:
+\begin{enumerate}
+\item They will draw the amount of power they need to draw for the given torque, and no more.  Thus a current-limiting resistor is not needed.  Additionally, if you calculate the current-limiting resistor for steady-state conditions, it will provide too little current for stall conditions.
+\item They will utilize the given voltage to achieve the RPM that balances it out.  Therefore, there will not be any excess voltage to consume.
+\end{enumerate}
+
+Additionally, series resistance can actually cause problems.
+The amount of current a motor can draw can vary very widely.
+As mentioned, the stall current can sometimes be ten times the steady state current.
+With series resistance, the voltage drop across the resistor will then vary up to ten times as well, which will affect the voltage available to the motor and thus alter the performance specifications of the motor.
+Under stall conditions, it will decrease the performance of the motor at precisely the wrong moment.
+
+Therefore, while you might want to down-step voltage for a motor to get the proper RPM, you want to do so in an essentially non-resistive way, using diodes, transistors, or other components that are not likely to add significant series resistance to the motor.
+
+However, you may want to prevent problematic conditions as well.
+You don't want a short circuit in your motor to fry your whole circuit.
+Because of this, you may want to add a fuse (instead of a current-limiting resistor) that will trip if it experiences excessively high current to protect the rest of your circuit.
+
+Additionally, since motors contain electromagnets, they utilize induction.
+As mentioned in Chapter~\ref{chapInductors}, when current to an inductor stops, it creates a voltage spike due to the collapsing of the electromagnetic fields.
+Therefore, we have to provide a snubber diode to prevent that current from blowing out our sensitive equipment.
+You can refer back to Figure~\ref{figSnubberDiode} to see how this is wired.
+
+\section{Attaching Things to Motors}
+
+Motors just spin a shaft.
+What happens after the shaft starts spinning is, technically, outside the scope of this book, and entirely up to you.
+Nonetheless, I thought I would take just a moment to talk about attaching things to motors.
+
+The first thing that comes up is \emph{how} do you attach something to a motor's shaft?
+There are several common options.
+
+\begin{enumerate}
+\item Some items are built to have a \glossterm{mechanical fit} onto a shaft.  That is, you can push them onto the shaft with some force, but they are unlikely to just fall off on their own.  
+\item Some items are attached with a \glossterm{set screw}.  This is similar to the previous method, except that what keeps the attachment in place is not the pure fit, but an extra screw that applies the force after your attachment is in position.  This allows for a little wider range of variance in size, so if the sizes are off slightly, the set screw will make up for the lack of mechanical force.
+\item Finally, some items need to be glued, welded, or in some other way permanently affixed to the shaft.  The problem with this method is that, once attached, you can't really use your motor for anything else.
+\end{enumerate}
+
+So, what are we attaching to our motor?
+
+Well, you \emph{can} directly attach things such as wheels to the shaft of the motor.
+For free-spinning things such as propellers, this is exactly what you do.
+It works for wheels, too, kind of.
+The problem is that small DC motors often can't generate the kind of torque you need for typical usages.
+Therefore, you need gears to translate the low-torque/high-RPM of the motor into a high-torque/low-RPM output to the wheels.
+
+Many places sell gearboxes which handle all of this for you.
+In fact, you can even buy motors with the gearboxes inside the motor package as well.
+Then, you connect your gearbox to the axle of the wheels using a gear or a belt, and the wheel is what performs the final actions.
+
+I find it interesting that all of these are just a series of conversions.
+We first convert electrical power into mechanical power.
+we then convert low-torque/high-RPM power into high-torque/low-RPM power.
+This is actually very similar to the operation of a transformer in electronics, which converts low-current/high-voltage into high-current/low-voltage and vice-versa.
+Then, the wheels convert rotational power into linear power, by driving your project along the ground, or driving a belt around, etc.
+We have a source of power (the battery) and the thing we want to do (moving things), and what we have to figure out is the best way to convert the one kind of power into the other.
+
+\section{Bidirectional Motors}
+
+Oftentimes we want motors to spin both forwards and backwards.
+Most motors can spin backwards just by reversing the positive and negative leads to the motor.
+However, we need to be able to do that electrically instead of forcing someone to go and reverse wires on our circuit board whenever they want to back up instead of go forward.
+
+Creating a circuit that can have current go either direction is hard enough, but added to that is the problem of positioning the snubber diodes---they will be needed in \emph{both} directions!
+However, if we just attached snubber diodes in each direction, we would wind up with a short circuit no matter what (the current would prefer to just go through the diode pointing our way rather than through the motor).
+
+A type of circuit to manage these considerations has been developed, known as an \glossterm{H-Bridge}.
+We will not delve into the details of how an H-Bridge works or how to use one, but thought we should mention them.
+
+If you are interested in H-Bridges, a popular chip is the L293, and a simplified datasheet is available in Appendix~\ref{appSimplifiedDatasheets}.
+
+\section{Servo Motors}
+
+A \glossterm{servo motor} (usually just called a servo) is a motor that, instead of spinning, creates an angle.
+Think about a remote-controlled car.
+To turn the car, the wheels have to be at an angle.
+A regular DC motor is what spins the wheels, but a servo motor is what causes the wheels to turn to a specific angle.
+
+Servos are operated by sending an oscillating signal, much like the output of a 555 timer (see Chapter~\ref{chapOscillators}).
+Servos expect a signal every twenty milliseconds, and the length of the signal will determine the angle of the servo:
+
+\begin{itemize}
+\item If the signal is 1.5 milliseconds, the servo will be in the middle (neutral) position.
+\item If the signal is 1.0 milliseconds, the servo will rotate 90 degrees counterclockwise.
+\item If the signal is 2.0 milliseconds, the servo will rotate 90 degrees clockwise.
+\item Between these positions, the servo will rotate in a proportional way.
+\end{itemize}
+
+As you can see, the servo can swing through 180 degrees of rotation.
+The servo expects to continually receive signals while it is on in order to maintain its position, but that position can be changed at any time with a change in the length of the signal.
+The behavior of a servo when no signal is applied depends on the particular servo you are using.
+
+Servo motors have a separate inputs for their voltage supply and their signal.
+The signal does not have to power the motor---it is powered through its supply voltage.
+Instead, the servo motor just needs to receive a small signal to know its rotation, and the actual power is supplied through its voltage input.
+
+\section{Stepper Motors}
+
+Stepper motors are motors that rotate in very precise increments.
+If you need something that can freely rotate, but need an \emph{exact} number of revolutions, or even half-revolutions, quarter-revolutions, etc., a stepper motor supplies this capability.
+Stepper motors are often used in 3D printers, where the print head needs to move a precise distance.  
+The integrity of the generated structure depends on the print head being in the exact correct location.
+Therefore, the rotation of the shaft must be precisely controlled.
+
+The control of stepper motors is far outside the scope of this book, and usually require additional hardware (known as a stepper motor driver circuit) but I wanted to be sure you were aware of what they were and why they are important.
+
+\reviewsection
+
+In this chapter, we learned:
+
+\begin{itemize}
+\item A DC motor converts electrical power into mechanical rotational power by either changing the magnetization of the shaft (in brushed motors) or of the fixed magnets (in brushless motors).
+\item Rotational mechanical power is known as torque.
+\item Motors tend to require a lot of current, especially at startup.
+\item The rated voltage of a motor is related to the motor's RPM---decreasing the voltage decreases the RPM and increasing the voltage increases the RPM.  This is due to the negative voltage (back EMF) generated by the movement of the motor.
+\item The current flowing through a motor is related to the torque needed to spin the motor---more required torque draws more current.
+\item When a motor is not spinning (either because it is just starting or because its load is too high) it is in a stall condition.
+\item Stall current is the amount of current the motor draws in stall conditions (usually about ten times more than in a stead state).
+\item Stall torque is the amount of torque generated in stall conditions.
+\item Loading a motor so that it stays in stall conditions for any significant amount of time can damage the motor.
+\item Series resistance is almost never added to a motor circuit.
+\item Snubber diodes are used to mitigate against inductive spikes that happen when the electromagnetic field of the motor shuts off.
+\item Gears can convert the low-torque/high-RPM of a motor into a high-torque/low-RPM output.
+\item Motors can be used bidirectionally using an H-Bridge.
+\item A servo motor is a motor that, instead of spinning, creates a fixed angle based on the length of a signal that is sent to it every twenty milliseconds.
+\item A stepper motor is a motor that provides precise control over the amount of rotation of the shaft.
+\end{itemize}
+
+\applysection
+
+\begin{enumerate}
+\item If you wanted to prevent too much current from going through a motor, what should you use for this?
+\item What happens to the RPM of a motor when I reduce the voltage to my motor?
+\item What should be attached to a motor to protect the other parts of the circuit when a motor is shut-off?
+\item List one reason why a series resistor should not be used with a motor.
+\item If I was building a robot and wanted to control the angle of a robot's arm, what type of motor could I use?
+\item If I was building a machine to place components into a precise position onto a board, what type of motor should I pick to achieve that precision?
+\end{enumerate}
