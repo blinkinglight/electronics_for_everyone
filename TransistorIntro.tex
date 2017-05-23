@@ -286,9 +286,17 @@ Sometimes, feedback occurs because the output is wired back to the input, but in
 What the final effect of adding a resistor to the base will do is to \emph{limit} the gain of the transistor to a \emph{fixed} value that won't change as the transistor beta changes.
 Additionally, the computation for this is very simple.
 So, if your transistor beta varies between 50 and 200, you can add a resistor to the emitter which will limit the actual transistor gain below 50, and it will keep this value very stable even as the transistor's beta drifts.
-In such a configuration, the most stable gain you can get for a given transistor beta is about $\frac{1}{4}$ of the transsitor's lowest beta.
+In such a configuration, the most stable gain you can get for a given transistor beta is about $\frac{1}{4}$ of the transistor's lowest beta.
 
-Now, the equation for this varies with each type of circuit.
+The equation for the effect that a feedback resistor has an a transistor circuit depends on the circuit design itself---there isn't a one-size-fits-all rule.
+However, feedback resistors are usually fairly small compared to the rest of the circuit.
+
+For many circuits, if you simply start with a small feedback resistor (10--100$\myohm$), the feedback resistor will usually improve the stability of your design, even if you can't calculate exactly how that affects the beta of the transistor.  
+It means that your design will likely continue to work even with different transistors, and operating at different temperatures.
+However, that will also limit the gain, which can be problematic when dealing with motors, which require large amounts of current.
+
+% The next section needs more help
+\iffalse
 The following equation is for the type of transistor circuit covered in this chapter, which has a simple DC resistance coming into the base of a common emitter NPN transistor DC amplifier.
 We will call the resistance at the base $R_B$, and the size of the resistor that we are going to add at the emitter as $R_E$.
 
@@ -311,6 +319,7 @@ This is the same circuit as Figure~\ref{figTransistorSwitchOnMotor}, but with an
 You may be wondering \emph{how} the equation for calculating the size of the emitter resistor came about.
 It isn't fancy, it is just very long.
 However, if you are interested, the details can be found in Section~\ref{eqGainStabilizingEmitterResistorDCCommonEmitter}.
+\fi
 
 \section{A Word of Caution}
 
