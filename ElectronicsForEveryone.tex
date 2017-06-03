@@ -29,6 +29,8 @@
 \usepackage{placeins} % Give float barriers
 
 \usepackage{makeidx}
+\usepackage[titles]{tocloft}
+\setlength{\cftbeforechapskip}{-0.5ex}
 
 \usepackage{array} % custom column cells
 \newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
@@ -71,7 +73,7 @@ tabsize=3
 \makeatother
 
 
-\setcounter{tocdepth}{1} % TOC to section level
+\setcounter{tocdepth}{0} % TOC to section level
 \setlength{\parindent}{0in} % No paragraph indents
 \setlength{\parskip}{10pt} % Between-paragraph skips
 
