@@ -1,273 +1,16 @@
 \documentclass{book}
 
+\input{Header}
+
+\newcommand{\question}[1]{#1}
+\newcommand{\solution}[1]{}
+\newcommand{\explanation}[1]{}
+
+% FIXME - do I want to do my schematics as PNGs or as vectors?  iCircuit does weird stuff with vectors.
+% FIXME - need to normalize ''exercises'' vs ''apply''
 % FIXME - move everything to a power module early on
 % FIXME - for some reason, Fritzing sometimes puts out a PDF 1.4 and sometimes 1.3.  xetex is choking on the 1.4s.  If this happens, to convert, rename FILE.pdf to FILE.1.4.pdf and run 
 % gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.3 -o FILE.pdf FILE.1.4.pdf 
-
-%% Math font options
-% \usepackage[math]{iwona}
-% \usepackage[math]{kurier}
-% \usepackage{cmbright}
-% \usepackage{lmodern}
-
-%% Font-y stuff
-\usepackage{siunitx}
-\usepackage{dingbat}
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage{amsfonts}
-\usepackage{textcomp}
-\usepackage{newtxmath} % Better math lettering (v vs u)
-% \usepackage{hyperref}
-
-
-\usepackage{amsmath}
-
-\usepackage{needspace}
-%\usepackage{pgfplots}
-\usepackage{mdframed}
-\usepackage{placeins} % Give float barriers
-
-\usepackage{makeidx}
-\usepackage[titles]{tocloft}
-\setlength{\cftbeforechapskip}{-0.5ex}
-
-\usepackage{array} % custom column cells
-\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
-\setlength{\tabcolsep}{1em}
-\renewcommand{\arraystretch}{1.6}
-
-
-% Booksize
-% \usepackage[top=1in,bottom=0.5in,left=0.5in,right=0.5in,paperwidth=8.5in,paperheight=11in]{geometry}
-\usepackage[top=1in,bottom=0.5in,left=0.5in,right=0.5in,paperwidth=7.5in,paperheight=9.25in]{geometry}
-
-% Better Hyphenation
-\usepackage[none]{hyphenat}
-\usepackage[english]{babel} % Prevents underscore from causing problems with tex4ht 
-% Graphics
-\usepackage{graphicx}
-\usepackage{xcolor}
-\usepackage{maxiplot} % Maxima interface
-
-% Code listings
-\usepackage{listings}
-\lstset{ %
-basicstyle=\ttfamily,
-breakatwhitespace=true,
-breaklines=true,
-tabsize=3
-}
-
-\newenvironment{typing}[1]{\begin{figure}[H] \caption{#1} \begin{mdframed}}{\end{mdframed} \end{figure}}
-\newenvironment{typingwithlabel}[2]{\begin{figure} \caption{#1} \label{#2} \begin{mdframed}}{\end{mdframed} \end{figure}}
-
-\makeatletter
-\@ifpackageloaded{tex4ht}{
-\newcommand{\forebook}[1]{#1}
-\newcommand{\forprintbook}[1]{}
-}{
-\newcommand{\forebook}[1]{}
-\newcommand{\forprintbook}[1]{#1}
-}
-\makeatother
-
-
-\setcounter{tocdepth}{0} % TOC to section level
-\setlength{\parindent}{0in} % No paragraph indents
-\setlength{\parskip}{10pt} % Between-paragraph skips
-
-
-\forprintbook{
-\def\bookpart#1{%
-  \par\newpage\cleardoublepage % Page break
-  \thispagestyle{empty}
-  \chaptermark{~}
-  \sectionmark{~}
-  \markboth{~}{~}
-  \vspace*{1in} % Vertical shift
-  \refstepcounter{part}% Next part
-  {\centering\textbf{\Huge Part \thepart}\par}% 
-  \addcontentsline{toc}{part}{{\thepart}~~~~~#1}
-  \vspace{1cm}% Vertical shift
-  {\centering \textbf{\Huge #1}\par}%
-  \vspace{2cm}% Vertical shift
-  % Some text
-}
-}
-
-\forebook{
-\def\bookpart#1{%
-%\section*{~}
-%\refstepcounter{part}% Next part
-%{\centering\textbf{\Huge Part \thepart}\par}% 
-% \part{#1}
-% \addcontentsline{toc}{part}{{\thepart}~~~~~#1}
-}
-}
-
-\forprintbook{
-\newenvironment{partintro}{\begin{mdframed}[backgroundcolor=gray!10,skipabove=\baselineskip,skipbelow=\baselineskip]%
-~\\ 
-}{%
-~\\
-\end{mdframed}
-}
-}
-
-\forebook{
-\newenvironment{partintro}{}{}
-}
-
-
-% \pgfplotsset{compat=1.10}
-\newcommand{\thev}{Th\'{e}venin\ } % Thevenin
-\newcommand{\booktitle}[1]{\emph{#1}}
-\newcommand{\myamp}{\,\si{\ampere}}
-\newcommand{\mymamp}{\,\si{\milli\ampere}}
-\newcommand{\myuamp}{\,\si{\micro\ampere}}
-\newcommand{\myvolt}{\,\si{\volt}}
-\newcommand{\myohm}{\,\si{\ohm}}
-\newcommand{\mykohm}{\,\si{\kilo\ohm}}
-\newcommand{\myMohm}{\,\si{\mega\ohm}}
-\newcommand{\mywatt}{\,\si{\watt}}
-\newcommand{\mymwatt}{\,\si{\milli\watt}}
-\newcommand{\myuf}{\,\si{\micro\farad}}
-\newcommand{\mynf}{\,\si{\nano\farad}}
-\newcommand{\mypf}{\,\si{\pico\farad}}
-\newcommand{\myf}{\,\si{\farad}}
-\newcommand{\myhz}{\,\si{\hertz}}
-\newcommand{\mykhz}{\,\si{\kilo\hertz}}
-\newcommand{\myhy}{\,\si{\henry}}
-\newcommand{\mymhy}{\,\si{\milli\henry}}
-\newcommand{\myuhy}{\,\si{\micro\henry}}
-\newcommand{\mywb}{\,\si{\weber}}
-\newcommand{\myuwb}{\,\si{\micro\weber}}
-\newcommand{\mysec}{\textrm{ seconds}}
-\newcommand{\deriv}[1]{\mathrm{d}#1}
-\newcommand{\pd}[2]{\partial{#1}_{#2}}
-\newcommand{\myint}{\int\!}
-\renewcommand{\dh}{\deriv{h}}
-\newcommand{\dx}{\deriv{x}}
-\newcommand{\dy}{\deriv{y}}
-\newcommand{\ds}{\deriv{s}}
-\newcommand{\dr}{\deriv{r}}
-\newcommand{\dt}{\deriv{t}}
-\newcommand{\du}{\deriv{u}}
-\newcommand{\dv}{\deriv{v}}
-\newcommand{\dw}{\deriv{w}}
-\newcommand{\diff}{\mathrm{d}}
-\newcommand{\dz}{\deriv{z}}
-\newcommand{\dq}{\deriv{q}}
-\newcommand{\dydx}{\frac{\dy}{\dx}}
-\newcommand{\arccot}{\mathrm{arccot}}
-\newcommand{\arcsec}{\mathrm{arcsec}}
-\newcommand{\arccsc}{\mathrm{arccsc}}
-\newcommand{\glossterm}[1]{\textbf{#1}}
-\newcommand{\fixme}[1]{FIXME---\textbf{#1}}
-\newcommand{\degrees}{^{\circ}}
-
-
-\newcommand{\icode}[1]{\texttt{#1}}
-
-
-\newcommand\simplepdffigure[3]{
-\begin{figure}
-\caption{#1}
-\label{fig#2}
-\centering
-\includegraphics[scale=#3]{#2.pdf}
-\end{figure}
-}
-
-\newcommand\simplegraphicsfigure[3]{
-\begin{figure}
-\caption{#1}
-\label{fig#2}
-\centering
-\includegraphics[scale=#3]{#2.png}
-\end{figure}
-}
-
-\newcommand\simplegraph[1]{
-	\begin{tikzpicture}
-		\begin{axis}[
-			xlabel=$x$,
-			ylabel=$y$,
-			axis equal image
-		]
-			\addplot+[mark=none,smooth]{#1};
-		\end{axis}
-	\end{tikzpicture}
-}
-
-\newcommand\mxpoutopt[1]{gnuplot_out_file,"./generated_plots\jobname#1.png"}
-\newcommand\maxgraphout[1]{\begin{center}\mxpIncludegraphics[scale=0.60]{generated_plots/\jobname#1.png}\end{center}}
-\newcommand\maxgraphscale[2]{\begin{center}\mxpIncludegraphics[scale=#2]{generated_plots/\jobname#1.png}\end{center}}
-\newcommand\maxdraw[3]{
-	\begin{maximacmd}
-		draw2d(terminal=eps_color, file_name="generated_plots/\jobname#1", xaxis=true, yaxis=true, yaxis_type=solid, xaxis_type=solid, #2);
-	\end{maximacmd}
-	\begin{center}
-		\mxpIncludegraphics[scale=#3]{generated_plots/\jobname#1.eps}
-	\end{center}
-}
-
-\newcommand\maxgraph[3]{
-	\begin{maximacmd}
-		plot2d(#2, #3, [gnuplot_preamble,"set zeroaxis;"], [gnuplot_term, png], [\mxpoutopt{#1}])$
-	\end{maximacmd}
-	\maxgraphout{#1}
-}
-
-\begin{maximacmd}
-load(draw);
-set_draw_defaults(grid=true, fill_color=grey, xaxis_type=solid, yaxis_type=solid, xlabel="x", ylabel="y");
-\end{maximacmd}
-% xaxis_color, xaxis_type (solid), xaxis_width, yaxis..., font, font_size, line_width
-
-\newcounter{examplecounter}
-\def\theexamplecounter{\thechapter.\arabic{examplecounter}}
-\newenvironment{exampleprob}{\begin{quote}%
-\refstepcounter{examplecounter}%
-\textbf{Example \theexamplecounter}%
-\quad
-}{%
-\end{quote}%
-}
-
-\newenvironment{advsidebar}[1]{%
-	\begin{sidebar}[Advanced: #1]
-}{%
-	\end{sidebar}
-}
-
-\newenvironment{sidebar}[1][]{%
-	\Needspace{10\baselineskip}
-	\begin{mdframed}[%
-		backgroundcolor=gray!10,
-		frametitle={--- \hskip 10pt #1},
-		frametitleaboveskip=0pt,
-		frametitlebelowskip=10pt,
-		innertopmargin=20pt,
-		innerbottommargin=10pt,
-		shadow=false,
-		shadowsize=2pt,
-		skipabove=\baselineskip,
-		skipbelow=\baselineskip,
-		linewidth=0.5pt,
-		frametitlerule=true,
-		frametitlebackgroundcolor=gray!30
-	]%
-}{%
-	\end{mdframed}
-}
-
-\newcommand\reviewsection{\newpage\section*{Review}}
-\newcommand\exercisesection{\newpage\section*{Exercises}}
-\newcommand{\applysection}{\section*{Apply What You Have Learned}}
-
-
 \raggedbottom
 
 \begin{document}
@@ -305,6 +48,8 @@ set_draw_defaults(grid=true, fill_color=grey, xaxis_type=solid, yaxis_type=solid
 % FIXME - I know I talk about digital, but do I ever *define* analog anywhere?
 
 % FIXME - make sure I say that legs, leads, and terminals all mean the same thing
+
+% FIXME - I should put in an early chapter that you can use the power module instead of just a 9V for most projects and they work out just fine.  Maybe have a short appendix on that or something. ``connecting power to your projects''.  Mention that we do 9V direct just to make sure that the student knows there is nothing up our sleeve.
 
 \part{Basic Concepts}
 \include{Units}
@@ -349,6 +94,7 @@ set_draw_defaults(grid=true, fill_color=grey, xaxis_type=solid, yaxis_type=solid
 
 % \include{OtherICs}
 
+\part{Appendices}
 \appendix
 
 \include{Glossary}

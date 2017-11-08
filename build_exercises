@@ -1,0 +1,4 @@
+#!/bin/sh
+
+xelatex ElectronicsSolutionGuide.tex
+xelatex ElectronicsSolutionGuide.tex
