@@ -1,14 +1,97 @@
 
 \begin{enumerate}
-\item If I have a 4-volt battery, how many volts are between the positive and negative terminals of this battery?
-\item If I choose the \emph{negative} terminal of this battery as my ground, how many volts are at the \emph{negative} terminal?
-\item If I choose the \emph{negative} terminal of this battery as my ground, how many volts are at the \emph{positive} terminal?
-\item If I choose the \emph{positive} terminal of this battery as my ground, how many volts are at the \emph{negative} terminal?
-\item Given a constant voltage, what effect does increasing the resistance have on current?
-\item Given a constant current, what effect does increasing the resistance have on voltage?
-\item If I have a 10-volt battery, how much resistance would I need to have a current flow of 10 amps?
-\item If I have a 3-volt battery, how much resistance would I need to have a current flow of 15 amps?
-\item Given 4 amps of current flow across 200 ohms of resistance, how much voltage is there in my circuit?
-\item If I am wanting to limit current flow to 2 amps, how much resistance would I need to add to a 40-volt source?
-\item If I am wanting to limit current flow to 2 milliamps, how much resistance would I need to add to a 9-volt source?
+\item 
+\question{If I have a 4-volt battery, how many volts are between the positive and negative terminals of this battery?}
+\solution{$4\myvolt$}
+\explanation{The definition of a battery's voltage is the number of volts between the positive and negative terminals.}
+\item 
+\question{If I choose the \emph{negative} terminal of this battery as my ground, how many volts are at the \emph{negative} terminal?}
+\solution{$0\myvolt$}
+\explanation{Because volts are relative units, a point must be chosen as the ``zero-volt'' level.  This is known as the ground.  Therefore, if the negative terminal is the ground, it is, by definition, zero volts.}
+\item 
+\question{If I choose the \emph{negative} terminal of this battery as my ground, how many volts are at the \emph{positive} terminal?}
+\solution{$4\myvolt$}
+\explanation{On a $4\myvolt$ battery, the positive terminal is by definition 4 volts above the negative terminal.  If the negative terminal is the ground (i.e., the zero point), then 4 volts above that will be $4\myvolt$.}
+\item 
+\question{If I choose the \emph{positive} terminal of this battery as my ground, how many volts are at the \emph{negative} terminal?}
+\solution{$-4\myvolt$}
+\explanation{On a $4\myvolt$ battery, the positive terminal is by definition 4 volts above the negative terminal. If the positive terminal is the ground (i.e., the zero point), then that is 4 volts above the negative terminal.  That must mean that the negative terminal is 4 volts below zero, or $-4\myvolt$.}
+\item 
+\question{Given a constant voltage, what effect does increasing the resistance have on current?}
+\solution{The current will decrease.}
+\explanation{Because $V = I \times R$, with constant voltage increasing the resistance will reduce the current.}
+\item 
+\question{Given a constant current, what effect does increasing the resistance have on voltage?}
+\solution{The voltage will increase.}
+\explanation{Because $V = I \times R$, if the current is kept constant, increasing the resistance will increase the voltage.}
+\item 
+\question{If I have a $10\myvolt$ battery, how much resistance would I need to have a current flow of 10 amps?}
+\solution{$1\myohm$}
+\explanation{Because we are looking for resistance, we can use Equation~\ref{ohomequationr}.
+\begin{align*}
+R &= V / I \\
+  &= 10 / 10 \\
+  &= 1
+\end{align*}
+We would need a $1\myohm$ resistance.
+}
+\item 
+\question{If I have a 3-volt battery, how much resistance would I need to have a current flow of 15 amps?}
+\solution{$0.2\myohm$}
+\explanation{We can use Equation~\ref{ohmequationr} to find how much resistance we need:
+\begin{align*}
+R &= V / I \\
+  &= 3 / 15 \\
+  &= 0.2
+\end{align*}
+We would need a $0.2\myohm$ resistance.
+}
+\item 
+\question{Given 4 amps of current flow across 200 ohms of resistance, how much voltage is there in my circuit?}
+\solution{$800\myvolt$}
+\explanation{This can be solved using Equation~\ref{ohmequationv}:
+\begin{align*}
+V &= I \times R \\
+  &= 4 \times 200 \\
+  &= 800
+\end{align*}
+This circuit has 800 volts.
+}
+\item 
+\question{If I am wanting to limit current flow to 2 amps, how much resistance would I need to add to a 40-volt source?}
+\solution{$20\myohm$}
+\explanation{This problem can be solved using Equation~\ref{ohmequationr}:
+\begin{align*}
+R &= V / I \\
+  &= 40 / 2 \\
+  &= 20
+\end{align*}
+You would need to add $20\myohm$ of resistance to that source to limit the current flow.
+}
+\item 
+\question{If I am wanting to limit current flow to 2 milliamps, how much resistance would I need to add to a 9-volt source?}
+\solution{$4,500\myohm$}
+\explanation{Since Ohm's law only works for amps, we need to first convert milliamps to amps:
+$$ 0.001 \frac{\myamp}{\mymamp} \times 2 \mymamp = 0.002 \myamp $$
+Now we can use Equation~\ref{ohmequationr} to find the resistance we need:
+\begin{align*}
+R &= V / I \\
+  &= 9 / 0.002 \\
+  &= 4500
+\end{align*}
+We would need to add 4500 ohms of resistance to this source to limit the current flow.
+}
+\item
+\question{If I am wanting to limit current flow to 20 milliamps, how much resistance would I need to add to a 5-volt source?}
+\solution{$250\myohm$}
+\explanation{Since Ohm's law only works for amps, we need to first convert milliamps to amps:
+$$ 0.001 \frac{\myamp}{\mymamp} \times 20 \mymamp = 0.02 \myamp $$
+Now we can use Equation~\ref{ohmequationr} to find the resistance we need:
+\begin{align*}
+R &= V / I \\
+  &= 5 / 0.02 \\
+  &= 250
+\end{align*}
+We need to add 250 ohms of resistance to this voltage source to limit the current.
+}
 \end{enumerate}

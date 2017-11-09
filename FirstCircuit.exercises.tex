@@ -3,10 +3,46 @@
 If you know how to calculate the circuit characteristics using the LED, please ignore it anyway for the purpose of these exercises.
 
 \begin{enumerate}
-\item Calculate the amount of current running in the circuit you built in this chapter using Ohm's law.  Since Ohm's law gives the results in amps, convert the value to milliamps.
-\item Let's say that the minimum amount of current needed for the LED to be visibly on is 1 milliamp.  What value of resistor would produce this current?
-\item Let's say that the maximum amount of current the LED can handle is 30 milliamps.  What value of resistor would produce this current?
-\item Draw a circuit diagram of a short circuit.
-\item Take the circuit drawing in this chapter, and modify it so that it is an open circuit.
-\item Draw a circuit with just a battery and a resistor.  Make up values for both the battery and the resistor and calculate the amount of current flowing through.
+\item 
+\question{Calculate the amount of current running in the circuit you built in this chapter using Ohm's law.  Since Ohm's law gives the results in amps, convert the value to milliamps.}
+\solution{$18\mymamp$}
+\explanation{We can use Ohm's Law (Equation~\ref{ohmequationi}) to find the current running through this circuit:
+\begin{align*}
+I &= V / R \\
+  &= 9 / 500 \\
+  &= 0.018
+\end{align*}
+Therefore, the circuit produces $0.018\myamp$ of current.  Multiply by $1,000$ to get milliamps and we get $18\mymamp$ of current.
+}
+\item 
+\question{Let's say that the minimum amount of current needed for the LED to be visibly on is 1 milliamp.  What value of resistor would produce this current?}
+\solution{$9,000\myohm$}
+\explanation{To find this out, we just need to use Ohm's law to find the necessary resistance using Equation~\ref{ohmequationr}.  However, Ohm's law is given in amps, so we need to convert $1\mymamp$ to amps.  $1\mymamp = 0.001\myamp$.  Therefore, we can calculate the resistor value with the following:
+\begin{align*}
+R &= V / I \\
+  &= 9 / 0.001 \\
+  &= 9,000
+\end{align*}
+We would need $9,000\myohm$ of resistance to reduce the current to 1 milliamp.
+}
+\item 
+\question{Let's say that the maximum amount of current the LED can handle is 30 milliamps.  What value of resistor would produce this current?}
+\solution{$300\myohm$}
+\explanation{To solve this problem we need to use Ohm's law, but first we need to convert milliamps into amps to do this.  $30\mymamp = 0.03\myamp$.  Now we can use Equation~\ref{ohmequationr} to solve:
+\begin{align*}
+R &= V / I \\
+  &= 9 / 0.03 \\
+  &= 300
+\end{align*}
+Therefore, a resistor of $300\myohm$ would produce this current.
+}
+\item 
+\question{Draw a circuit diagram of a short circuit.}
+\solution{This is an open-ended question, so a number of results are possible.  For it to be successful, you must be able to trace a path from the positive terminal of the battery to the negative terminal of the battery without going through a resistor.}
+\item 
+\question{Take the circuit drawing in this chapter, and modify it so that it is an open circuit.}
+\solution{This is an open-ended question, so a number of results are possible.  For it to be successful, you must not be able to trace \emph{any} path from the positive terminal of the battery to the negative terminal of the battery.}
+\item 
+\question{Draw a circuit with just a battery and a resistor.  Make up values for both the battery and the resistor and calculate the amount of current flowing through.}
+\solution{This is an open-ended question, but the circuit should be neither a short circuit nor an open circuit.  Equation~\ref{ohmequationi} should be used to calculate the amount of current flowing through the circuit.}
 \end{enumerate}
