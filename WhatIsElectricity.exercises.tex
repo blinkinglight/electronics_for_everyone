@@ -1,12 +1,49 @@
 
 \begin{enumerate}
-\item If I have 56 milliamps of current flowing, how many amps of current do I have flowing?
-\item If I have 1,450 milliamps of current flowing, how many amps of current do I have flowing?
-\item If I have 12 amps of current flowing, how many milliamps of current do I have flowing?
-\item If I have 0.013 amps of current flowing, how many milliamps of current do I have flowing?
-\item If I have 125 milliamps of current flowing for one hour, how many coulombs of charge have I used up?
-\item What is the difference between AC and DC current?
-\item In AC mains current, how often does the direction of current go back and forth?
-\item Why is AC used instead of DC to deliver electricity within a city?
-\item In working with electronic devices, do we normally work in amps or milliamps?
+\item 
+\question{If I have 56 milliamps of current flowing, how many amps of current do I have flowing?}
+\solution{$0.056\myamp$}
+\explanation{A milliamp is $0.001\myamp$, so, to convert, we multiply milliamps by $0.001$.
+$$ 0.001 \frac{\myamp}{\mymamp} \times 56 \mymamp = 0.056\myamp $$
+}
+\item 
+\question{If I have 1,450 milliamps of current flowing, how many amps of current do I have flowing?}
+\solution{$1.45\myamp$}
+\explanation{A milliamp is $0.001\myamp$, so, to convert, we multiply milliamps by $0.001$.
+$$ 0.001 \frac{\myamp}{\mymamp} \times 1450\mymamp = 1.45\myamp $$
+}
+\item 
+\question{If I have 12 amps of current flowing, how many milliamps of current do I have flowing?}
+\solution{$12,000\mymamp$}
+\explanation{There are $1,000$ milliamps in each amp.  So, to convert, we multiplay amps by $1,000$.
+$$ 1,000 \frac{\mymamp}{\myamp} \times 12\myamp = 12,000\mymamp $$
+}
+\item 
+\question{If I have 0.013 amps of current flowing, how many milliamps of current do I have flowing?}
+\explanation{There are $1,000$ milliamps in each amp.  So, to convert, we multiplay amps by $1,000$.
+$$ 1,000 \frac{\mymamp}{\myamp} \times 0.013\myamp = 12\mymamp $$
+}
+\item 
+\question{If I have 125 milliamps of current flowing for one hour, how many coulombs of charge have I used up?}
+\solution{$450\text{ coulombs}$}
+\explanation{An amp is a flow of 1 coulomb per second.  First we have to convert milliamps to amps:
+$$ 0.001\frac{\myamp}{\mymamp} \times 125 \mymamp = 0.125 \myamp $$
+Because an amp is 1 coulomb per second, this is equal to $0.125\frac{\text{coulomb}}{\mysec}$.
+Since it is flowing for an hour, we have to convert hours into seconds.
+$$ 1 \textrm{ hour} \times \frac{60\text{ min}}{\text{hour}} \times \frac{60\text{ seconds}}{\text{minute}} = 3,600 \text{ seconds} $$
+So, we have $0.125$ coulombs per second for $3,600$ seconds.  So the total number of coulombs is:
+$$3,600 \frac{\text{coulombs}}{\text{second}} \times 0.125 \text{ seconds} = 450\text{ coulombs} $$
+}
+\item 
+\question{What is the difference between AC and DC current?}
+\solution{AC stands for ``alternative current.'' In AC current moves back and forth, continually changing the direction that it is moving.  DC stands for ``direct current.''  In DC current moves in essentially one direction.}
+\item 
+\question{In AC mains current, how often does the direction of current go back and forth?}
+\solution{The direction of current goes back and forth $50--60$ times per second.}
+\item 
+\question{Why is AC used instead of DC to deliver electricity within a city?}
+\solution{There is much less loss over large distances using AC}
+\item 
+\question{In working with electronic devices, do we normally work in amps or milliamps?}
+\solution{With small electronic devices, we usually measure our currents in milliamps.}
 \end{enumerate}
