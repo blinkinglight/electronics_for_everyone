@@ -160,13 +160,27 @@ $$ R_T = \frac{1}{\frac{1}{R_2} + \frac{1}{R_L}} = \frac{1}{\frac{1}{2,000} + \f
 This is very close to the resistance of $R_2$ by itself.
 So, what we can say is that our voltage divider circuit can ignore the resistance of the load \emph{if the resistance of the load is significantly more than the resistance of the voltage divider resistor}.
 A way of writing this down is that $R_L \gg R_2$.
-What ``significantly'' means depends on how sensitive your circuit it to voltage changes, but, generally, I would say that $R_L$ should be at least ten times $R_2$.
+What ``significantly'' means depends on how sensitive your circuit it to voltage changes, but, generally (and for the purposes of the exercises), I would say that $R_L$ should be at least ten times $R_2$.
 
 So, for low-resistance loads, a voltage divider does not work well, because it puts too little resistance between the voltage source and ground.
 However, in Chapter~\ref{chapIC} we will see that many circuit have loads of approximately infinite resistance, so voltage dividers work well.
 
 In general terms, a voltage divider with smaller resistors is ``stiffer'' because it varies less in response to variations in a load, but it also eats up more current.
 A voltage divider with larger resistors doesn't work with low-resistance loads, but it also uses up much less current.
+
+If you need to know a full equation for figuring out voltage divider resistors, I have it listed below in Equations~\ref{eqVDIVR2Eq} and~\ref{eqVDIVR1Eq}.
+In these equations, $V_{IN}$ is the voltage coming into the voltage divider, $V_{OUT}$ is the voltage going out of the divider into your load, and $R_L$ is the load resistance.
+$R_1$ is the resistor connected to the positive power supply, and $R_2$ is the resistor connected to the ground.
+If you are good at Algebra, you might see if you can deduce this formula yourself from the information given in this section.
+\begin{equation}
+\label{eqVDIVR2Eq}
+R_2 = R_L / 10
+\end{equation}
+\begin{equation}
+\label{eqVDIVR1Eq}
+R_1 = \frac{R_2 * (V_{IN} - V_{OUT})}{V_{OUT}}
+\end{equation}
+
 
 \section{The Pull-Up Resistor}
 \label{secPullUpResistor}

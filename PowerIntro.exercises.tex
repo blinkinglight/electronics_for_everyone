@@ -1,12 +1,124 @@
 
 \begin{enumerate}
-\item If I have 50 joules of energy, what is the maximum amount of work I could possibly do with that amount of energy?
-\item If I am using up 10 joules of energy each second, how many watts am I using up?
-\item If I convert 30 watts of mechanical power into electrical power with 50\% efficiency, how many watts of electrical power are delivered?
-\item If I have a circuit powered by a $9\myvolt$ battery that uses $0.125\myamp$, how many watts does that circuit use?
-\item If a resistor has a $2\myvolt$ drop with a $0.03\myamp$ current, how much power is the resistor dissipating?
-\item If a resistor has a $3\myvolt$ drop with a $12\mymamp$ current, how much power is the resistor dissipating?
-\item If a $700\myohm$ resistor has a $5\myvolt$ drop, how much power is the resistor dissipating?
-\item If a $500\myohm$ resistor has $20\mymamp$ flowing through it, how much power is the resistor dissipating?
-\item In the circuit below, calculate the voltage drop, current, and power dissipation of every component (except the battery). \\ \includegraphics[scale=0.08]{ExampleForPowerDissipation.png}
+\item 
+\question{If I have 50 joules of energy, what is the maximum amount of work I could possibly do with that amount of energy?}
+\solution{50 joules of work}
+\explanation{You cannot do more work than you have energy, therefore, with 50 joules of energy you cannot do more than 50 joules of work.  Likely you can do much less.}
+\item 
+\question{If I am using up 10 joules of energy each second, how many watts am I using up?}
+\solution{$10\mywatt$}
+\explanation{Since a watt \emph{means} a joule of energy each second, 10 joules per second is the same as 10 watts.}
+\item 
+\question{If I convert 30 watts of mechanical power into electrical power with 50\% efficiency, how many watts of electrical power are delivered?}
+\solution{$15\mywatt$}
+\explanation{The units of power are the same for both (watts), and, since there is only a 50\% efficiency, that means that we only retain half (50\%) of the power.  Half of 30 is 15.}
+\item
+\question{If I have a circuit powered by a $9\myvolt$ battery that uses $0.125\myamp$, how many watts does that circuit use?}
+\solution{$1.125\mywatt$}
+\explanation{Power is voltage multiplied by current. Therefore:
+\begin{align*}
+P &= V * I \\
+  &= 9 * 0.125 \\
+  &= 1.125\mywatt
+\end{align*}
+}
+\item 
+\question{If a resistor has a $2\myvolt$ drop with a $0.03\myamp$ current, how much power is the resistor dissipating?}
+\solution{$0.06\mywatt$ or $60\mymwatt$}
+\explanation{The amount of power consumed (and therefore dissipated) by the resistor is given by:
+\begin{align*}
+P &= V * I \\
+  &= 2 * 0.03 \\
+  &= 0.06\mywatt = 60\mymwatt
+\end{align*}
+}
+\item 
+\question{If a resistor has a $3\myvolt$ drop with a $12\mymamp$ current, how much power is the resistor dissipating?}
+\solution{$0.036\mywatt$ or $36\mymwatt$}
+\explanation{To solve, first we have to convert $12\mymamp$ to $0.012\myamp$.  Then we just use the power equation:
+\begin{align*}
+P &= V * I \\
+  &= 3 * 0.012 \\
+  &= 0.036\mywatt = 36\mymwatt
+\end{align*}
+}
+\item 
+\question{If a $700\myohm$ resistor has a $5\myvolt$ drop, how much power is the resistor dissipating?}
+\solution{$0.0357 \mywatt$ or $35.7\mymwatt$}
+\explanation{Since we are given the voltage and the resistance, we can use Equation~\ref{eqpowervr} to solve:
+\begin{align*}
+P &= V^2 / R \\
+  &= 5^2 / 700 \\
+  &= 25 / 700 \\
+  &= 0.0357 \mywatt = 35.7\mymwatt
+\end{align*}
+Therefore, this resistor is dissipating $35.7\mymwatt$.
+}
+\item 
+\question{If a $500\myohm$ resistor has $20\mymamp$ flowing through it, how much power is the resistor dissipating?  If the resistor was rated for $1/8$ of a watt, are we within the rated usage for the resistor?}
+\solution{The resistor is dissipating $0.2\mywatt$.  $1/8$ of a watt is $0.125\mywatt$.  Therefore, this resistor is being used beyond its rated usage, which is hazardous.}
+\explanation{Since we are given resistance and current, we can use Equation~\ref{eqpowercurrent}:
+\begin{align*}
+P &= I^2 \times R \\
+  &= 0.02^2 \times 500 \\
+  &= 0.0004 \times 500 \\
+  &= 0.2\mywatt
+\end{align*}
+
+Now, is this above or below $1/8$ of a watt?
+$1 / 8 = 0.125$.
+Also, $0.2 > 0.125$.
+Therefore, we have exceeded the power rating for this resistor, which is a hazardous situation, and can actually cause the resistor to catch fire if left in that state for too long.
+}
+\item 
+\question{In the circuit below, calculate the voltage drop, current, and power dissipation of every component (except the battery).  If the resistors are all rated for $1/8$ of a watt, are any of the resistors out of spec? \\ \includegraphics[scale=0.08]{ExampleForPowerDissipation.png}}
+\solution{\begin{description}
+\item[$500\myohm$ resistor] $5.35\myvolt$ voltage drop, $0.0107\myamp$ current, $0.0572\mywatt$ power dissipation
+\item[$800\myohm$ resistor] $3.65\myvolt$ voltage drop, $0.00456\myamp$ current, $0.0155\mywatt$ power dissipation
+\item[$600\myohm$ resistor] $3.65\myvolt$ voltage drop, $0.00608\myamp$ current, $0.0222\mywatt$ power disspiation
+\end{description}
+All power dissipations were less than $1/8$ of a watt ($0.125\mywatt$), so all of the resistors are within specification.
+}
+\explanation{To solve this, first we need to solve for all of the voltage drops and currents along each segment of the circuit.  We can start by adding up the parallel resistances at the bottom of the circuit:
+\begin{align*}
+R_T &= \frac{1}{\frac{1}{800} + \frac{1}{600}} \\
+    &\approx \frac{1}{0.002917} \\
+    &\approx 342.82\myohm
+\end{align*}
+Now, those parallel resistances together are in series with the $500\myohm$ resistor at the top of the circuit.  Therefore they can be added together to get $342.82 + 500 = 842.82\myohm$ total resistance.
+
+To calculate the total current, we just use Ohm's Law:
+\begin{align*}
+I &= V / R \\
+  &= 9 / 842.82 \\
+  &= 0.0107\myamp
+\end{align*}
+We can use this value to calculate the voltage drop of the first resistor:
+\begin{align*}
+V &= I \times R \\
+  &= 0.0107 \times 500 \\
+  &= 5.35\myvolt
+\end{align*}
+Therefore, the parallel circuit drops the rest: $9 - 5.35 = 3.65\myvolt$.
+The current on the $800\myohm$ resistor is:
+\begin{align*}
+I &= V / R \\
+  &= 3.65 / 800 \\
+  &= 0.00456 \myamp
+\end{align*}
+The current on the $600\myohm$ resistor is:
+\begin{align*}
+I &= V / R \\
+  &= 3.65 / 600 \\
+  &= 0.00608 \myamp
+\end{align*}
+Now the power for each resistor is simply voltage times current.
+For the $500\myohm$ resistor:
+$$ P = 5.35 * 0.0107 = 0.0572 \mywatt $$
+For the $800\myohm$ resistor:
+$$ P = 3.65 * 0.00456 = 0.0166 \mywatt $$
+For the $600\myohm$ resistor:
+$$ P = 3.65 * 0.00608 = 0.0222 \mywatt $$
+All of these power dissipations are less than $1/8$ of a watt ($0.125\mywatt$), so they are all within spec.
+}
 \end{enumerate}
