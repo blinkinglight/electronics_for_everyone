@@ -1,3 +1,32 @@
 \begin{enumerate}
-\item \fixme{need exercises here}
+\item 
+\question{Which Arduino pin do you use when supplying an unregulated voltage (i.e., a voltage above the $5\myvolt$ that the Arduino runs at)?}
+\solution{The $V_{IN}$ pin is used to provide an unregulated voltage to the Arduino.}
+\question{What Arduino pins would you use to extract power out from an Arduino connected to a power supply?}
+\solution{You would use the $5\myvolt$ pin for a regulated five volt output, and the $GND$ pin for ground.}
+\question{What is the voltage of an output pin set to HIGH?}
+\solution{An output pin set to HIGH puts out $5\myvolt$.}
+\question{What is the maximum current that should be sourced by any particular Arduino pin?}
+\solution{Each output pin should only have up to $20\mymamp$ of current coming out of it.}
+\question{If you have a red LED attached to an Arduino output pin, what is the minimum size of resistor that you need?}
+\solution{$160\myohm$}
+\explanation{Since each output pin can only output $20\mymamp$ of current, we can use Ohm's Law to figure out the minimum size of resistor.
+The red LED will eat up $1.8\myvolt$ of voltage. 
+That leave $5 - 1.8 = 3.2\myvolt$ remaining.
+Therefore, Ohm's Law states:
+\begin{align*}
+R &= V / I \\
+  &= 3.2 / 0.02 \\
+  &= 160\myohm
+\end{align*}
+Therefore, the resistor needs to be at least $160\myohm$.
+}
+\question{If an Arduino input pin is completely disconnected from a circuit, what state does the Arduino read it as?}
+\solution{If a pin is completely disconnected from a circuit, it could read any value---either HIGH or LOW.}
+\question{How much current does an Arduino input use?}
+\solution{Arduino inputs can be thought of as mere voltage sensors, not using up any serious amount of current.}
+\question{What is the best way to wire a button to an Arduino?}
+\solution{Buttons should be wired to Arduinos with pull-down (or pull-up) resistors, in order to make sure that the input pin is always physically connected to the circuit, and therefore has a valid value.}
+\question{What is an advantage of storing a program in a microcontroller even if the logic could be built directly in hardware?}
+\solution{Storing a program in a microcontroller allows \emph{changes} in logic to be performed without remanufacturing.  Additionally, the microcontroller can often be cheaper (and smaller) than the device built without them.}
 \end{enumerate}

@@ -1,12 +1,99 @@
 
 \begin{enumerate}
-\item Convert $23\myf$ to microfarads.
-\item Convert $15\myuf$ to farads.
-\item Convert $0.0002\myf$ to microfarads.
-\item Convert $0.0030\myuf$ to farads.
-\item If a voltage of $6\myvolt$ is applied to a $55\myuf$ capacitor, how much charge would it store?
-\item If a voltage of $2\myvolt$ is applied to a $13\mypf$ capacitor, how much charge would it store?
-\item If a $132\myuf$ capacitor is holding $0.02\textrm{ coulombs}$ of charge, how many volts will it produce when it discharges?
-\item if a $600\mypf$ capacitor is holding $0.03\textrm{ coulombs}$ of charge, how many volts will it produce when it discharges?
-\item If a $121\myuf$ capacitor is connected to a battery.  After some fluctuation, the capacitor has $0.00089\textrm{ coulombs}$ of charge stored in it and the battery is reading $8.9\myvolt$.  Is the capacitor going to be charging or discharging at this point?
+\item 
+\question{Convert $23\myf$ to microfarads.}
+\solution{$23\myf = 23,000,000\myuf$}
+\explanation{$1\my = 1,000,000\myuf$.  Therefore, to convert we multiply by $1,000,000$.}
+\item 
+\question{Convert $15\myuf$ to farads.}
+\solution{$15\myuf = 0.000015\myf$}
+\explanation{$1\myuf = 0.000001\myf$.  Therefore, to convert we multiply by $0.000001$.}
+\question{Convert $35\mypf$ to farads.}
+\solution{$35\mypf = 0.000000035\myf$}
+\explanation{$1\mypf = 0.000000001\myf$.  Therefore, to convert we multiply by $ 0.000000001$.}
+\item 
+\question{Convert $0.0002\myf$ to microfarads.}
+\solution{$0.0002\myf = 200\myuf$}
+\explanation{$1\myf = 1,000,000\myuf$.  Therefore, to convert we multiply by $1,000,000$.}
+\item 
+\question{Convert $0.0030\myuf$ to farads.}
+\solution{$0.0030\myuf = 0.000000003\myf$}
+\explanation{$1 \myuf = 0.000001\mf$. Therefore, to convert we multiply by $0.000001$.}
+\item 
+\question{If a voltage of $6\myvolt$ is applied to a $55\myuf$ capacitor, how much charge would it store?}
+\solution{$0.00033$ coulombs}
+\explanation{The equation for charge is $Q = C \cdot V$, where $C$ is the capacitance in farads, and the result is in coulombs.
+Therefore, begin by converting the capacitance to farads.
+$1\myuf = 0.000001\myf$, so $55\myuf = 0.000055\myf$.
+The equation then becomes:
+\begin{align*}
+Q &= C \cdot V \\
+  &= 0.000055 \cdot 6 \\
+  &= 0.00033
+\end{align*}
+Therefore, the capacitor will be holding $0.00033$ coulombs of charge.
+}
+\item 
+\question{If a voltage of $2\myvolt$ is applied to a $13\mypf$ capacitor, how much charge would it store?}
+\solution{$0.000000026$ coulombs}
+\explanation{The equation for charge is $Q = C \cdot V$, where $C$ is the capacitance in farads, and the result is in coulombs.
+Therefore, begin by converting the capacitance to farads.
+$1\mypf = 0.000000001\myf$, so $13\mypf = 0.000000013\myf$.
+Therefore, the equation becomes:
+\begin{align*}
+Q &= C \cdot V \\
+  &= 0.000000013 \cdot 2 \\
+  &= 0.000000026
+\end{align*}
+Therefore, the capacitor will store $0.000000026$ coulombs worth of charge.
+} 
+\item 
+\question{If a $132\myuf$ capacitor is holding $0.02\textrm{ coulombs}$ of charge, how many volts will it produce when it begins to discharge?}
+\solution{$151.5\myvolt$}
+\explanation{The equation for charge in a capacitor is $Q = C \cdot V$ where $Q$ is in coulombs and $C$ is in farads.
+This can be rearranged to solve for voltage, giving $V = \frac{Q}{C}$.
+Then, we convert $132\myuf$ to farads.
+Since $1\myuf = 0.000001\myf$, then $132\myuf = 0.000132\myf$.
+Therefore, the equation becomes:
+\begin{align*}
+V &= \frac{Q}{C} \\
+  &= \frac{0.02}{0.000132} \\
+  &\approx 151.5
+\end{align*}
+Therefore, when the capacitor begins to discharge, it will discharge at $151.5\myvolt$.
+}
+\item 
+\question{if a $600\mypf$ capacitor is holding $0.03\textrm{ coulombs}$ of charge, how many volts will it produce when it begins to discharge?}
+\solution{$50,000\myvolt$}
+\explanation{
+The equation for the voltage when discharging a capacitor is $V = \frac{Q}{C}$, where the charge is in coulombs and the capacitance is in farads.
+We will start by converting $600\mypf$ to farads.
+Since $1\mypf = 0.000000001\myf$, then $\600\mypf = 0.0000006\myf$.
+Therefore, the equation becomes:
+\begin{align*}
+V &= \frac{Q}{C} \\
+  &= \frac{0.03}{0.0000006} \\
+  &= 50000
+\end{align*}
+Therefore, this would generate $50,000\myvolt$ when it began to discharge. 
+Note that this is probably beyond the physical capacity of such a device, and, even if you could charge it up that much, it would discharge almost instantaneously, kind of like a static electricity shock (which has almost the same amount of voltage).
+}
+\item 
+\question{If a $121\myuf$ capacitor is connected to a battery.  After some fluctuation, the capacitor has $0.00089\textrm{ coulombs}$ of charge stored in it and the battery is reading $8.9\myvolt$.  Is the capacitor going to be charging or discharging at this point?}
+\solution{The capacitor will be charging.}
+\explanation{To know if the capacitor will be charging or discharging, find out first how much charge the capacitory \emph{could} store at the supplied voltage.
+If the charge in the capacitor is less than the potential charge at that voltage, then that means that charge would be flowing in.
+If the charge in the capacitor is greater than the potential charge at that voltage, then the charge will flow out into the circuit.
+
+At $8.9\myvolt$, the amount of charge for a $121\myuf$ ($0.000121\myf$) capacitor is:
+\begin{align*}
+Q &= C \cdot V \\
+  &= 0.000121 \cdot 8.9 \\
+  &= 0.0010769
+\end{align*}
+Therefore, at $8.9\myvolt$, the charge in the capacitor should go to $0.0010769$ coulombs.
+The actual charge in the capacitor is $0.00089$ coulombs, which is \emph{less} than the charge should be at that voltage.
+Therefore, the charge is flowing into the capacitor.
+}
+% FIXME - more problems like this one?
 \end{enumerate}
