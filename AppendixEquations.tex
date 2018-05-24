@@ -224,20 +224,20 @@ Additionally, since it is just bouncing back-and-forth between $\frac{1}{3}$ and
 Therefore, we can have two formulas, one for the time charging and one for the time discharging:
 
 \begin{align*}
-T_{CHARGE} &= 0.693 C (R_1 + R_2) \\
-T_{DISCHARGE} &= 0.693 C R_2
+T_{\text{CHARGE}} &= 0.693 C (R_1 + R_2) \\
+T_{\text{DISCHARGE}} &= 0.693 C R_2
 \end{align*}
 
 The total period is just these two time periods added together.
 Therefore, you get:
 
 \begin{align*}
-T_{PERIOD} &= 0.693 C (R_1 + R_2) + 0.693 C R_2 \\
+T_{\text{PERIOD}} &= 0.693 C (R_1 + R_2) + 0.693 C R_2 \\
  &= 0.693 C((R_1 + R_2) + R_2) && \textrm{Factoring out $0.693 C$} \\
  &= 0.693 C(R_1 + 2 R_2) && \textrm{Regrouping}
 \end{align*}
 
-Since $f = \frac{1}{T_{PERIOD}}$, we can flip the above equation and get:
+Since $f = \frac{1}{T_{\text{PERIOD}}}$, we can flip the above equation and get:
 
 \begin{align*}
 f &= \frac{1}{0.693 C(R_1 + 2 R_2)} \\
@@ -461,4 +461,56 @@ As you can see, this is Equation~\ref{eqThevEqVoltExp}.
 %V_T &= \frac{I_H I_L R_L - I_H I_L R_H}{I_H - I_L} && \textrm{Divide both sides by $I_H - I_L$} \\
 %V_T &= \frac{I_H I_L (R_L - R_H)}{I_H - I_L} && \textrm{Regroup the top} \\
 %V_T &= \frac{\frac{V_H}{R_H} \frac{V_L}{R_L} (R_L - R_H)}{\frac{V_H}{R_H} - \frac{V_L}{R_L} && \textrm{Replace currents with their Ohm's law equivalents}
+
+\section{Electronics and Calculus}
+
+Calculus is a favorite subject of mine, and many parts of electronics make a lot of sense in the light of Calculus.
+
+\subsection{Current and Voltage}
+First of all, recognize that electronics includes both static and dynamic quantities. 
+Charge, for instance, is a static quantity.
+Current, though, is the \emph{movement} of charge, and thus is a dynamic quantity.
+Current entering or leaving a point can be written as a differential:
+\begin{equation}
+I = \frac{\dQ}{\dt}
+\end{equation}
+Like current, voltage is a dynamic quantity, which is the change in the magnetic flux ($\phi$):
+\begin{equation}
+V = \frac{\deriv{\phi}}{\dt}
+\end{equation}
+
+\subsection{Capacitors and Inductors}
+
+The static equation governing a capacitor is
+\begin{equation}
+Q = V \cdot C
+\end{equation}
+where $Q$ is the charge, $V$ is the voltage, and $C$ is the capacitance.
+Taking the derivative of both sides, this can be converted into a dynamic equation. 
+\begin{equation}
+\frac{\dQ}{\dt} = C\frac{\dV}{\dt}
+\end{equation}
+Since $\frac{\dQ}{\dt} = I$ we can rewrite this as
+\begin{equation}
+I = C\frac{\dV}{\dt}.
+\end{equation}
+What this means is that the current is proportional to the \emph{change} in voltage.
+
+The static equation governing an inductor is similar:
+\begin{equation}
+\phi = L \cdot I
+\end{equation}
+Taking the derivative of both sides yields
+\begin{equation}
+\frac{\deriv{\phi}}{\dt} = L \cdot \frac{\deriv{I}}{\dt}
+\end{equation}
+Since $V = \frac{\deriv{\phi}}{\dt}$, this can be rewritten as
+\begin{equation}
+V = L \cdot \frac{\deriv{I}}{\dt}.
+\end{equation}
+In other words, on inductors, the voltage is proportional to the change in current.
+
+\subsection{Time Constants}
+
+If an ideal capacitor were connected to an ideal voltage source, then the capacitor would charge instantaneously.
 

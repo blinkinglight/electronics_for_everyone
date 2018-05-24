@@ -4,4 +4,4 @@ xelatex ElectronicsForEveryone.tex
 xelatex ElectronicsForEveryone.tex
 xelatex ElectronicsForEveryone.tex
 
-gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile=Combined.pdf ElectronicsForEveryone.pdf SimplifiedDatasheetsPages.pdf
+# gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile=Combined.pdf ElectronicsForEveryone.pdf SimplifiedDatasheetsPages.pdf

@@ -1,11 +1,49 @@
 
 \begin{enumerate}
-\item If I have an RC circuit with a resistor of $10\myohm$ and a capacitor of $2\myf$, what is the RC time constant of this circuit?
-\item In the previous question, how many seconds does it take to charge my capacitor to approximately 50\% of supply voltage?
-\item If I have an RC circuit with a resistor of $30,000\myohm$ and a capacitor of $0.001\myf$, what is the RC time constant of this circuit?
-\item In the previous question, what percentage of the way is the capacitor charged after 60 seconds?
-\item If I have an RC circuit with a resistor of $25\mykohm$ and a capacitor of $20\myuf$, what is the RC time constant of this circuit?
-\item Give a resistor and capacitor combination that will yield an RC time constant of 0.25 seconds.
-\item Reconfigure the circuit in Figure~\ref{figSimpleTimerCircuit} to wait for 3 seconds.  Draw the whole circuit.
-\item Redraw the previous circuit, and circle each basic circuit pattern and label it.
+\item 
+\question{If I have an RC circuit with a resistor of $10\myohm$ and a capacitor of $2\myf$, what is the RC time constant of this circuit?}
+\solution{$20$ seconds}
+\explanation{The RC time constant is just the resistance (in ohms) multiplied by the capacitance (in farads).
+Therefore, multiply $10\cdot 2 = 20$.
+The time constant is $20$ seconds.
+}
+\item 
+\question{In the previous question, how many seconds does it take to charge my capacitor to approximately 50\% of supply voltage?}
+\solution{$14$ seconds}
+\explanation{Figure~\ref{figTimeConstants} shows how many time constants it takes to charge a capacitor to a certain percentage of supply voltage.
+Like most things in electronics, it won't be exact.
+However, in the figure you can see that $0.7$ time constants will yield 50.3\% of the supply voltage.
+Since the time constant was $20$ seconds, the amount of time to charge 50\% is $0.7\cdot 20 = 14$ seconds.
+}
+\item 
+\question{If I have an RC circuit with a resistor of $30,000\myohm$ and a capacitor of $0.001\myf$, what is the RC time constant of this circuit?}
+\solution{$30$ seconds}
+\explanation{The RC time constant is just resistance (in ohms) multiplied by capacitance (in farads).
+In this case, that yields $30,000 \cdot 0.001 = 30$ seconds.
+}
+\item 
+\question{In the previous question, what percentage of the way is the capacitor's voltage charged after 60 seconds?}
+\solution{86.5\%}
+\explanation{Since the RC time constant is 30 seconds, 60 seconds would be two RC time constants.
+Figure~\ref{figTimeConstants} shows that two time constants yields an 86.5\% voltage charge.}
+\item 
+\question{If I have an RC circuit with a resistor of $25\mykohm$ and a capacitor of $20\myuf$, what is the RC time constant of this circuit?}
+\solution{$0.25$ seconds}
+\explanation{This is just like the other time constant problems, except that we have to change units.
+The units for the RC circuit are ohms and farads.
+Since $1\mykohm = 1,000\myohm$, then $25\mykohm = 25,000\myohm$.
+Likewise, since $1\myuf = 0.000001\myf$, then $20\myuf = 0.00002\myf$.
+
+Now we just need to multiply them together.
+$25,000 \cdot 0.00002 = 0.5$ seconds.
+}
+\item 
+\question{Give a resistor and capacitor combination that will yield an RC time constant of 0.25 seconds.}
+\solution{Any resistor/capacitor combination that, when multiplied together, yields $0.25$ will suffice.  A simple example would be to halve \emph{one} of the component values from the previous problem. For instance, I could keep the $25\mykohm$ resistor but change the capacitor to $10\myuf$.}
+\item 
+\question{Reconfigure the circuit in Figure~\ref{figSimpleTimerCircuit} to wait for 3 seconds.  Draw the whole circuit.}
+% FIXME - need solution
+\item 
+\question{Redraw the previous circuit, and circle each basic circuit pattern and label it.}
+% FIXME - need solution
 \end{enumerate}
