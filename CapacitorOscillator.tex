@@ -89,14 +89,15 @@ Thus, the oscillations in voltage eventually wind up as sound for your ears.
 \section{Building an Oscillator}
 
 Let's think for a moment of what it would take to build an oscillator.
-You have at least two different states---on and off.
-You \emph{can} build an oscillator with more than two states, but we won't be concerned with such things in this book.
-Then, you have a time period between the two states.
+On oscillator has (at least) two different states---on and off.\footnote{You can build an oscillator with more than two states, but we won't be concerned with those circuits in this book, though the setup is similar.}
+Then, you have a time period between changing from each state to the other.
+
 What sort of circuit have we looked at that provides a time period?
 
 As we saw in Chapter~\ref{chapCapacitorTimer}, RC (resistor-capacitor) circuits can provide us with time delays.
 We can then use these time delays as the time periods between the states of the oscillation.
-What we need is a circuit that will give out a state (we'll called it S1) for a time period (we'll call it T1) and then move to another state (we'll call it S2) and stay there for another time period (we'll call it T2).
+What we need is a circuit that will give out a state (we'll called it S1) for a time period (we'll call it T1) and then move to another state (we'll call it S2) and stay there for another time period (we'll call it T2). 
+After T2 is finished, the circuit moves back to state S1 and begins again.
 
 Now, it is possible that we might be able to build such a circuit using multiple RC timers with multiple comparators.
 It is doable, but it is harder than it sounds.
@@ -118,9 +119,8 @@ First, let's look at the pins on the left-hand side that are directly connected 
 Pin~1 ($Ground$) and Pin~8 ($VCC$) are easy enough---they are connected to ground and positive voltage, respectively.
 Pin~4 ($\overline{Reset}$) gets connected to the voltage source, too.
 That is a reset pin which is activated if the pin receives a \emph{low} voltage signal.
-Pins that are activated by low-voltage signals are often shown with a line over them.
-Since most pins are activated by a higher voltage, pins that are activated with a lower voltage get a line over them.
-In our case, we never want to reset the chip, so we just tie the reset pin to positive voltage, which will prevent any accidental resets from changes in voltages in the air.
+Pins that are activated by low-voltage signals are often shown with a line over them.\footnote{Since most pins are activated by a higher voltage, pins that are activated with a lower voltage get the special treatment.}
+In our case, we never want to reset the chip, so we will just tie the reset pin to positive voltage which will prevent any accidental resets from changes in voltages in the air.
 
 Now, on the right-hand side at the top, you can see the LED connected to Pin~3 ($Output$).
 Pin~3 is simply the output pin.
@@ -142,9 +142,8 @@ In Chapter~\ref{chapCapacitors}, we learned that capacitors act essentially like
 This capacitor is doing just that.
 It is providing a short-term supply of charge in case there is a sudden change in current needs within the chip.
 For instance, when the output goes active, there may be a sudden need for charge.
-Having this capacitor supplies a quick reservoir of charge available to the chip so that the sudden change in current needs will not affect other chip properties.
-For most of our uses of the NE555, you can actually leave Pin~5 unconnected---our usage of the chip are not so precise or power-hungry as to be affected in this way.  
-Nonetheless, I show it connected so that you can see how it is \emph{supposed} to be connected.
+This capacitor supplies a quickly available reservoir of charge available to the chip so that sudden changes in current needs will not affect other chip properties.\footnote{For most of our uses of the NE555, you can actually leave Pin~5 unconnected---our usage of the chip are not so precise or power-hungry as to be affected in this way.  
+Nonetheless, I show it connected so that you can see how it is \emph{supposed} to be connected.}
 
 Down the middle of the schematic is where all of the action happens.
 This is what controls the oscillation.
@@ -171,6 +170,7 @@ Thus, the capacitor discharges, but at a \emph{different} rate than it charged.
 The RC circuit for the charging of the capacitor used both R1 and R2 for the resistance.
 However, the discharge of the capacitor only uses R2.
 Therefore, the discharge from $\frac{2}{3}$ voltage down to $\frac{1}{3}$ voltage will be faster than the charge up.
+
 Once the capacitor discharges down to $\frac{1}{3}$ of supply voltage, Pin~2 ($\overline{Trigger}$) will detect this event and turn Pin~7 off so that the capacitor can recharge again.
 Therefore, the capacitor will be continually charging and discharging through $\frac{1}{3}$ to $\frac{2}{3}$ of supply voltage, as the 555 turns Pin~7 (connected to ground) on and off.
 This is also why having two resistors is so important.
@@ -226,6 +226,7 @@ Therefore, the \emph{difference} between the point where we are $\frac{1}{3}$ ch
 Since we were using approximate values from the table, this is only an approximation.
 The circuit actually use a little longer period than that.
 It turns out that to go from $\frac{1}{3}$ supply voltage to $\frac{2}{3}$ supply voltage actually takes 0.693 time constants.
+This is an important number to remember when when using the NE555, as it will be used in all of your time calculuations.
 Since our time constant is 1 second, that makes the calculation really easy: $1\cdot 0.693 = 0.693\mysec$.
 
 Now, for discharge, remember that the point that it is discharging to is Pin~7.
@@ -371,3 +372,4 @@ In this chapter, we learned:
 
 \applysection
 
+\input{CapacitorOscillator.exercises}

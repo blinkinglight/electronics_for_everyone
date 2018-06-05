@@ -38,8 +38,29 @@ Since it is watching voltage levels, it is likely using a voltage comparator in 
 \solution{Generally, the NE555 oscillates between filling and discharging the capacitor from one third to two-thirds full.  When first turned on, the capacitor will (presumably) be \emph{fully} discharged, so it will take some amount of time for that first charge cycle to occur, because it is charging from zero instead of from one third full.}
 \item 
 \question{Let's say that we wanted our circuit to be on for $2\mysec$ and off for $1\mysec$.  Keeping the same capacitor, what values should we use for R1 and R2 to accomplish that?}
-\solution{Use a $100\mykohm$ resistor for both R1 and R2.}
-\explanation{\fixme{need an explanation}}
+\solution{R1 would be $144300.2\myohm$ and R2 would be $144300.1\myohm$.  In terms of standard components, using a $150\mykohm$ resistor for each one would be sufficient.}
+\explanation{Since the discharge phase (when the output is off) only uses one resistor (R2) we will beging considering the discharge phase.
+The total time is $1\mysec$.
+Since we are using a NE555 timer, this time will cover $0.693$ time constants.
+The time constant is given by the resistance multiplied by the capacitance.
+Since the capacitor is a $10\myuf$ capacitor, the full equation is:
+\begin{align*}
+R \cdot 0.00001 \cdot 0.693 &= 1 \\
+R &= \frac{1}{0.00001 \cdot 0.693} \\
+R &\approx 144300.1
+\end{align*}
+Therefore, R2 will be approximately $144300.1\myohm$.
+We now do a similar operation to find R1.  
+However, the ``on'' phase of the oscillation will utilize both R1 and R2, and will take two seconds.
+\begin{align*}
+0.00001 \cdot (144300.1 + R) \cdot 0.693 &= 2 \\
+144300.1 + R &= \frac{2}{0.00001 \cdot 0.693} \\
+R &= \frac{2}{0.00001 \cdot 0.693} - 144300.1 \\
+R &\approx 144300.2 
+\end{align*}
+Resistors are not actually available in these values.
+Therefore, you would likely choose a $150\mykohm$ resistor for each of these.
+}
 \item 
 \question{Let's say that we wanted our circuit to be on for $10\mysec$ and off for $3\mysec$.  Keeping the same capacitor, what values should we use for R1 and R2 to accomplish that?}
 \item 
